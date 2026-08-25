@@ -1263,9 +1263,9 @@
      ]
     },
     {
-     "name": "Unlock Protocol (cross-chain upgrade)",
+     "name": "ZKsync Governance (ZK token upgrade)",
      "category": "governance",
-     "confidence": "medium",
+     "confidence": "high",
      "tx_count": 1,
      "share_of_all": 0.0,
      "share_of_non_deposit": 0.0,
@@ -1281,13 +1281,13 @@
      "l1_addresses": [
       {
        "address": "0xe30dca3047b37dc7d88849de4a4dc07937ad5ab3",
-       "role": "ProtocolUpgradeHandler proxy (verified impl name)"
+       "role": "ZKsync Governance ProtocolUpgradeHandler proxy (docs.zknation.io; verified src/ProtocolUpgradeHandler.sol)"
       }
      ],
      "l2_addresses": [
       {
        "address": "0xdb1e46b448e68a5e35cb693a99d59f784ad115cc",
-       "role": "ProxyAdmin (verified source file contracts/past-versions/UnlockV13.sol \u2014 Unlock repo)"
+       "role": "Era L2 ProxyAdmin of the ZK token (owner() == alias of L1 sender)"
       }
      ],
      "selectors": [
@@ -1298,8 +1298,8 @@
       }
      ],
      "evidence": [
-      "single tx; upgrade(address,address) 0x99a88ec4 executed on a ProxyAdmin whose verified source is Unlock's UnlockV13.sol",
-      "sender impl name 'ProtocolUpgradeHandler'; medium confidence because sender's project link is inferred from the target"
+      "calldata upgrade(0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e, 0x4fcd824d304e9b1584cdbb582c104bdcbfb11274): target proxy is the ZK token (name()='ZKsync'); its impl slot now holds verified ZkTokenV3 - upgrade executed",
+      "L1 sender 0xe30dca3047b37dc7d88849de4a4dc07937ad5ab3 is the ZKsync Protocol Upgrade Handler listed on docs.zknation.io (verified src/ProtocolUpgradeHandler.sol); L2 ProxyAdmin owner() equals its L1->L2 alias 0xf41eca3047b37dc7d88849de4a4dc07937ad6bc4", "relabeled 2026-08-25 after adversarial audit: prior 'Unlock Protocol' attribution was an explorer bytecode-match artifact (generic OZ ProxyAdmin displayed under UnlockV13.sol)"
      ]
     },
     {

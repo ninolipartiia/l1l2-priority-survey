@@ -20,7 +20,7 @@ contract. **Chainlink** (sequencer uptime feed), **Rocket Pool** (rETH rate orac
 wrapper bridges are the defining traffic of the small chains: Sophon's **BridgeHubWrapper** (SOPH),
 Cronos's **ZkCroMintAndBridge** (zkCRO), and OpenZK's **BridgeMiddleware** (ozETH/ozUSD
 stake-and-bridge). Long-tail-but-real users of canonical messaging on era: **Lido** (wstETH
-bridge), **Nodle** (NODL bridge), **Aave** (a.DI governance), **Unlock Protocol** (one cross-chain
+bridge), **Nodle** (NODL bridge), **Aave** (a.DI governance), **ZKsync Governance** (one ZK-token
 upgrade). Plain user activity (direct base-token transfers + canonical deposits) accounts for
 ~59% of all records; only **22 of 45,711 records (0.05%) remain unattributed**, all enumerated below.
 
@@ -126,7 +126,7 @@ declined 111→~40–70/month.
 | Lido wstETH bridge | bridge | 18 | 0.05% / 0.05% | 7 | to 2026-06-09 | high |
 | Nodle NODL token bridge | bridge | 8 | 0.02% | 3 | 2025-10-22→ | high |
 | Aave a.DI governance messaging | governance | 3 | 0.01% | 3 | Nov 25–Feb 26 | high |
-| Unlock Protocol cross-chain upgrade | governance | 1 | — | 1 | 2025-12-08 | medium |
+| ZKsync Governance ZK-token upgrade | governance | 1 | — | 1 | 2025-12-08 | high |
 | L2Scan bridge | bridge | 1 | — | 1 | 2025-11-26 | low |
 
 Addresses and roles (all verified as cited in `aggregates.json` evidence):
@@ -154,9 +154,12 @@ Addresses and roles (all verified as cited in `aggregates.json` evidence):
 - **Aave**: L1 GovernanceV3 CrossChainController `0xed42a7d8559a463722ca4bed50e0cc05a386b0e1`
   (exact match to aave-address-book) → L2 adapter `0x1bc5c10cae378fdbd7d52ec4f9f34590a619c68e`
   (unverified), `receiveMessage(bytes)`.
-- **Unlock Protocol**: L1 ProtocolUpgradeHandler proxy `0xe30dca3047b37dc7d88849de4a4dc07937ad5ab3`
-  → L2 ProxyAdmin `0xdb1e46b448e68a5e35cb693a99d59f784ad115cc` (verified UnlockV13 source),
-  one `upgrade(address,address)`.
+- **ZKsync Governance (ZK Nation)**: L1 ProtocolUpgradeHandler proxy `0xe30dca3047b37dc7d88849de4a4dc07937ad5ab3`
+  (docs.zknation.io; verified `src/ProtocolUpgradeHandler.sol`) → L2 ProxyAdmin of the **ZK token**
+  `0xdb1e46b448e68a5e35cb693a99d59f784ad115cc` (`owner()` == alias of the L1 sender), one
+  `upgrade(address,address)` switching ZK token `0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e` to verified `ZkTokenV3` `0x4fcd824d304e9b1584cdbb582c104bdcbfb11274`.
+  *(Relabeled 2026-08-25: the prior "Unlock Protocol" attribution was an explorer bytecode-match
+  artifact — a generic OZ ProxyAdmin displayed under Unlock's `UnlockV13.sol` filename.)*
 - **L2Scan bridge**: L1 L2ScanEthereumBridgeV2 `0x375424756f4a5ada1ce1e0849abdd19255b1729e`,
   one value transfer.
 
