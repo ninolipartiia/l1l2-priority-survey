@@ -1,0 +1,68 @@
+{
+  "task": "L1->L2 priority-transaction census across ZKsync Elastic Network chains",
+  "parameters": {
+    "CHAINS": ["era", "abstract", "sophon", "lens", "cronos", "zero", "zkcandy", "openzk"],
+    "T": {"from": "2025-08-26", "to": "2026-08-26", "note": "UTC, end exclusive; window end is in the future relative to the run, so effective end = scan time 2026-08-25 ~15:20Z"},
+    "eth_block_bounds": [23221564, "25832861-25833013 (per-chain, resolved at scan start; see raw/<chain>.jsonl.runlog start events)"]
+  },
+  "run": {
+    "run_date": "2026-08-25",
+    "preflight_start": "2026-08-25T14:33:00Z",
+    "scans": "2026-08-25T14:39:01Z .. 2026-08-25T15:18:36Z (8 chains, <=4 concurrent, sophon first)",
+    "gap_rescans_completeness_enrichment_attribution": "2026-08-25T14:44Z .. 15:40Z (overlapping)",
+    "generated": "2026-08-25T15:40:08Z"
+  },
+  "scanner": {
+    "script": "scripts/scan_priority.py (package reference scanner, UNMODIFIED)",
+    "sha256_prefix": "f9c2372c623da5f14067fd0d",
+    "post_scan_tooling": [
+      "results/scripts/rescan_gaps.py (gap recovery via multi-endpoint L1 union rescan)",
+      "results/scripts/check_completeness.py (continuity, dual boundary proofs, L2 spot checks)",
+      "results/scripts/enrich.py (classification per METHOD.md §5 + attribution)",
+      "results/scripts/aggregate.py (aggregates.json builder)",
+      "results/scripts/group_report.py (Phase-4 grouping helper)"
+    ]
+  },
+  "endpoints": {
+    "ethereum_l1": {
+      "https://eth.drpc.org": "package-verified; used by initial scans. FINDING: free tier silently omitted 29 NewPriorityRequest events (sophon 11, zero 6, lens 12) in blocks ~23.575M-23.595M while returning success; also item-level batch throttling. All losses detected via txId continuity and recovered.",
+      "https://rpc.mevblocker.io": "package-verified; primary workhorse (era full rescan, batches of 50 reliable)",
+      "https://eth.api.onfinality.io/public": "ADDED at runtime: getLogs 10k OK with blockTimestamp; used for era + gap rescans; no historical eth_call, batch rate-limited",
+      "https://gateway.tenderly.co/public/mainnet": "ADDED at runtime: getLogs 10k OK (no blockTimestamp -> 13 openzk ts backfilled), historical eth_call OK (window-start boundary proofs); used for openzk scan + gap rescans"
+    },
+    "l2_rpcs": "all 8 package RPCs, verified via eth_chainId at preflight; no substitutions needed",
+    "explorers_and_dbs": [
+      "https://eth.blockscout.com/api/v2 (L1 contract names/sources)",
+      "https://block-explorer-api.mainnet.zksync.io (era contract sources)",
+      "https://explorer-api.lens.xyz (lens contract sources)",
+      "https://api.openchain.xyz (selector signatures)",
+      "github.com raw (aave-address-book, zklink docs, sophon-org/custom-usdc-bridge), docs.zklink.io, web search for protocol docs"
+    ]
+  },
+  "rpc_call_accounting_approx": {
+    "eth_getLogs_chunks": 2096,
+    "eth_getLogs_rescan_and_verification": 10,
+    "block_binary_search_getBlockByNumber": 400,
+    "eth_getTransactionByHash": "45,711 tx lookups in ~950 batch requests (50/req) + solo retries",
+    "eth_getCode": "~19,000 lookups in ~250 batch requests (initiator classification incl. EIP-7702 code-prefix pass)",
+    "eth_call": "~30 (getTotalPriorityTxs latest+historical, preflight)",
+    "l2_rpc_calls": "~130 (96 spot checks, chainIds, proxy impl slots, bytecode)",
+    "explorer_api_calls": "~220",
+    "total_json_rpc_requests": "~3,700 (many batched)"
+  },
+  "deviations_from_package": [
+    "Two Ethereum endpoints added (onfinality, tenderly) after measuring drpc throttling/data loss; recorded above and in REPORT.md §2.",
+    "Era scan was killed and resumed twice (checkpoint-native) to repoint endpoints: run.log/run2.log/run3.log all preserved.",
+    "Gap records were recovered from L1 (not L2): they carry full l1_from/l1_to provenance and 'source':'gap-rescan' instead of the spec's 'l2-recovery' shape; OUTPUT_SPEC's gap_handling enum extended to 'recovered-from-l1-rescan' accordingly (better fidelity than the spec's fallback).",
+    "Extra folder results/scripts/ with run tooling + attribution.json/labels.json/completeness.json/codecache.json/initiator-kinds.json for reproducibility.",
+    "deposit_by_contract refined beyond spec: EIP-7702-delegated EOAs are counted as users (deposit_via_7702 field), not protocol contracts; enriched schema gains deposit_via_7702, aggregates gain deposits_via_7702_accounts and a three-way initiator split.",
+    "Package discrepancy found and reported: 3 Sophon native-SOPH deposits executed AFTER the 2026-06-25 deposit block (last: 2026-07-03); package expected zero."
+  ],
+  "data_inventory": {
+    "results/raw/": "8 chains x (.jsonl + .jsonl.ckpt + .jsonl.runlog + scanner stdout logs), 45,711 records total (37 MB)",
+    "results/enriched/": "8 x .jsonl with class/attribution fields (43 MB)",
+    "results/aggregates.json": "all cited numbers",
+    "results/REPORT.md": "primary deliverable",
+    "results/scripts/completeness.json": "per-chain completeness results"
+  }
+}

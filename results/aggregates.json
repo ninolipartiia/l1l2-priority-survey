@@ -1,0 +1,4402 @@
+{
+ "run": {
+  "window": {
+   "from": "2025-08-26",
+   "to": "2026-08-26"
+  },
+  "generated": "2026-08-25T15:43:05Z",
+  "chains": [
+   "era",
+   "abstract",
+   "sophon",
+   "lens",
+   "cronos",
+   "zero",
+   "zkcandy",
+   "openzk"
+  ]
+ },
+ "chains": {
+  "era": {
+   "chain_id": 324,
+   "eth_blocks": [
+    23221564,
+    25832928
+   ],
+   "totals": {
+    "priority_txs": 33779,
+    "by_class": {
+     "protocol-message": 13844,
+     "direct-transfer": 19035,
+     "canonical-deposit": 891,
+     "other": 9
+    },
+    "non_deposit_txs": 32888,
+    "unique_l1_initiators": 17343,
+    "unique_inner_senders": 17137
+   },
+   "completeness": {
+    "records_deduped": 33779,
+    "tx_id_range": [
+     3281895,
+     3315673
+    ],
+    "gaps_after_rescan": [],
+    "gaps_found_in_scan": [],
+    "gap_handling": "none",
+    "total_priority_txs_now": 3315674,
+    "boundary_check": "ok",
+    "window_start_check": "ok",
+    "l2_spot_checks": {
+     "sampled": 12,
+     "ok": 12,
+     "failed": 0
+    },
+    "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+   },
+   "protocols": [
+    {
+     "name": "Across Protocol",
+     "category": "bridge",
+     "confidence": "high",
+     "tx_count": 12653,
+     "share_of_all": 0.3746,
+     "share_of_non_deposit": 0.3847,
+     "unique_users": 4,
+     "first_seen": "2025-08-26",
+     "last_seen": "2026-08-25",
+     "weekly": [
+      {
+       "week": "2025-W35",
+       "tx_count": 123
+      },
+      {
+       "week": "2025-W36",
+       "tx_count": 155
+      },
+      {
+       "week": "2025-W37",
+       "tx_count": 159
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 164
+      },
+      {
+       "week": "2025-W39",
+       "tx_count": 176
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 158
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 156
+      },
+      {
+       "week": "2025-W42",
+       "tx_count": 163
+      },
+      {
+       "week": "2025-W43",
+       "tx_count": 163
+      },
+      {
+       "week": "2025-W44",
+       "tx_count": 164
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 300
+      },
+      {
+       "week": "2025-W46",
+       "tx_count": 310
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 306
+      },
+      {
+       "week": "2025-W48",
+       "tx_count": 294
+      },
+      {
+       "week": "2025-W49",
+       "tx_count": 274
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 302
+      },
+      {
+       "week": "2025-W51",
+       "tx_count": 257
+      },
+      {
+       "week": "2025-W52",
+       "tx_count": 300
+      },
+      {
+       "week": "2026-W01",
+       "tx_count": 305
+      },
+      {
+       "week": "2026-W02",
+       "tx_count": 282
+      },
+      {
+       "week": "2026-W03",
+       "tx_count": 271
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 238
+      },
+      {
+       "week": "2026-W05",
+       "tx_count": 272
+      },
+      {
+       "week": "2026-W06",
+       "tx_count": 283
+      },
+      {
+       "week": "2026-W07",
+       "tx_count": 280
+      },
+      {
+       "week": "2026-W08",
+       "tx_count": 266
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 278
+      },
+      {
+       "week": "2026-W10",
+       "tx_count": 209
+      },
+      {
+       "week": "2026-W11",
+       "tx_count": 240
+      },
+      {
+       "week": "2026-W12",
+       "tx_count": 257
+      },
+      {
+       "week": "2026-W13",
+       "tx_count": 228
+      },
+      {
+       "week": "2026-W14",
+       "tx_count": 240
+      },
+      {
+       "week": "2026-W15",
+       "tx_count": 254
+      },
+      {
+       "week": "2026-W16",
+       "tx_count": 261
+      },
+      {
+       "week": "2026-W17",
+       "tx_count": 282
+      },
+      {
+       "week": "2026-W18",
+       "tx_count": 252
+      },
+      {
+       "week": "2026-W19",
+       "tx_count": 262
+      },
+      {
+       "week": "2026-W20",
+       "tx_count": 264
+      },
+      {
+       "week": "2026-W21",
+       "tx_count": 265
+      },
+      {
+       "week": "2026-W22",
+       "tx_count": 255
+      },
+      {
+       "week": "2026-W23",
+       "tx_count": 242
+      },
+      {
+       "week": "2026-W24",
+       "tx_count": 222
+      },
+      {
+       "week": "2026-W25",
+       "tx_count": 233
+      },
+      {
+       "week": "2026-W26",
+       "tx_count": 197
+      },
+      {
+       "week": "2026-W27",
+       "tx_count": 259
+      },
+      {
+       "week": "2026-W28",
+       "tx_count": 248
+      },
+      {
+       "week": "2026-W29",
+       "tx_count": 274
+      },
+      {
+       "week": "2026-W30",
+       "tx_count": 248
+      },
+      {
+       "week": "2026-W31",
+       "tx_count": 257
+      },
+      {
+       "week": "2026-W32",
+       "tx_count": 246
+      },
+      {
+       "week": "2026-W33",
+       "tx_count": 229
+      },
+      {
+       "week": "2026-W34",
+       "tx_count": 268
+      },
+      {
+       "week": "2026-W35",
+       "tx_count": 62
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xc186fa914353c44b2e33ebe05f21846f1048beda",
+       "role": "HubPool (message sender; aliased 0xd297fa91...cfeb)"
+      },
+      {
+       "address": "0x64668fbd18b967b46dd22dc8675134d91efedd8d",
+       "role": "AtomicWethDepositor (relayer L2-funding sender)"
+      },
+      {
+       "address": "0xf7bac63fc7ceacf0589f25454ecf5c2ce904997c",
+       "role": "dataworker EOA (initiates via Multicall3)"
+      },
+      {
+       "address": "0xca11bde05977b3631167028862be2a173976ca11",
+       "role": "Multicall3 (l1_to of dataworker submissions)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0xe0b015e54d54fc84a6cb9b666099c46ade9335ff",
+       "role": "ZkSync_SpokePool (relayRootBundle target)"
+      },
+      {
+       "address": "0x07ae8551be970cb1cca11dd7a11f47ae82e70e67",
+       "role": "relayer funding recipient (AtomicWethDepositor target)"
+      },
+      {
+       "address": "0xa36bc6867c9963de1a5daaf7882efb5b56899e8c",
+       "role": "relayer funding recipient (AtomicWethDepositor target)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0x493a4f84",
+       "signature": "relayRootBundle(bytes32,bytes32)",
+       "count": 12572
+      },
+      {
+       "selector": "",
+       "signature": "(no calldata)",
+       "count": 74
+      },
+      {
+       "selector": "0x272751c7",
+       "signature": "setEnableRoute(address,uint256,bool)",
+       "count": 4
+      },
+      {
+       "selector": "0x4f1ef286",
+       "signature": "upgradeToAndCall(address,bytes)",
+       "count": 3
+      }
+     ],
+     "evidence": [
+      "KNOWN_ADDRESSES seed verified live (alias math + 19/19 quickstart records)",
+      "L2 impl verified source: contracts/Lens_SpokePool.sol on explorer-api.lens.xyz; era SpokePool = long-known 0xe0b015e5",
+      "AtomicWethDepositor: verified name on eth.blockscout.com; sends plain value to Across relayer EOAs",
+      "admin selectors observed: setEnableRoute 0x272751c7, upgradeToAndCall 0x4f1ef286, upgradeTo 0x3659cfe6"
+     ]
+    },
+    {
+     "name": "Chainlink (sequencer uptime feed)",
+     "category": "infra",
+     "confidence": "high",
+     "tx_count": 434,
+     "share_of_all": 0.0128,
+     "share_of_non_deposit": 0.0132,
+     "unique_users": 10,
+     "first_seen": "2025-08-26",
+     "last_seen": "2026-08-24",
+     "weekly": [
+      {
+       "week": "2025-W35",
+       "tx_count": 9
+      },
+      {
+       "week": "2025-W36",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W37",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 9
+      },
+      {
+       "week": "2025-W39",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W42",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W43",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W44",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W46",
+       "tx_count": 10
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W48",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W49",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W51",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W52",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W01",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W02",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W03",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 6
+      },
+      {
+       "week": "2026-W05",
+       "tx_count": 13
+      },
+      {
+       "week": "2026-W06",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W07",
+       "tx_count": 8
+      },
+      {
+       "week": "2026-W08",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W10",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W11",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W12",
+       "tx_count": 11
+      },
+      {
+       "week": "2026-W13",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W14",
+       "tx_count": 8
+      },
+      {
+       "week": "2026-W15",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W16",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W17",
+       "tx_count": 9
+      },
+      {
+       "week": "2026-W18",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W19",
+       "tx_count": 8
+      },
+      {
+       "week": "2026-W20",
+       "tx_count": 13
+      },
+      {
+       "week": "2026-W21",
+       "tx_count": 9
+      },
+      {
+       "week": "2026-W22",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W23",
+       "tx_count": 8
+      },
+      {
+       "week": "2026-W24",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W25",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W26",
+       "tx_count": 9
+      },
+      {
+       "week": "2026-W27",
+       "tx_count": 15
+      },
+      {
+       "week": "2026-W28",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W29",
+       "tx_count": 10
+      },
+      {
+       "week": "2026-W30",
+       "tx_count": 11
+      },
+      {
+       "week": "2026-W31",
+       "tx_count": 11
+      },
+      {
+       "week": "2026-W32",
+       "tx_count": 10
+      },
+      {
+       "week": "2026-W33",
+       "tx_count": 19
+      },
+      {
+       "week": "2026-W34",
+       "tx_count": 10
+      },
+      {
+       "week": "2026-W35",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xdd2e524d186615dedd052c35d3f669b35c5faa8c",
+       "role": "ZKSyncValidator (posts L2 uptime status)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0x21cf759a1523fa0aa50b16fadd2fbc9b4d6471ac",
+       "role": "ZKSyncSequencerUptimeFeed (verified source)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0xed8378f5",
+       "signature": "updateStatus(bool,uint64)",
+       "count": 434
+      }
+     ],
+     "evidence": [
+      "L1 verified name ZKSyncValidator (blockscout); L2 verified source tmp/chainlink/v0.8/l2ep/dev/zksync/ZKSyncSequencerUptimeFeed.sol (era explorer)",
+      "selector 0xed8378f5 = updateStatus(bool,uint64) (openchain.xyz)"
+     ]
+    },
+    {
+     "name": "Rocket Pool (rETH rate oracle)",
+     "category": "infra",
+     "confidence": "high",
+     "tx_count": 364,
+     "share_of_all": 0.0108,
+     "share_of_non_deposit": 0.0111,
+     "unique_users": 13,
+     "first_seen": "2025-08-26",
+     "last_seen": "2026-08-25",
+     "weekly": [
+      {
+       "week": "2025-W35",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W36",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W37",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W39",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W42",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W43",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W44",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W46",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W48",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W49",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W51",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W52",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W01",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W02",
+       "tx_count": 5
+      },
+      {
+       "week": "2026-W03",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W05",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W06",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W07",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W08",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W10",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W11",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W12",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W13",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W14",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W15",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W16",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W17",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W18",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W19",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W20",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W21",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W22",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W23",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W24",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W25",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W26",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W27",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W28",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W29",
+       "tx_count": 8
+      },
+      {
+       "week": "2026-W30",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W31",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W32",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W33",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W34",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W35",
+       "tx_count": 2
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0x6cf6cb29754aebf88af12089224429bd68b0b8c8",
+       "role": "RocketZkSyncPriceMessenger (pushes rETH/ETH rate)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0x6aacd3ed8443a7f4cb19eb4f289a5829842da2b1",
+       "role": "RocketZkSyncPriceOracle (verified source)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0x69ea1771",
+       "signature": "updateRate(uint256)",
+       "count": 364
+      }
+     ],
+     "evidence": [
+      "both sides verified source (blockscout / era explorer); selector 0x69ea1771 = updateRate(uint256) (openchain.xyz)"
+     ]
+    },
+    {
+     "name": "zkLink Nova (state-sync gateway)",
+     "category": "messaging",
+     "confidence": "high",
+     "tx_count": 356,
+     "share_of_all": 0.0105,
+     "share_of_non_deposit": 0.0108,
+     "unique_users": 1,
+     "first_seen": "2025-09-05",
+     "last_seen": "2026-08-25",
+     "weekly": [
+      {
+       "week": "2025-W36",
+       "tx_count": 18
+      },
+      {
+       "week": "2025-W37",
+       "tx_count": 8
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W39",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 8
+      },
+      {
+       "week": "2025-W42",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W43",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W44",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 8
+      },
+      {
+       "week": "2025-W46",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W48",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W49",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 5
+      },
+      {
+       "week": "2025-W51",
+       "tx_count": 10
+      },
+      {
+       "week": "2025-W52",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W01",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W02",
+       "tx_count": 8
+      },
+      {
+       "week": "2026-W03",
+       "tx_count": 8
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W05",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W06",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W07",
+       "tx_count": 12
+      },
+      {
+       "week": "2026-W08",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 8
+      },
+      {
+       "week": "2026-W10",
+       "tx_count": 5
+      },
+      {
+       "week": "2026-W11",
+       "tx_count": 9
+      },
+      {
+       "week": "2026-W12",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W13",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W14",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W15",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W16",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W17",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W18",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W19",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W20",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W21",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W22",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W23",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W24",
+       "tx_count": 6
+      },
+      {
+       "week": "2026-W25",
+       "tx_count": 5
+      },
+      {
+       "week": "2026-W26",
+       "tx_count": 9
+      },
+      {
+       "week": "2026-W27",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W28",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W29",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W30",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W31",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W32",
+       "tx_count": 7
+      },
+      {
+       "week": "2026-W33",
+       "tx_count": 5
+      },
+      {
+       "week": "2026-W34",
+       "tx_count": 5
+      },
+      {
+       "week": "2026-W35",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xecd189e0f390826e137496a4e4a23acf76c942ab",
+       "role": "ZkSyncL1Gateway (ERC1967 proxy, verified impl; forwards sync-hash messages)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0xc203a2df4ddff9ede2200f1f02054fd721182535",
+       "role": "ZkSyncL2Gateway (impl 0x8463989308de8ea3d80dc26fa650600d391b899f, verified source contracts/gateway/zksync/ZkSyncL2Gateway.sol)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0x031e7b61",
+       "signature": "claimMessageCallback(uint256,bytes)",
+       "count": 356
+      }
+     ],
+     "evidence": [
+      "impl verified 'ZkSyncL2Gateway' read via ERC1967 slot on era RPC + era explorer",
+      "selector 0x031e7b61 = claimMessageCallback(uint256,bytes) matches zkLink Nova docs (docs.zklink.io multi-chain state synchronization; github.com/zkLinkProtocol/zklink-evm-contracts)"
+     ]
+    },
+    {
+     "name": "Lido (wstETH bridge)",
+     "category": "bridge",
+     "confidence": "high",
+     "tx_count": 18,
+     "share_of_all": 0.0005,
+     "share_of_non_deposit": 0.0005,
+     "unique_users": 7,
+     "first_seen": "2025-09-12",
+     "last_seen": "2026-06-09",
+     "weekly": [
+      {
+       "week": "2025-W37",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 4
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 3
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W46",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W01",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W16",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W24",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0x41527b2d03844db6b0945f25702cb958b6d55989",
+       "role": "Lido L1ERC20Bridge (OssifiableProxy, verified impl L1ERC20Bridge)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0xe1d6a50e7101c8f8db77352897ee3f1ac53f782b",
+       "role": "Lido L2 wstETH bridge (OssifiableProxy; finalizeDeposit target)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0xcfe7af7c",
+       "signature": "finalizeDeposit(address,address,address,uint256,bytes)",
+       "count": 18
+      }
+     ],
+     "evidence": [
+      "L1 verified OssifiableProxy->L1ERC20Bridge on blockscout (Lido's proxy pattern); L2 address matches Lido deployed-contracts docs for zkSync Era; selector 0xcfe7af7c finalizeDeposit"
+     ]
+    },
+    {
+     "name": "Nodle (NODL token bridge)",
+     "category": "bridge",
+     "confidence": "high",
+     "tx_count": 8,
+     "share_of_all": 0.0002,
+     "share_of_non_deposit": 0.0002,
+     "unique_users": 3,
+     "first_seen": "2025-10-22",
+     "last_seen": "2026-08-09",
+     "weekly": [
+      {
+       "week": "2025-W43",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W02",
+       "tx_count": 5
+      },
+      {
+       "week": "2026-W03",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W32",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0x2d02b651ea9630351719c8c55210e042e940d69a",
+       "role": "Nodle L1Bridge (verified name L1Bridge; creator 0x49ddbe12...)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0x2c1b65da72d5cf19b41de6edccfb7dd83d1b529e",
+       "role": "L2Bridge (verified source src/bridge/L2Bridge.sol embedding NODL token contract)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0x4ddf75e6",
+       "signature": "unknown (Nodle L2Bridge finalize entrypoint)",
+       "count": 8
+      }
+     ],
+     "evidence": [
+      "L2 verified source contains 'contract NODL' (Nodle token) \u2014 era explorer getsourcecode",
+      "selector 0x4ddf75e6 (unnamed in DBs) is the bridge finalize entrypoint"
+     ]
+    },
+    {
+     "name": "Aave (a.DI governance messaging)",
+     "category": "governance",
+     "confidence": "high",
+     "tx_count": 3,
+     "share_of_all": 0.0001,
+     "share_of_non_deposit": 0.0001,
+     "unique_users": 3,
+     "first_seen": "2025-11-14",
+     "last_seen": "2026-02-26",
+     "weekly": [
+      {
+       "week": "2025-W46",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W02",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xed42a7d8559a463722ca4bed50e0cc05a386b0e1",
+       "role": "Aave CrossChainController (matches bgd-labs/aave-address-book GovernanceV3Ethereum.CROSS_CHAIN_CONTROLLER)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0x1bc5c10cae378fdbd7d52ec4f9f34590a619c68e",
+       "role": "a.DI ZkSync bridge adapter (receiveMessage target; unverified on explorer)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0xf953cec7",
+       "signature": "receiveMessage(bytes)",
+       "count": 3
+      }
+     ],
+     "evidence": [
+      "L1 sender == Aave GovernanceV3 Ethereum CrossChainController per aave-address-book (exact match)",
+      "selector 0xf953cec7 = receiveMessage(bytes)"
+     ]
+    },
+    {
+     "name": "Unlock Protocol (cross-chain upgrade)",
+     "category": "governance",
+     "confidence": "medium",
+     "tx_count": 1,
+     "share_of_all": 0.0,
+     "share_of_non_deposit": 0.0,
+     "unique_users": 1,
+     "first_seen": "2025-12-08",
+     "last_seen": "2025-12-08",
+     "weekly": [
+      {
+       "week": "2025-W50",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xe30dca3047b37dc7d88849de4a4dc07937ad5ab3",
+       "role": "ProtocolUpgradeHandler proxy (verified impl name)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0xdb1e46b448e68a5e35cb693a99d59f784ad115cc",
+       "role": "ProxyAdmin (verified source file contracts/past-versions/UnlockV13.sol \u2014 Unlock repo)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0x99a88ec4",
+       "signature": "upgrade(address,address)",
+       "count": 1
+      }
+     ],
+     "evidence": [
+      "single tx; upgrade(address,address) 0x99a88ec4 executed on a ProxyAdmin whose verified source is Unlock's UnlockV13.sol",
+      "sender impl name 'ProtocolUpgradeHandler'; medium confidence because sender's project link is inferred from the target"
+     ]
+    },
+    {
+     "name": "L2Scan bridge",
+     "category": "bridge",
+     "confidence": "low",
+     "tx_count": 1,
+     "share_of_all": 0.0,
+     "share_of_non_deposit": 0.0,
+     "unique_users": 1,
+     "first_seen": "2025-11-26",
+     "last_seen": "2025-11-26",
+     "weekly": [
+      {
+       "week": "2025-W48",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0x375424756f4a5ada1ce1e0849abdd19255b1729e",
+       "role": "L2ScanEthereumBridgeV2 proxy (verified impl name)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0xbb8bc29695232088b1a2dbc117e8c6006478c295",
+       "role": "recipient of the single value transfer (same address initiated on L1)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "",
+       "signature": "(no calldata)",
+       "count": 1
+      }
+     ],
+     "evidence": [
+      "single tx; impl name L2ScanEthereumBridgeV2 on blockscout; project identity not further corroborated"
+     ]
+    }
+   ],
+   "deposit_initiator_contracts": [],
+   "deposits_via_7702_accounts": {
+    "tx_count": 263,
+    "unique_accounts": 52,
+    "note": "EIP-7702-delegated EOAs (smart accounts); counted as users, not protocol contracts"
+   },
+   "top_initiators": [
+    {
+     "address": "0xf7bac63fc7ceacf0589f25454ecf5c2ce904997c",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 12607,
+     "label": "Across dataworker EOA"
+    },
+    {
+     "address": "0x4eb759a55c56ee1bc06c2b3744df3e1c8fbcfd91",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 356,
+     "label": "zkLink Nova gateway operator EOA (sends all ZkSyncL1Gateway messages)"
+    },
+    {
+     "address": "0x07ae8551be970cb1cca11dd7a11f47ae82e70e67",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 111,
+     "label": "Across relayer funding recipient (era)"
+    },
+    {
+     "address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 94,
+     "label": null
+    },
+    {
+     "address": "0xcc29be4ca92d4ecc43c8451fba94c200b83991f6",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 57,
+     "label": null
+    },
+    {
+     "address": "0x2ce910fbba65b454bbaf6a18c952a70f3bcd8299",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 54,
+     "label": null
+    },
+    {
+     "address": "0x9452ed6da616783786c6d8aaf73047ecad126c57",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 52,
+     "label": null
+    },
+    {
+     "address": "0x218b5a7861dbf368d09a84e0dbff6c6ddbf99db8",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 50,
+     "label": null
+    },
+    {
+     "address": "0x8f3ab0e87b70a57bd4980111a99a1b2c4b8334f4",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 49,
+     "label": null
+    },
+    {
+     "address": "0x686bec83b59f8b23a6129f03550a3aad245a543c",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 47,
+     "label": null
+    },
+    {
+     "address": "0xc4b732fd121f2f3783a9ac2a6c62fd535fd13fda",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 45,
+     "label": null
+    },
+    {
+     "address": "0x61317c73d0225b2e37140fb9664d607b450613c6",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 44,
+     "label": null
+    },
+    {
+     "address": "0x1feec90f63b1927d1078d123a57f940e680a3abf",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 44,
+     "label": null
+    },
+    {
+     "address": "0xc5d291607600044348e5014404cc18394bd1d57d",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 41,
+     "label": null
+    },
+    {
+     "address": "0x632f869a26ab4da58e2da476ee74800f2bae060a",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 39,
+     "label": null
+    },
+    {
+     "address": "0xa36bc6867c9963de1a5daaf7882efb5b56899e8c",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 38,
+     "label": "Across relayer funding recipient (era)"
+    },
+    {
+     "address": "0x9741569dedb1e0cb204f2df7f43f7a52bb49ba3a",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 37,
+     "label": null
+    },
+    {
+     "address": "0xe69f81b825d7dc31ee9becef4dbeab5cf30e3abb",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 37,
+     "label": null
+    },
+    {
+     "address": "0xaede212cda8fc657ac7b4ad5e98fd510624638b3",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 36,
+     "label": null
+    },
+    {
+     "address": "0xd0ce021bceff33ca74c7b26a108fbbef75bc060d",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 36,
+     "label": null
+    }
+   ],
+   "top_share": {
+    "top1": 0.3732,
+    "top10": 0.399
+   },
+   "initiator_eoa_contract_split": {
+    "plain_eoa": 17109,
+    "eip7702_account": 234,
+    "true_contract": 0,
+    "note": "getCode at latest block (approximation; see caveats)"
+   },
+   "unattributed": {
+    "tx_count": 15,
+    "share_of_non_deposit": 0.0005,
+    "top_groups": [
+     {
+      "unaliased_from": "0x1ed2b6ce07d548552815e6a834f0d7677955585f",
+      "to": "0x1ed2b6ce07d548552815e6a834f0d7677955585f",
+      "selector": "",
+      "count": 2
+     },
+     {
+      "unaliased_from": "0xcf75bd79bc19c41f83a7c35eb276d830064ae85f",
+      "to": "0x708f741b5fa76c9f4a70355207b4f0226ce265f3",
+      "selector": "",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0x21465ea9f971311d45aa1f250e66bfd399a07707",
+      "to": "0xe30b2b4cbf9068c48bbc282279b81fad3b2bb3f5",
+      "selector": "",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0x21465ea9f971311d45aa1f250e66bfd399a07707",
+      "to": "0x78a50ff4438670de218f3644573d789069b1d4a8",
+      "selector": "",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0x000040d6c85a13a1aa74565fde87e499dc023c6f",
+      "to": "0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4",
+      "selector": "0x095ea7b3",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0x000040d6c85a13a1aa74565fde87e499dc023c6f",
+      "to": "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
+      "selector": "0x095ea7b3",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0x000040d6c85a13a1aa74565fde87e499dc023c6f",
+      "to": "0x5aea5775959fbc2557cc8789bc1bf90a239d9a91",
+      "selector": "0x095ea7b3",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0xe97daa9677462ed47b53afdf534cca4203e2f84a",
+      "to": "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
+      "selector": "0xa9059cbb",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0x213dba333f24ec06c1a330d89efeac1df194692c",
+      "to": "0x213dba333f24ec06c1a330d89efeac1df194692c",
+      "selector": "",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0xab23df3fd78f45e54466d08926c3a886211ac5a1",
+      "to": "0x40f58bd4616a6e76021f1481154db829953bf01b",
+      "selector": "0x28373390",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0xab23df3fd78f45e54466d08926c3a886211ac5a1",
+      "to": "0xf69a42efe9d2a3ad87436bd7589f2c497f910cef",
+      "selector": "0x28373390",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0xa0d3473a5691995afdcc1d68efc7bc74c53cca90",
+      "to": "0xa0d3473a5691995afdcc1d68efc7bc74c53cca90",
+      "selector": "",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0xe673621b36984cb1f74a876b4ba26c4f6ca4e25f",
+      "to": "0xe673621b36984cb1f74a876b4ba26c4f6ca4e25f",
+      "selector": "",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0xbfdc183df07812c0f867fe89e2693a96e1203b20",
+      "to": "0xbfdc183df07812c0f867fe89e2693a96e1203b20",
+      "selector": "",
+      "count": 1
+     }
+    ]
+   }
+  },
+  "abstract": {
+   "chain_id": 2741,
+   "eth_blocks": [
+    23221564,
+    25832865
+   ],
+   "totals": {
+    "priority_txs": 4092,
+    "by_class": {
+     "direct-transfer": 3271,
+     "canonical-deposit": 817,
+     "other": 2,
+     "protocol-message": 2
+    },
+    "non_deposit_txs": 3275,
+    "unique_l1_initiators": 1889,
+    "unique_inner_senders": 1656
+   },
+   "completeness": {
+    "records_deduped": 4092,
+    "tx_id_range": [
+     22842,
+     26933
+    ],
+    "gaps_after_rescan": [],
+    "gaps_found_in_scan": [],
+    "gap_handling": "none",
+    "total_priority_txs_now": 26934,
+    "boundary_check": "ok",
+    "window_start_check": "ok",
+    "l2_spot_checks": {
+     "sampled": 12,
+     "ok": 12,
+     "failed": 0
+    },
+    "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+   },
+   "protocols": [
+    {
+     "name": "AbstractBridge (third-party deposit relayer)",
+     "category": "bridge",
+     "confidence": "medium",
+     "tx_count": 2,
+     "share_of_all": 0.0005,
+     "share_of_non_deposit": 0.0006,
+     "unique_users": 2,
+     "first_seen": "2026-06-17",
+     "last_seen": "2026-07-12",
+     "weekly": [
+      {
+       "week": "2026-W25",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W28",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0x8696a96c606bd48872e7e42fcbef41c250e8792a",
+       "role": "AbstractBridge (verified source: operator-fee deposit forwarder wrapping Bridgehub)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "(per-user)",
+       "role": "value transfer to depositor address"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "",
+       "signature": "(no calldata)",
+       "count": 2
+      }
+     ],
+     "evidence": [
+      "verified source on eth.blockscout.com (fee-taking Bridgehub wrapper); operator identity unknown"
+     ]
+    }
+   ],
+   "deposit_initiator_contracts": [],
+   "deposits_via_7702_accounts": {
+    "tx_count": 128,
+    "unique_accounts": 36,
+    "note": "EIP-7702-delegated EOAs (smart accounts); counted as users, not protocol contracts"
+   },
+   "top_initiators": [
+    {
+     "address": "0x83b9b447ac2bfc35885ec049e90d96ff7b9ba63d",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 144,
+     "label": null
+    },
+    {
+     "address": "0x65a8f07bd9a8598e1b5b6c0a88f4779dbc077675",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 135,
+     "label": null
+    },
+    {
+     "address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 133,
+     "label": null
+    },
+    {
+     "address": "0xffef73d5567c3137a28066cccfb097dac180db20",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 111,
+     "label": null
+    },
+    {
+     "address": "0xae1fd047ce925920806e2e47c69ff5fef3d762c1",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 96,
+     "label": null
+    },
+    {
+     "address": "0x2b53ea7f648d9e59148a71ad9c14e6d66cd82d9a",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 94,
+     "label": null
+    },
+    {
+     "address": "0x1ed66234a2a16d83667c563ecb61950be50b9f5c",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 81,
+     "label": null
+    },
+    {
+     "address": "0xffd8e86bf75b065d18e05d6ea0573256bbb524e1",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 69,
+     "label": null
+    },
+    {
+     "address": "0xba980ec10ea8a93f9568c11fafbc5d13dd3ef1fe",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 55,
+     "label": null
+    },
+    {
+     "address": "0xa1814cb3f521a2e01e008b3b0cebe874cf7c9f1e",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 44,
+     "label": null
+    },
+    {
+     "address": "0xf097cb4511ff2b8677075934718014675abe03c4",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 41,
+     "label": null
+    },
+    {
+     "address": "0xafd4fea8345de4cdf7718d1aa424d90d70e67874",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 37,
+     "label": null
+    },
+    {
+     "address": "0x93eb34a23146e3726e0f4af322c8176bfc7e32c1",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 22,
+     "label": null
+    },
+    {
+     "address": "0x9aaad29e7106f9e48a5629af40547b8ca4f6e4df",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 18,
+     "label": null
+    },
+    {
+     "address": "0xfa91ffb9bd4cf73401bb0cac913831fd6c8d925f",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 17,
+     "label": null
+    },
+    {
+     "address": "0xcdbe215240e57043dc8040ce61d1bac64d20aefa",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 15,
+     "label": null
+    },
+    {
+     "address": "0xb19412c2948416535f3301be7b1919d3b7820f9a",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 15,
+     "label": null
+    },
+    {
+     "address": "0xfb6c3bcff669f8d901fa044a7863e40378ea6089",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 15,
+     "label": null
+    },
+    {
+     "address": "0x1cc832dc945173b48c90f62810053b0aa2657970",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 13,
+     "label": null
+    },
+    {
+     "address": "0x8522948ea6124ef64331e645c9068a5f77c326b3",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 12,
+     "label": null
+    }
+   ],
+   "top_share": {
+    "top1": 0.0352,
+    "top10": 0.2351
+   },
+   "initiator_eoa_contract_split": {
+    "plain_eoa": 1563,
+    "eip7702_account": 326,
+    "true_contract": 0,
+    "note": "getCode at latest block (approximation; see caveats)"
+   },
+   "unattributed": {
+    "tx_count": 2,
+    "share_of_non_deposit": 0.0006,
+    "top_groups": [
+     {
+      "unaliased_from": "0x58551793beedca08a861c394258e0457e48a2fcc",
+      "to": "0x0000000000000000000000000000000000000000",
+      "selector": "",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0x94a8ce783060c8e519ca85fe2de8068bf3917d22",
+      "to": "0xed68e19181108758d17c2b1992a5e6b46a60f7d5",
+      "selector": "0x64e7f93b",
+      "count": 1
+     }
+    ]
+   }
+  },
+  "sophon": {
+   "chain_id": 50104,
+   "eth_blocks": [
+    23221564,
+    25832861
+   ],
+   "totals": {
+    "priority_txs": 1139,
+    "by_class": {
+     "canonical-deposit": 921,
+     "protocol-message": 217,
+     "other": 1
+    },
+    "non_deposit_txs": 218,
+    "unique_l1_initiators": 266,
+    "unique_inner_senders": 4
+   },
+   "completeness": {
+    "records_deduped": 1139,
+    "tx_id_range": [
+     9073,
+     10211
+    ],
+    "gaps_after_rescan": [],
+    "gaps_found_in_scan": [
+     [
+      9518,
+      9528
+     ]
+    ],
+    "gap_handling": "recovered-from-l1-rescan (eth.drpc.org silently omitted 11 events; all recovered from Ethereum via tenderly+onfinality union, initiators intact)",
+    "total_priority_txs_now": 10212,
+    "boundary_check": "ok",
+    "window_start_check": "ok",
+    "l2_spot_checks": {
+     "sampled": 12,
+     "ok": 12,
+     "failed": 0
+    },
+    "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+   },
+   "protocols": [
+    {
+     "name": "Sophon BridgeHubWrapper (native SOPH deposits)",
+     "category": "bridge",
+     "confidence": "high",
+     "tx_count": 110,
+     "share_of_all": 0.0966,
+     "share_of_non_deposit": 0.5046,
+     "unique_users": 73,
+     "first_seen": "2025-09-04",
+     "last_seen": "2026-07-03",
+     "weekly": [
+      {
+       "week": "2025-W36",
+       "tx_count": 3
+      },
+      {
+       "week": "2025-W37",
+       "tx_count": 5
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 3
+      },
+      {
+       "week": "2025-W39",
+       "tx_count": 4
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 4
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W43",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W44",
+       "tx_count": 4
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W48",
+       "tx_count": 4
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W51",
+       "tx_count": 15
+      },
+      {
+       "week": "2025-W52",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W03",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W05",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W06",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W07",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W08",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W10",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W11",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W12",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W14",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W15",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W16",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W17",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W18",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W19",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W20",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W21",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W22",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W23",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W24",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W27",
+       "tx_count": 3
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xc97f5f2fde4fe6e220069f8d3718be4fac7c00f0",
+       "role": "BridgeHubWrapperProxy (impl 0x5a278c11316803e0ec0dfabbe996f73e0309884b BridgeHubWrapper, verified) \u2014 sends SOPH base-token to depositor; also l1_to of nearly all Sophon canonical deposits"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "(per-user)",
+       "role": "value transfer to the depositing user's own address (empty calldata)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "",
+       "signature": "(no calldata)",
+       "count": 110
+      }
+     ],
+     "evidence": [
+      "verified source on eth.blockscout.com; pattern: aliased sender 0xda905f2f...1201, inner to == l1 initiator, value>0, no calldata"
+     ]
+    },
+    {
+     "name": "Bridged USDC Standard (matter-labs usdc-bridge)",
+     "category": "bridge",
+     "confidence": "high",
+     "tx_count": 107,
+     "share_of_all": 0.0939,
+     "share_of_non_deposit": 0.4908,
+     "unique_users": 35,
+     "first_seen": "2025-08-26",
+     "last_seen": "2026-06-16",
+     "weekly": [
+      {
+       "week": "2025-W35",
+       "tx_count": 5
+      },
+      {
+       "week": "2025-W36",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W37",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 8
+      },
+      {
+       "week": "2025-W42",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W43",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W44",
+       "tx_count": 6
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 4
+      },
+      {
+       "week": "2025-W46",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W48",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W49",
+       "tx_count": 5
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W51",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W01",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W02",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W03",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W05",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W06",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W08",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W10",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W11",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W12",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W15",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W16",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W17",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W18",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W19",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W20",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W22",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W25",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xf553e6d903aa43420ed7e3bc2313be9286a8f987",
+       "role": "L1USDCBridge shared proxy (impl 0x2ccd5486ea1b2a52dcd387c01314f6a328f66cbb, verified; serves Sophon AND Lens)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0x0f44bac3ec514be912aa4359017593b35e868d74",
+       "role": "L2USDCBridge (finalizeDeposit target; impl 0x1eea0f29bcd9e52b5fd1ac7c616caf61993c86e4)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0xcfe7af7c",
+       "signature": "finalizeDeposit(address,address,address,uint256,bytes)",
+       "count": 107
+      }
+     ],
+     "evidence": [
+      "L1 proxy verified 'L1USDCBridge' on eth.blockscout.com",
+      "github.com/sophon-org/custom-usdc-bridge documents exactly L1 0xf553e6d9.../L2 0x0f44bac3... (fork of matter-labs/usdc-bridge, Circle native USDC standard)",
+      "Lens L2 side verified L2USDCBridge on explorer-api.lens.xyz"
+     ]
+    }
+   ],
+   "deposit_initiator_contracts": [],
+   "deposits_via_7702_accounts": {
+    "tx_count": 138,
+    "unique_accounts": 47,
+    "note": "EIP-7702-delegated EOAs (smart accounts); counted as users, not protocol contracts"
+   },
+   "top_initiators": [
+    {
+     "address": "0x428fa73ca0d499910c914ec30cbc46b96bf524a4",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 235,
+     "label": null
+    },
+    {
+     "address": "0x9452ed6da616783786c6d8aaf73047ecad126c57",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 105,
+     "label": null
+    },
+    {
+     "address": "0x3982f6a7b4e1a7d204d5594ea9f4f35ef6ecde43",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 104,
+     "label": null
+    },
+    {
+     "address": "0x6e46400a2cefd120719f7c303e413f94a6261c5f",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 80,
+     "label": null
+    },
+    {
+     "address": "0x996d7b599ccf1360b630f79ac227489f1c655761",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 47,
+     "label": null
+    },
+    {
+     "address": "0x11a968128adb249441d9d279a4ddd8968e158a11",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 35,
+     "label": null
+    },
+    {
+     "address": "0x3d2710f23951472b889de5df33c3178b4cc78f19",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 18,
+     "label": null
+    },
+    {
+     "address": "0x85aa51445bcc5df432456ffae8197b911ada8020",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 15,
+     "label": null
+    },
+    {
+     "address": "0xbd590f8d0df7c13aefea1205515c2072763b5058",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 15,
+     "label": null
+    },
+    {
+     "address": "0x41c719c9ba451838cc43bf13d874e31f98b4a17a",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 15,
+     "label": null
+    },
+    {
+     "address": "0x89b07733cbdb3fd00cc62252cd197739e1dfc636",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 10,
+     "label": null
+    },
+    {
+     "address": "0xf5c8dc07f24f53feeeb7368119398333df000af6",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 9,
+     "label": null
+    },
+    {
+     "address": "0x96398689c2b4af9336337a601d35e20e73720947",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 8,
+     "label": null
+    },
+    {
+     "address": "0x207de16a72e04f25bf1a007655e29876173fb2f3",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 7,
+     "label": null
+    },
+    {
+     "address": "0x650cefc0fda8e773109e89ab2f949d7217363444",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 7,
+     "label": null
+    },
+    {
+     "address": "0x7ad5ac4b60d475bde637de2981ee2607a5f5ec14",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 7,
+     "label": null
+    },
+    {
+     "address": "0x7517006ea5461fd772df3e537aa81cd99ca418ab",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 7,
+     "label": null
+    },
+    {
+     "address": "0xdfc2b503deb958045104a195cd2f939856eed3fd",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 7,
+     "label": null
+    },
+    {
+     "address": "0xfdf0e167e6c94c93c8d51c9f46bda6ee5ea4b384",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 6,
+     "label": null
+    },
+    {
+     "address": "0x20f05ec683d2ca2cab9baaa6d9f9ea1a2fefd446",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 6,
+     "label": null
+    }
+   ],
+   "top_share": {
+    "top1": 0.2063,
+    "top10": 0.5874
+   },
+   "initiator_eoa_contract_split": {
+    "plain_eoa": 200,
+    "eip7702_account": 66,
+    "true_contract": 0,
+    "note": "getCode at latest block (approximation; see caveats)"
+   },
+   "unattributed": {
+    "tx_count": 1,
+    "share_of_non_deposit": 0.0046,
+    "top_groups": [
+     {
+      "unaliased_from": "0x58551793beedca08a861c394258e0457e48a2fcc",
+      "to": "0x0000000000000000000000000000000000000000",
+      "selector": "",
+      "count": 1
+     }
+    ]
+   }
+  },
+  "lens": {
+   "chain_id": 232,
+   "eth_blocks": [
+    23221564,
+    25832867
+   ],
+   "totals": {
+    "priority_txs": 4391,
+    "by_class": {
+     "protocol-message": 4376,
+     "canonical-deposit": 4,
+     "direct-transfer": 11
+    },
+    "non_deposit_txs": 4387,
+    "unique_l1_initiators": 8,
+    "unique_inner_senders": 5
+   },
+   "completeness": {
+    "records_deduped": 4391,
+    "tx_id_range": [
+     2837,
+     7227
+    ],
+    "gaps_after_rescan": [],
+    "gaps_found_in_scan": [
+     [
+      3475,
+      3486
+     ]
+    ],
+    "gap_handling": "recovered-from-l1-rescan (same drpc data hole, 12 events recovered)",
+    "total_priority_txs_now": 7229,
+    "boundary_check": "ok",
+    "window_start_check": "ok",
+    "l2_spot_checks": {
+     "sampled": 12,
+     "ok": 12,
+     "failed": 0
+    },
+    "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+   },
+   "protocols": [
+    {
+     "name": "Across Protocol",
+     "category": "bridge",
+     "confidence": "high",
+     "tx_count": 4357,
+     "share_of_all": 0.9923,
+     "share_of_non_deposit": 0.9932,
+     "unique_users": 4,
+     "first_seen": "2025-08-26",
+     "last_seen": "2026-08-25",
+     "weekly": [
+      {
+       "week": "2025-W35",
+       "tx_count": 49
+      },
+      {
+       "week": "2025-W36",
+       "tx_count": 69
+      },
+      {
+       "week": "2025-W37",
+       "tx_count": 82
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 111
+      },
+      {
+       "week": "2025-W39",
+       "tx_count": 94
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 118
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 84
+      },
+      {
+       "week": "2025-W42",
+       "tx_count": 64
+      },
+      {
+       "week": "2025-W43",
+       "tx_count": 65
+      },
+      {
+       "week": "2025-W44",
+       "tx_count": 80
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 66
+      },
+      {
+       "week": "2025-W46",
+       "tx_count": 51
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 113
+      },
+      {
+       "week": "2025-W48",
+       "tx_count": 103
+      },
+      {
+       "week": "2025-W49",
+       "tx_count": 87
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 99
+      },
+      {
+       "week": "2025-W51",
+       "tx_count": 145
+      },
+      {
+       "week": "2025-W52",
+       "tx_count": 104
+      },
+      {
+       "week": "2026-W01",
+       "tx_count": 96
+      },
+      {
+       "week": "2026-W02",
+       "tx_count": 85
+      },
+      {
+       "week": "2026-W03",
+       "tx_count": 63
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 70
+      },
+      {
+       "week": "2026-W05",
+       "tx_count": 106
+      },
+      {
+       "week": "2026-W06",
+       "tx_count": 81
+      },
+      {
+       "week": "2026-W07",
+       "tx_count": 71
+      },
+      {
+       "week": "2026-W08",
+       "tx_count": 53
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 63
+      },
+      {
+       "week": "2026-W10",
+       "tx_count": 46
+      },
+      {
+       "week": "2026-W11",
+       "tx_count": 44
+      },
+      {
+       "week": "2026-W12",
+       "tx_count": 83
+      },
+      {
+       "week": "2026-W13",
+       "tx_count": 82
+      },
+      {
+       "week": "2026-W14",
+       "tx_count": 102
+      },
+      {
+       "week": "2026-W15",
+       "tx_count": 71
+      },
+      {
+       "week": "2026-W16",
+       "tx_count": 88
+      },
+      {
+       "week": "2026-W17",
+       "tx_count": 63
+      },
+      {
+       "week": "2026-W18",
+       "tx_count": 88
+      },
+      {
+       "week": "2026-W19",
+       "tx_count": 68
+      },
+      {
+       "week": "2026-W20",
+       "tx_count": 64
+      },
+      {
+       "week": "2026-W21",
+       "tx_count": 73
+      },
+      {
+       "week": "2026-W22",
+       "tx_count": 102
+      },
+      {
+       "week": "2026-W23",
+       "tx_count": 93
+      },
+      {
+       "week": "2026-W24",
+       "tx_count": 145
+      },
+      {
+       "week": "2026-W25",
+       "tx_count": 102
+      },
+      {
+       "week": "2026-W26",
+       "tx_count": 83
+      },
+      {
+       "week": "2026-W27",
+       "tx_count": 112
+      },
+      {
+       "week": "2026-W28",
+       "tx_count": 109
+      },
+      {
+       "week": "2026-W29",
+       "tx_count": 73
+      },
+      {
+       "week": "2026-W30",
+       "tx_count": 63
+      },
+      {
+       "week": "2026-W31",
+       "tx_count": 79
+      },
+      {
+       "week": "2026-W32",
+       "tx_count": 73
+      },
+      {
+       "week": "2026-W33",
+       "tx_count": 84
+      },
+      {
+       "week": "2026-W34",
+       "tx_count": 81
+      },
+      {
+       "week": "2026-W35",
+       "tx_count": 14
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xc186fa914353c44b2e33ebe05f21846f1048beda",
+       "role": "HubPool (message sender; aliased 0xd297fa91...cfeb)"
+      },
+      {
+       "address": "0x64668fbd18b967b46dd22dc8675134d91efedd8d",
+       "role": "AtomicWethDepositor (relayer L2-funding sender)"
+      },
+      {
+       "address": "0xf7bac63fc7ceacf0589f25454ecf5c2ce904997c",
+       "role": "dataworker EOA (initiates via Multicall3)"
+      },
+      {
+       "address": "0xca11bde05977b3631167028862be2a173976ca11",
+       "role": "Multicall3 (l1_to of dataworker submissions)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0xb234ca484866c811d0e6d3318866f583781ed045",
+       "role": "Lens_SpokePool current (verified source, ERC1967; impl 0xd4f78a65dc910a79353bef66827f851b68755360)"
+      },
+      {
+       "address": "0xe7cb3e167e7475de1331cf6e0ceb187654619e12",
+       "role": "Lens_SpokePool initial deployment (traffic 2025-08-26..08-30, then upgraded/replaced)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0x493a4f84",
+       "signature": "relayRootBundle(bytes32,bytes32)",
+       "count": 4338
+      },
+      {
+       "selector": "",
+       "signature": "(no calldata)",
+       "count": 15
+      },
+      {
+       "selector": "0x3659cfe6",
+       "signature": "upgradeTo(address)",
+       "count": 2
+      },
+      {
+       "selector": "0x4f1ef286",
+       "signature": "upgradeToAndCall(address,bytes)",
+       "count": 2
+      }
+     ],
+     "evidence": [
+      "KNOWN_ADDRESSES seed verified live (alias math + 19/19 quickstart records)",
+      "L2 impl verified source: contracts/Lens_SpokePool.sol on explorer-api.lens.xyz; era SpokePool = long-known 0xe0b015e5",
+      "AtomicWethDepositor: verified name on eth.blockscout.com; sends plain value to Across relayer EOAs",
+      "admin selectors observed: setEnableRoute 0x272751c7, upgradeToAndCall 0x4f1ef286, upgradeTo 0x3659cfe6"
+     ]
+    },
+    {
+     "name": "Bridged USDC Standard (matter-labs usdc-bridge)",
+     "category": "bridge",
+     "confidence": "high",
+     "tx_count": 19,
+     "share_of_all": 0.0043,
+     "share_of_non_deposit": 0.0043,
+     "unique_users": 5,
+     "first_seen": "2025-09-02",
+     "last_seen": "2026-08-22",
+     "weekly": [
+      {
+       "week": "2025-W36",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W39",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W29",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W30",
+       "tx_count": 5
+      },
+      {
+       "week": "2026-W32",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W33",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W34",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xf553e6d903aa43420ed7e3bc2313be9286a8f987",
+       "role": "L1USDCBridge shared proxy (impl 0x2ccd5486ea1b2a52dcd387c01314f6a328f66cbb, verified; serves Sophon AND Lens)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0x7188b6975eec82ae914b6ec7ac32b3c9a18b2c81",
+       "role": "L2USDCBridge (verified source src/L2USDCBridge.sol; impl 0xf179e13c90140e6b2ed6b005e4a8ff7011fbba98)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "0xcfe7af7c",
+       "signature": "finalizeDeposit(address,address,address,uint256,bytes)",
+       "count": 19
+      }
+     ],
+     "evidence": [
+      "L1 proxy verified 'L1USDCBridge' on eth.blockscout.com",
+      "github.com/sophon-org/custom-usdc-bridge documents exactly L1 0xf553e6d9.../L2 0x0f44bac3... (fork of matter-labs/usdc-bridge, Circle native USDC standard)",
+      "Lens L2 side verified L2USDCBridge on explorer-api.lens.xyz"
+     ]
+    }
+   ],
+   "deposit_initiator_contracts": [],
+   "deposits_via_7702_accounts": {
+    "tx_count": 0,
+    "unique_accounts": 0,
+    "note": "EIP-7702-delegated EOAs (smart accounts); counted as users, not protocol contracts"
+   },
+   "top_initiators": [
+    {
+     "address": "0xf7bac63fc7ceacf0589f25454ecf5c2ce904997c",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4345,
+     "label": "Across dataworker EOA"
+    },
+    {
+     "address": "0x07ae8551be970cb1cca11dd7a11f47ae82e70e67",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 14,
+     "label": "Across relayer funding recipient (era)"
+    },
+    {
+     "address": "0x9a8f92a830a5cb89a3816e3d267cb7791c16b04d",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 13,
+     "label": null
+    },
+    {
+     "address": "0xc2c20a7736cc2a9ee07b8b3e61a64ec7caf6baf5",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 12,
+     "label": null
+    },
+    {
+     "address": "0xfc142d6e289384ad8e5e263f6ed5beaca90f28e6",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0xfebc231959550ffecd1ad1ae22a3d6bb55471b6a",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 2,
+     "label": null
+    },
+    {
+     "address": "0x837219d7a9c666f5542c4559bf17d7b804e5c5fe",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 1,
+     "label": null
+    },
+    {
+     "address": "0x718648c8c531f91b528a7757dd2be813c3940608",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 1,
+     "label": null
+    }
+   ],
+   "top_share": {
+    "top1": 0.9895,
+    "top10": 1.0
+   },
+   "initiator_eoa_contract_split": {
+    "plain_eoa": 7,
+    "eip7702_account": 1,
+    "true_contract": 0,
+    "note": "getCode at latest block (approximation; see caveats)"
+   },
+   "unattributed": {
+    "tx_count": 0,
+    "share_of_non_deposit": 0.0,
+    "top_groups": []
+   }
+  },
+  "cronos": {
+   "chain_id": 388,
+   "eth_blocks": [
+    23221564,
+    25832928
+   ],
+   "totals": {
+    "priority_txs": 343,
+    "by_class": {
+     "protocol-message": 100,
+     "canonical-deposit": 241,
+     "direct-transfer": 2
+    },
+    "non_deposit_txs": 102,
+    "unique_l1_initiators": 125,
+    "unique_inner_senders": 4
+   },
+   "completeness": {
+    "records_deduped": 343,
+    "tx_id_range": [
+     4499,
+     4841
+    ],
+    "gaps_after_rescan": [],
+    "gaps_found_in_scan": [],
+    "gap_handling": "none",
+    "total_priority_txs_now": 4842,
+    "boundary_check": "ok",
+    "window_start_check": "ok",
+    "l2_spot_checks": {
+     "sampled": 12,
+     "ok": 12,
+     "failed": 0
+    },
+    "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+   },
+   "protocols": [
+    {
+     "name": "Cronos zkEVM ZkCroMintAndBridge (native zkCRO deposits)",
+     "category": "bridge",
+     "confidence": "high",
+     "tx_count": 100,
+     "share_of_all": 0.2915,
+     "share_of_non_deposit": 0.9804,
+     "unique_users": 56,
+     "first_seen": "2025-08-26",
+     "last_seen": "2026-08-14",
+     "weekly": [
+      {
+       "week": "2025-W35",
+       "tx_count": 4
+      },
+      {
+       "week": "2025-W36",
+       "tx_count": 7
+      },
+      {
+       "week": "2025-W37",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W39",
+       "tx_count": 5
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W42",
+       "tx_count": 4
+      },
+      {
+       "week": "2025-W43",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W44",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W45",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W46",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 4
+      },
+      {
+       "week": "2025-W48",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W51",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W01",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W02",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W03",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W04",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W05",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W08",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W09",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W10",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W11",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W12",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W13",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W14",
+       "tx_count": 14
+      },
+      {
+       "week": "2026-W15",
+       "tx_count": 5
+      },
+      {
+       "week": "2026-W16",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W17",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W18",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W19",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W20",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W22",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W29",
+       "tx_count": 4
+      },
+      {
+       "week": "2026-W30",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W32",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W33",
+       "tx_count": 1
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xe69a535730858fd8dc386b448972a9f801ab4e12",
+       "role": "ZkCroMintAndBridge (verified name; mints zkCRO from CRO and bridges as base token)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "(per-user)",
+       "role": "value transfer to depositor address (empty calldata)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "",
+       "signature": "(no calldata)",
+       "count": 100
+      }
+     ],
+     "evidence": [
+      "verified name on eth.blockscout.com; same wrapper pattern as Sophon"
+     ]
+    }
+   ],
+   "deposit_initiator_contracts": [],
+   "deposits_via_7702_accounts": {
+    "tx_count": 40,
+    "unique_accounts": 10,
+    "note": "EIP-7702-delegated EOAs (smart accounts); counted as users, not protocol contracts"
+   },
+   "top_initiators": [
+    {
+     "address": "0x00d2c498fb20d91d094b49b134088ef746d09c1f",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 35,
+     "label": null
+    },
+    {
+     "address": "0x6bf1cb3fdcc9043324c782434dfb0392014e3915",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 34,
+     "label": null
+    },
+    {
+     "address": "0x3b0b00379f6ae78773e656da8b524cfc246d61ab",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 19,
+     "label": null
+    },
+    {
+     "address": "0x024c5e453e199a32d29ac61b9d5d28a9b2f76f88",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 18,
+     "label": null
+    },
+    {
+     "address": "0x6308641623fefc1371457c7702a7dd67b04c86f5",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 9,
+     "label": null
+    },
+    {
+     "address": "0x17e49502febdf7b3bd3a9842a325036d729b7654",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 9,
+     "label": null
+    },
+    {
+     "address": "0x17795c5bcc5843029b42bfe1b271c4b256625f83",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 8,
+     "label": null
+    },
+    {
+     "address": "0x55528a5f3f163ce2f0b2fe97d0fc17b80fa78177",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 8,
+     "label": null
+    },
+    {
+     "address": "0xa1da3ab5d5b6031129781206052f16cf90bb58a5",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 7,
+     "label": null
+    },
+    {
+     "address": "0xee616fb11683254c77c29ee5d59876f3d119b8d3",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 7,
+     "label": null
+    },
+    {
+     "address": "0xf1237a783d0447bfb42408bb033c4e4e58608992",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 7,
+     "label": null
+    },
+    {
+     "address": "0x1b86b6d9339db5e673b01c95c23416c2deaa78e2",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 6,
+     "label": null
+    },
+    {
+     "address": "0x3a21cf11e9c94471773ea51c99b11d379b9ea6d1",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 5,
+     "label": null
+    },
+    {
+     "address": "0xaad67ad9b853dca659cf40bdf14ec3ab54eec71a",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0xe3e56da9addc2e29532669140fb94fa7f21f6e4f",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x815b8db70ad84d2b26afab5df73c0ad0275604a9",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x983c7831404357f6ddb4ff1c892eeb9c02806b73",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x921f50a32004c392dc8d13a619941e782368b2f2",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0xf76fe8593325ccea4e0ef0b61eb277dc3f90fa79",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x7712c06f5dfb4a52c6fe57bfd14148585acaff8e",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    }
+   ],
+   "top_share": {
+    "top1": 0.102,
+    "top10": 0.449
+   },
+   "initiator_eoa_contract_split": {
+    "plain_eoa": 111,
+    "eip7702_account": 14,
+    "true_contract": 0,
+    "note": "getCode at latest block (approximation; see caveats)"
+   },
+   "unattributed": {
+    "tx_count": 0,
+    "share_of_non_deposit": 0.0,
+    "top_groups": []
+   }
+  },
+  "zero": {
+   "chain_id": 543210,
+   "eth_blocks": [
+    23221564,
+    25832977
+   ],
+   "totals": {
+    "priority_txs": 378,
+    "by_class": {
+     "direct-transfer": 338,
+     "canonical-deposit": 38,
+     "protocol-message": 1,
+     "other": 1
+    },
+    "non_deposit_txs": 340,
+    "unique_l1_initiators": 269,
+    "unique_inner_senders": 257
+   },
+   "completeness": {
+    "records_deduped": 378,
+    "tx_id_range": [
+     4877,
+     5254
+    ],
+    "gaps_after_rescan": [],
+    "gaps_found_in_scan": [
+     [
+      4971,
+      4976
+     ]
+    ],
+    "gap_handling": "recovered-from-l1-rescan (same drpc data hole, 6 events recovered)",
+    "total_priority_txs_now": 5255,
+    "boundary_check": "ok",
+    "window_start_check": "ok",
+    "l2_spot_checks": {
+     "sampled": 12,
+     "ok": 12,
+     "failed": 0
+    },
+    "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+   },
+   "protocols": [],
+   "deposit_initiator_contracts": [],
+   "deposits_via_7702_accounts": {
+    "tx_count": 5,
+    "unique_accounts": 5,
+    "note": "EIP-7702-delegated EOAs (smart accounts); counted as users, not protocol contracts"
+   },
+   "top_initiators": [
+    {
+     "address": "0x9397b44adee01fc53064875e2bc54f51fb3c78d4",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 19,
+     "label": null
+    },
+    {
+     "address": "0x02867114b27d686f3565e2060424e985a1e565f5",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 10,
+     "label": null
+    },
+    {
+     "address": "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 8,
+     "label": "cross-chain tester EOA (0-value pings on zero/zkcandy/openzk)"
+    },
+    {
+     "address": "0x433cec62e43cffe989b075b49868eca5e9bea9d6",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 7,
+     "label": null
+    },
+    {
+     "address": "0x21f00a127ab97d68e506ebab3379ddee849af8a5",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 6,
+     "label": null
+    },
+    {
+     "address": "0xf2315e7c6671a3502a4548d619af779eb222fb51",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 6,
+     "label": null
+    },
+    {
+     "address": "0x90ec745b0c0c825539c3ca9d1e8305a2ef1b76b2",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 6,
+     "label": null
+    },
+    {
+     "address": "0x2f2f665974261c4129b1dc6c359bd259cd66f78a",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 5,
+     "label": null
+    },
+    {
+     "address": "0xaa5861528f175dc2fccb4599cb049623b8752735",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 5,
+     "label": null
+    },
+    {
+     "address": "0x49f5ca29d3c19ccf2f18db521dc409cc078b3eea",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x4b67c7f8893bd8fbc819fa57b9dd9dde0b03ccba",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x38100517d75c440340397e08afc8076c1d6ecf54",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x01018fe8bb93ea88bb499f55c3273859a98e9edc",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x33b38d3be35e3c7ee05b53028a224aeb657f3196",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x664034f8b401b17f4db17700ec8921495c1a0a76",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x6a2e7648e6c58fd80b938340a2c7b33aeb78d991",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x5de267b59683b63759a3f0be74b293853f5dcde0",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x7681cbf41c5459e8be15043b7b94da06fbb3820d",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x393472253eee6adc02e6ada6db8d47c43d871750",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    }
+   ],
+   "top_share": {
+    "top1": 0.0503,
+    "top10": 0.2011
+   },
+   "initiator_eoa_contract_split": {
+    "plain_eoa": 218,
+    "eip7702_account": 51,
+    "true_contract": 0,
+    "note": "getCode at latest block (approximation; see caveats)"
+   },
+   "unattributed": {
+    "tx_count": 2,
+    "share_of_non_deposit": 0.0059,
+    "top_groups": [
+     {
+      "unaliased_from": "0x42260072dd498829f5338186082ec254edebc1cd",
+      "to": "0x42260072dd498829f5338186082ec254edebc1cd",
+      "selector": "",
+      "count": 1
+     },
+     {
+      "unaliased_from": "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722",
+      "to": "0x0000000000000000000000000000000000000000",
+      "selector": "",
+      "count": 1
+     }
+    ]
+   }
+  },
+  "zkcandy": {
+   "chain_id": 320,
+   "eth_blocks": [
+    23221564,
+    25833013
+   ],
+   "totals": {
+    "priority_txs": 1407,
+    "by_class": {
+     "direct-transfer": 1395,
+     "canonical-deposit": 11,
+     "other": 1
+    },
+    "non_deposit_txs": 1396,
+    "unique_l1_initiators": 1255,
+    "unique_inner_senders": 1251
+   },
+   "completeness": {
+    "records_deduped": 1407,
+    "tx_id_range": [
+     4953,
+     6359
+    ],
+    "gaps_after_rescan": [],
+    "gaps_found_in_scan": [],
+    "gap_handling": "none",
+    "total_priority_txs_now": 6360,
+    "boundary_check": "ok",
+    "window_start_check": "ok",
+    "l2_spot_checks": {
+     "sampled": 12,
+     "ok": 12,
+     "failed": 0
+    },
+    "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+   },
+   "protocols": [],
+   "deposit_initiator_contracts": [],
+   "deposits_via_7702_accounts": {
+    "tx_count": 3,
+    "unique_accounts": 2,
+    "note": "EIP-7702-delegated EOAs (smart accounts); counted as users, not protocol contracts"
+   },
+   "top_initiators": [
+    {
+     "address": "0x830bc5551e429ddbc4e9ac78436f8bf13eca8434",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 10,
+     "label": null
+    },
+    {
+     "address": "0x7aa4c5e3a7d25276d60d14c4779d0499788e304b",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 6,
+     "label": null
+    },
+    {
+     "address": "0x7eb710e864f0fa50e423c91fb3afb5d23a94c51a",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x1b0cc0a629c11d46d8f865af3f0af1b9222c4b85",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x6a164c14bcc4fd458e4b5d2d509e1506a5c21cd7",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0xb37b7e09f639196a6547de0d7e75f1c96d57f2ac",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x06cc9fbf519d757b574cdf930b7161b717acf3fd",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": "cross-chain tester EOA (0-value pings on zero/zkcandy/openzk)"
+    },
+    {
+     "address": "0x635fd3871d337bb623556de9dfee4ca19feb735e",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0xe961066d859d4922b51269801cd26a2351c4f1e3",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0xb99eec8af92bacc5106c1a5912eae6a555ef5b1f",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x6fe64e8fcd6218959c1108440908fc0097640357",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x5f1ec9bc6d3847d8ad98dfc227d4ec8d69a4f1be",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0xafa5d052125049f5ad1ea79970955965dd8c0795",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x5dc6caeb5743f712164294ccea827d6550c00360",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x85d20d92460087be7337be5545a4fc23f8400568",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x4e3d67d218433ad822cd328e0224675d7beb3002",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x53f262fdfd34cf16994cb320cd0319da0fad52ab",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0x3f5242b0dba4a442326d8211d5d6b25175b7a013",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0xf5f155dfc740a89ffaa17c4f6459aec7d7206413",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    }
+   ],
+   "top_share": {
+    "top1": 0.0071,
+    "top10": 0.0327
+   },
+   "initiator_eoa_contract_split": {
+    "plain_eoa": 1159,
+    "eip7702_account": 96,
+    "true_contract": 0,
+    "note": "getCode at latest block (approximation; see caveats)"
+   },
+   "unattributed": {
+    "tx_count": 1,
+    "share_of_non_deposit": 0.0007,
+    "top_groups": [
+     {
+      "unaliased_from": "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722",
+      "to": "0x0000000000000000000000000000000000000000",
+      "selector": "",
+      "count": 1
+     }
+    ]
+   }
+  },
+  "openzk": {
+   "chain_id": 1345,
+   "eth_blocks": [
+    23221564,
+    25833013
+   ],
+   "totals": {
+    "priority_txs": 182,
+    "by_class": {
+     "canonical-deposit": 141,
+     "protocol-message": 40,
+     "other": 1
+    },
+    "non_deposit_txs": 41,
+    "unique_l1_initiators": 48,
+    "unique_inner_senders": 3
+   },
+   "completeness": {
+    "records_deduped": 182,
+    "tx_id_range": [
+     5818,
+     5999
+    ],
+    "gaps_after_rescan": [],
+    "gaps_found_in_scan": [],
+    "gap_handling": "none",
+    "total_priority_txs_now": 6000,
+    "boundary_check": "ok",
+    "window_start_check": "ok",
+    "l2_spot_checks": {
+     "sampled": 12,
+     "ok": 12,
+     "failed": 0
+    },
+    "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+   },
+   "protocols": [
+    {
+     "name": "OpenZK BridgeMiddleware (stake-and-bridge)",
+     "category": "bridge",
+     "confidence": "high",
+     "tx_count": 40,
+     "share_of_all": 0.2198,
+     "share_of_non_deposit": 0.9756,
+     "unique_users": 19,
+     "first_seen": "2025-08-27",
+     "last_seen": "2026-08-23",
+     "weekly": [
+      {
+       "week": "2025-W35",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W36",
+       "tx_count": 9
+      },
+      {
+       "week": "2025-W37",
+       "tx_count": 5
+      },
+      {
+       "week": "2025-W38",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W39",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W40",
+       "tx_count": 3
+      },
+      {
+       "week": "2025-W41",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W42",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W43",
+       "tx_count": 2
+      },
+      {
+       "week": "2025-W47",
+       "tx_count": 1
+      },
+      {
+       "week": "2025-W50",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W17",
+       "tx_count": 2
+      },
+      {
+       "week": "2026-W18",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W19",
+       "tx_count": 3
+      },
+      {
+       "week": "2026-W21",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W22",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W27",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W33",
+       "tx_count": 1
+      },
+      {
+       "week": "2026-W34",
+       "tx_count": 3
+      }
+     ],
+     "l1_addresses": [
+      {
+       "address": "0xbd9a30a63df163dc91efd65060d47ed350061b53",
+       "role": "BridgeMiddleware (verified source: StakeAndBridge/ozUSD mint events, IUSDVault, Chainlink feeds)"
+      }
+     ],
+     "l2_addresses": [
+      {
+       "address": "0xee65cca8fe8f2f657c05755779fcad29348c76e2",
+       "role": "main recipient of bridged value (16 txs; also itself a canonical-deposit initiator on L1)"
+      }
+     ],
+     "selectors": [
+      {
+       "selector": "",
+       "signature": "(no calldata)",
+       "count": 40
+      }
+     ],
+     "evidence": [
+      "verified source on eth.blockscout.com mentions ozUSD minting + bridging \u2014 OpenZK's oz-asset infrastructure"
+     ]
+    }
+   ],
+   "deposit_initiator_contracts": [],
+   "deposits_via_7702_accounts": {
+    "tx_count": 61,
+    "unique_accounts": 9,
+    "note": "EIP-7702-delegated EOAs (smart accounts); counted as users, not protocol contracts"
+   },
+   "top_initiators": [
+    {
+     "address": "0xa91206fa0b82e08ab62522382577cca84ccf3837",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 37,
+     "label": null
+    },
+    {
+     "address": "0xee65cca8fe8f2f657c05755779fcad29348c76e2",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 22,
+     "label": "OpenZK BridgeMiddleware main L2 recipient / L1 deposit initiator"
+    },
+    {
+     "address": "0x57f99d06848611d4e2515fe82973dcb1261cd143",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 14,
+     "label": null
+    },
+    {
+     "address": "0xbf538cd195eff54c1dc7e8c27df88ad8affa2024",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 12,
+     "label": null
+    },
+    {
+     "address": "0x2b1a4abf883b505f899ad097701d5f3b94414c4a",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 11,
+     "label": null
+    },
+    {
+     "address": "0x589bb0a801ab8d1a644991cb0cfd41d3850ba1fd",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 5,
+     "label": null
+    },
+    {
+     "address": "0xe66c76e685e185bd6f6335525193d8f536f887d2",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 5,
+     "label": null
+    },
+    {
+     "address": "0x37490b0c0cacaaa28eeca071803beeb0a742c326",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 5,
+     "label": null
+    },
+    {
+     "address": "0x0642c3c760c38ba7b67a4038965db5ed0b72cfd1",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 5,
+     "label": null
+    },
+    {
+     "address": "0x510289a0447956fe3958da9da955254778add65a",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 5,
+     "label": null
+    },
+    {
+     "address": "0xda8a872d02223dd4087e55c90d78523bc4c02bee",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x21822dd18746368557fb057ac5e3f3448a77695a",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x7f8995a3cb93a8e24149cd95c9f91a4dd92b5d80",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 4,
+     "label": null
+    },
+    {
+     "address": "0x0682ef8d2b0ca0203464f6f5bc50f871efe56705",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0xaeb0a9970bd38b6ae9c560c238f9f90ecce71f0b",
+     "is_contract": false,
+     "is_7702_account": true,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0xe3052a5bbb5afe743688d35431462139ffa17f1f",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 3,
+     "label": null
+    },
+    {
+     "address": "0xc765ccf10e7dc9c985b6cb982c63a7e8be98b3d6",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 2,
+     "label": null
+    },
+    {
+     "address": "0x49ccf29f1e1dcdd30cd23a11ced908e3d54ea42d",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 2,
+     "label": null
+    },
+    {
+     "address": "0xdd05df8a6ec5587a55700655bb9d7bd0f84d42e4",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 2,
+     "label": null
+    },
+    {
+     "address": "0x6a2b8d9e933643a6da4e5205a4be93071977fca1",
+     "is_contract": false,
+     "is_7702_account": null,
+     "tx_count": 2,
+     "label": null
+    }
+   ],
+   "top_share": {
+    "top1": 0.2033,
+    "top10": 0.6648
+   },
+   "initiator_eoa_contract_split": {
+    "plain_eoa": 37,
+    "eip7702_account": 11,
+    "true_contract": 0,
+    "note": "getCode at latest block (approximation; see caveats)"
+   },
+   "unattributed": {
+    "tx_count": 1,
+    "share_of_non_deposit": 0.0244,
+    "top_groups": [
+     {
+      "unaliased_from": "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722",
+      "to": "0x0000000000000000000000000000000000000000",
+      "selector": "",
+      "count": 1
+     }
+    ]
+   }
+  }
+ },
+ "cross_chain": {
+  "protocols_multi_chain": [
+   {
+    "name": "Across Protocol",
+    "chains": [
+     "era",
+     "lens"
+    ],
+    "l1_addresses": [
+     "0x64668fbd18b967b46dd22dc8675134d91efedd8d",
+     "0xc186fa914353c44b2e33ebe05f21846f1048beda",
+     "0xca11bde05977b3631167028862be2a173976ca11",
+     "0xf7bac63fc7ceacf0589f25454ecf5c2ce904997c"
+    ]
+   },
+   {
+    "name": "Bridged USDC Standard (matter-labs usdc-bridge)",
+    "chains": [
+     "lens",
+     "sophon"
+    ],
+    "l1_addresses": [
+     "0xf553e6d903aa43420ed7e3bc2313be9286a8f987"
+    ]
+   }
+  ],
+  "initiators_multi_chain_total": 62,
+  "initiators_multi_chain": [
+   {
+    "address": "0xf7bac63fc7ceacf0589f25454ecf5c2ce904997c",
+    "chains": [
+     "era",
+     "lens"
+    ],
+    "total_txs": 16952
+   },
+   {
+    "address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+    "chains": [
+     "abstract",
+     "era",
+     "zero"
+    ],
+    "total_txs": 230
+   },
+   {
+    "address": "0x65a8f07bd9a8598e1b5b6c0a88f4779dbc077675",
+    "chains": [
+     "abstract",
+     "cronos",
+     "era"
+    ],
+    "total_txs": 158
+   },
+   {
+    "address": "0x9452ed6da616783786c6d8aaf73047ecad126c57",
+    "chains": [
+     "era",
+     "sophon"
+    ],
+    "total_txs": 157
+   },
+   {
+    "address": "0x07ae8551be970cb1cca11dd7a11f47ae82e70e67",
+    "chains": [
+     "era",
+     "lens"
+    ],
+    "total_txs": 125
+   },
+   {
+    "address": "0x996d7b599ccf1360b630f79ac227489f1c655761",
+    "chains": [
+     "era",
+     "sophon"
+    ],
+    "total_txs": 48
+   },
+   {
+    "address": "0x11a968128adb249441d9d279a4ddd8968e158a11",
+    "chains": [
+     "abstract",
+     "sophon"
+    ],
+    "total_txs": 46
+   },
+   {
+    "address": "0x9a8f92a830a5cb89a3816e3d267cb7791c16b04d",
+    "chains": [
+     "era",
+     "lens"
+    ],
+    "total_txs": 36
+   },
+   {
+    "address": "0x00d2c498fb20d91d094b49b134088ef746d09c1f",
+    "chains": [
+     "abstract",
+     "cronos"
+    ],
+    "total_txs": 36
+   },
+   {
+    "address": "0x93eb34a23146e3726e0f4af322c8176bfc7e32c1",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 25
+   },
+   {
+    "address": "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722",
+    "chains": [
+     "openzk",
+     "zero",
+     "zkcandy"
+    ],
+    "total_txs": 13
+   },
+   {
+    "address": "0x9bc2d99249b9e87991bb5c3e44fd3ad6be88f809",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 11
+   },
+   {
+    "address": "0x98464f58c04e6ef1966d04ba2fc7fd50f153ff45",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 11
+   },
+   {
+    "address": "0xebfdee3355189098e1d08386f2ec87c853222335",
+    "chains": [
+     "era",
+     "sophon"
+    ],
+    "total_txs": 9
+   },
+   {
+    "address": "0x000f9764a2c9345df184d19a2cb935a0857af000",
+    "chains": [
+     "abstract",
+     "era",
+     "sophon"
+    ],
+    "total_txs": 8
+   },
+   {
+    "address": "0xf2315e7c6671a3502a4548d619af779eb222fb51",
+    "chains": [
+     "abstract",
+     "zero"
+    ],
+    "total_txs": 8
+   },
+   {
+    "address": "0xf62d60da2fa7fe8db5c3b31fa086108a07cb6635",
+    "chains": [
+     "era",
+     "zkcandy"
+    ],
+    "total_txs": 7
+   },
+   {
+    "address": "0x6f6426a9b93a7567fcccbfe5d0d6f26c1085999b",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 6
+   },
+   {
+    "address": "0x13283b2784a203aee36d0d8730c2fe246b602e25",
+    "chains": [
+     "era",
+     "sophon"
+    ],
+    "total_txs": 6
+   },
+   {
+    "address": "0xbaeb92889696217a3a6be2175e5a95dc4cffc9f7",
+    "chains": [
+     "cronos",
+     "sophon"
+    ],
+    "total_txs": 6
+   },
+   {
+    "address": "0x8b937c5395d95a8c8948c7c5b844e1541798d90c",
+    "chains": [
+     "era",
+     "sophon"
+    ],
+    "total_txs": 5
+   },
+   {
+    "address": "0x900c787fb3c82895637144a77e0c41daeb3a8d99",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 5
+   },
+   {
+    "address": "0x198d400fc7f4a06e8161f4cb04eab856b0ae7edd",
+    "chains": [
+     "cronos",
+     "era"
+    ],
+    "total_txs": 5
+   },
+   {
+    "address": "0x15918ff7f6c44592c81d999b442956b07d26cc44",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 5
+   },
+   {
+    "address": "0xfabc88f604a25f177e2ca284256f2bccb84fd9c2",
+    "chains": [
+     "era",
+     "sophon"
+    ],
+    "total_txs": 5
+   },
+   {
+    "address": "0x835322e4ed980941b20976aebf66744a20047092",
+    "chains": [
+     "abstract",
+     "cronos",
+     "sophon"
+    ],
+    "total_txs": 5
+   },
+   {
+    "address": "0x9d5250d3f518a6fe96012f159429794e2f807827",
+    "chains": [
+     "sophon",
+     "zkcandy"
+    ],
+    "total_txs": 5
+   },
+   {
+    "address": "0x8a8fa799d8799d6cac92196a96708d0228825628",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 4
+   },
+   {
+    "address": "0x8c826f795466e39acbff1bb4eeeb759609377ba1",
+    "chains": [
+     "abstract",
+     "cronos",
+     "sophon"
+    ],
+    "total_txs": 4
+   },
+   {
+    "address": "0x5f8b9671575cdf9b665e73a9c219c16ab5e97dc8",
+    "chains": [
+     "abstract",
+     "zkcandy"
+    ],
+    "total_txs": 4
+   },
+   {
+    "address": "0x363dbdbf8bbebc7c2c09ce38d0b2849e50403228",
+    "chains": [
+     "era",
+     "zkcandy"
+    ],
+    "total_txs": 3
+   },
+   {
+    "address": "0xe8332555fefff65b2464b863e37a05c06976d7fb",
+    "chains": [
+     "era",
+     "sophon"
+    ],
+    "total_txs": 3
+   },
+   {
+    "address": "0xbff89ef6d47726e30877d4e3d18590f8b67a9486",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 3
+   },
+   {
+    "address": "0x6d077cf3e261fdfb3a749b72afc69a12f52dc666",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 3
+   },
+   {
+    "address": "0x6bf2cad604645c9e8cebfde1008d19eaab23b444",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 3
+   },
+   {
+    "address": "0x1113380e02a9eccd203285b96e4a9f3dfca325cc",
+    "chains": [
+     "abstract",
+     "era"
+    ],
+    "total_txs": 3
+   },
+   {
+    "address": "0xd3a5a3b167ff2eab162e1e8a69b5cdbb9c68ba3e",
+    "chains": [
+     "abstract",
+     "zkcandy"
+    ],
+    "total_txs": 3
+   },
+   {
+    "address": "0x2274588fb17c6315210ba8fd117dc1fc4b816ea2",
+    "chains": [
+     "abstract",
+     "cronos"
+    ],
+    "total_txs": 3
+   },
+   {
+    "address": "0x25b3ea33069428dcd1f268f1c6139701f1dc0137",
+    "chains": [
+     "abstract",
+     "cronos"
+    ],
+    "total_txs": 3
+   },
+   {
+    "address": "0xacd2ac03ad7e0c89103083be640d911ed076d53e",
+    "chains": [
+     "zero",
+     "zkcandy"
+    ],
+    "total_txs": 3
+   }
+  ]
+ }
+}

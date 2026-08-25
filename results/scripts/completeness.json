@@ -1,0 +1,169 @@
+{
+ "sophon": {
+  "records_deduped": 1139,
+  "tx_id_range": [
+   9073,
+   10211
+  ],
+  "gaps_after_rescan": [],
+  "gaps_found_in_scan": [
+   [
+    9518,
+    9528
+   ]
+  ],
+  "gap_handling": "recovered-from-l1-rescan (eth.drpc.org silently omitted 11 events; all recovered from Ethereum via tenderly+onfinality union, initiators intact)",
+  "total_priority_txs_now": 10212,
+  "boundary_check": "ok",
+  "window_start_check": "ok",
+  "l2_spot_checks": {
+   "sampled": 12,
+   "ok": 12,
+   "failed": 0
+  },
+  "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+ },
+ "cronos": {
+  "records_deduped": 343,
+  "tx_id_range": [
+   4499,
+   4841
+  ],
+  "gaps_after_rescan": [],
+  "gaps_found_in_scan": [],
+  "gap_handling": "none",
+  "total_priority_txs_now": 4842,
+  "boundary_check": "ok",
+  "window_start_check": "ok",
+  "l2_spot_checks": {
+   "sampled": 12,
+   "ok": 12,
+   "failed": 0
+  },
+  "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+ },
+ "abstract": {
+  "records_deduped": 4092,
+  "tx_id_range": [
+   22842,
+   26933
+  ],
+  "gaps_after_rescan": [],
+  "gaps_found_in_scan": [],
+  "gap_handling": "none",
+  "total_priority_txs_now": 26934,
+  "boundary_check": "ok",
+  "window_start_check": "ok",
+  "l2_spot_checks": {
+   "sampled": 12,
+   "ok": 12,
+   "failed": 0
+  },
+  "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+ },
+ "zero": {
+  "records_deduped": 378,
+  "tx_id_range": [
+   4877,
+   5254
+  ],
+  "gaps_after_rescan": [],
+  "gaps_found_in_scan": [
+   [
+    4971,
+    4976
+   ]
+  ],
+  "gap_handling": "recovered-from-l1-rescan (same drpc data hole, 6 events recovered)",
+  "total_priority_txs_now": 5255,
+  "boundary_check": "ok",
+  "window_start_check": "ok",
+  "l2_spot_checks": {
+   "sampled": 12,
+   "ok": 12,
+   "failed": 0
+  },
+  "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+ },
+ "era": {
+  "records_deduped": 33779,
+  "tx_id_range": [
+   3281895,
+   3315673
+  ],
+  "gaps_after_rescan": [],
+  "gaps_found_in_scan": [],
+  "gap_handling": "none",
+  "total_priority_txs_now": 3315674,
+  "boundary_check": "ok",
+  "window_start_check": "ok",
+  "l2_spot_checks": {
+   "sampled": 12,
+   "ok": 12,
+   "failed": 0
+  },
+  "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+ },
+ "lens": {
+  "records_deduped": 4391,
+  "tx_id_range": [
+   2837,
+   7227
+  ],
+  "gaps_after_rescan": [],
+  "gaps_found_in_scan": [
+   [
+    3475,
+    3486
+   ]
+  ],
+  "gap_handling": "recovered-from-l1-rescan (same drpc data hole, 12 events recovered)",
+  "total_priority_txs_now": 7229,
+  "boundary_check": "ok",
+  "window_start_check": "ok",
+  "l2_spot_checks": {
+   "sampled": 12,
+   "ok": 12,
+   "failed": 0
+  },
+  "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+ },
+ "zkcandy": {
+  "records_deduped": 1407,
+  "tx_id_range": [
+   4953,
+   6359
+  ],
+  "gaps_after_rescan": [],
+  "gaps_found_in_scan": [],
+  "gap_handling": "none",
+  "total_priority_txs_now": 6360,
+  "boundary_check": "ok",
+  "window_start_check": "ok",
+  "l2_spot_checks": {
+   "sampled": 12,
+   "ok": 12,
+   "failed": 0
+  },
+  "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+ },
+ "openzk": {
+  "records_deduped": 182,
+  "tx_id_range": [
+   5818,
+   5999
+  ],
+  "gaps_after_rescan": [],
+  "gaps_found_in_scan": [],
+  "gap_handling": "none",
+  "total_priority_txs_now": 6000,
+  "boundary_check": "ok",
+  "window_start_check": "ok",
+  "l2_spot_checks": {
+   "sampled": 12,
+   "ok": 12,
+   "failed": 0
+  },
+  "note": "window_start_check: getTotalPriorityTxs(b_from-1) == first in-window txId; boundary_check: max txId+1 <= getTotalPriorityTxs(latest). No ZK-Gateway-period gaps found on any chain; all txId gaps were L1-endpoint data loss, fully recovered from Ethereum (not L2), so all records carry l1_from."
+ }
+}
