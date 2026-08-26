@@ -24,13 +24,17 @@ bridge), **Nodle** (NODL bridge), **Aave** (a.DI governance), **ZKsync Governanc
 upgrade). Plain user activity (direct base-token transfers + canonical deposits) accounts for
 ~59% of all records; only **22 of 45,711 records (0.05%) remain unattributed**, all enumerated below.
 
-Two findings deserve emphasis: (1) **not a single canonical-bridge deposit in the whole window was
-initiated by a true protocol contract** — every code-bearing deposit initiator turned out to be an
-EIP-7702-delegated user account (790 such smart accounts seen across all chains; the dominant
-delegator is MetaMask's `EIP7702StatelessDeleGator`, 361 of the 525 delegations recorded);
-protocols move funds through their own wrappers instead. (2) The
+Two findings deserve emphasis: (1) judged by the transaction sender (`l1_from`), no canonical-bridge
+deposit was initiated by a protocol contract — every code-bearing deposit initiator turned out to be
+an EIP-7702-delegated user account (790 such smart accounts seen across all chains; the dominant
+delegator is MetaMask's `EIP7702StatelessDeleGator`, 361 of the 525 delegations recorded). Note the
+sender-side test cannot flag protocols by construction (`l1_from` is tx.from, which only EIP-7702
+can give code); judged by the **called L1 contract** (`l1_to`), protocol routing of deposits is the
+norm on the small chains — 241/241 cronos and 140/141 openzk deposits enter through the chains' own
+bridge/staking routers (§3.5, §3.8), all 921 sophon deposits through BridgeHubWrapper (§3.3), and
+2 lens deposits were Across rebalances via its AtomicWethDepositor (§3.4). (2) The
 package's assumption "zero Sophon deposits after the 2026-06-25 shutdown" is **wrong in detail**:
-three native SOPH deposits (305,800 SOPH, one EOA) executed 2026-06-30..07-03; Sophon's true last
+three native SOPH deposits (320,800 SOPH, one EOA) executed 2026-06-30..07-03; Sophon's true last
 priority tx is txId 10211 on **2026-07-03**.
 
 ## 2. Method & completeness
@@ -95,7 +99,9 @@ totals):
 | **all** | **45,711** | **3,064** | **24,052** | **18,580** | **15** |
 
 100% of canonical deposits on every chain flow through the modern route (aliased **L1AssetRouter**
-`0x8829ad80…ce56` → **L2AssetRouter** `0x…10003`); the legacy Era bridge path had **zero** traffic.
+`0x8829ad80…ce56` → **L2AssetRouter** `0x…10003`); the legacy Era bridge delivered **zero** deposits
+on the L2 side, though 58 era deposits still *entered* via the legacy L1ERC20Bridge
+`0x57891966…e063` as `l1_to` (it forwards into the modern route internally).
 Deposit ABI: legacy `finalizeDeposit(address,address,address,uint256,bytes)` `0xcfe7af7c`
 (2,924 txs, all chains) and v26 `finalizeDeposit(uint256,bytes32,bytes)` `0x9c884fd1`
 (140 txs, era only).
@@ -163,10 +169,12 @@ Addresses and roles (all verified as cited in `aggregates.json` evidence):
 - **L2Scan bridge**: L1 L2ScanEthereumBridgeV2 `0x375424756f4a5ada1ce1e0849abdd19255b1729e`,
   one value transfer.
 
-**Deposits & initiators.** 891 canonical deposits; **none initiated by a true contract** — 263
-deposits came from 52 EIP-7702 smart accounts (the largest, `0xd0ce021b…`, 36 txs), the rest from
-plain EOAs. Notable "other": 3 L1-initiated `approve()` calls on era tokens (USDC.e, WETH) by one
-vanity EOA, 5 empty self-calls.
+**Deposits & initiators.** 891 canonical deposits; **none initiated (tx.from) by a true contract** —
+263 deposits came from 52 EIP-7702 smart accounts (the largest, `0xd0ce021b…`, 36 txs), the rest
+from plain EOAs. By `l1_to`, 807 went straight to Bridgehub; the rest were routed: 58 via the
+legacy L1ERC20Bridge, 19 via Multicall3, 5 via a GnosisSafe (`0x519d3e38…`), 2 via an unverified
+ERC1967Proxy (`0xb30802d9…`). Notable "other": 3 L1-initiated `approve()` calls on era tokens
+(USDC.e, ZK, WETH) by one vanity EOA, 6 empty self-calls.
 
 **Unattributed remainder: 15 txs (0.11% of non-deposit).** 4 Safe/GnosisSafe multisig value/token
 moves (`0x21465ea9…` ×2, `0xcf75bd79…` ×1, `0xe97daa96…` ×1 token transfer), 2 messages
@@ -207,7 +215,7 @@ EOA) — all Sophon L1→L2 traffic is intermediated. Nearly every deposit's `l1
 **Wind-down timeline** (announced 2026-06-25): monthly volume 302 (Sep-25) → ~20/mo (Apr–Jun 26)
 → 2 (Jul). USDC bridging stopped 2026-06-16, canonical ERC-20 deposits 2026-06-20 — but **three
 native SOPH wrapper deposits executed after the announcement** (txIds 10209–10211; 2026-06-30,
-07-03 ×2; 15,800 + 30,000 + 260,000 SOPH; single EOA `0xbaeb9288…`). Sophon's last priority tx is
+07-03 ×2; 15,800 + 30,000 + 275,000 SOPH; single EOA `0xbaeb9288…`). Sophon's last priority tx is
 2026-07-03; nothing since (verified zero events in the final ~7.5 weeks and boundary-exact count
 10,212). 138 deposits by 47 EIP-7702 accounts; none by true contracts.
 
@@ -229,13 +237,19 @@ unique initiators all window.**
 - **USDC bridge**: same L1 contract as sophon → lens L2USDCBridge
   `0x7188b6975eec82ae914b6ec7ac32b3c9a18b2c81` (verified source).
 
-Residual: 4 canonical deposits, 11 direct transfers. Zero unattributed.
+Residual: 4 canonical deposits (2 of them Across rebalances routed through its
+**AtomicWethDepositor** `0x64668fbd…` as `l1_to`), 11 direct transfers. Zero unattributed.
 
 ### 3.5 Cronos zkEVM (chainId 388) — 343 txs · base token zkCRO
 
 241 canonical deposits + 100 wrapper messages + 2 direct transfers. One protocol:
 **ZkCroMintAndBridge** `0xe69a535730858fd8dc386b448972a9f801ab4e12` (verified; mints zkCRO from
-CRO and bridges as base token; 100 txs = 98% of non-deposit, 56 users, full window). 40 deposits
+CRO and bridges as base token; 100 txs = 98% of non-deposit, 56 users, full window). All 241
+canonical deposits are also protocol-routed on L1 (`l1_to`): **YbEthBridge**
+`0xd91629518a1ec964cfce27c2a939f689dcbdf73f` (108), **YBUSDBridge**
+`0x42696a64a238e5c661b1bad2530198d54e7b0dff` (74), **BridgeMiddleware**
+`0x248c731b155af4cae198af705fb803f087a0b01e` (59) — verified contract names (yield-bearing
+ybETH/ybUSD onboarding); operator presumed the chain itself (medium confidence). 40 deposits
 by 10 7702 accounts. 125 unique initiators. Zero unattributed. Quiet chain: 8–64 txs/month,
 June 2026 had zero.
 
@@ -260,7 +274,10 @@ chain since.
 141 canonical deposits + 40 protocol messages + 1 ping. One protocol: **OpenZK BridgeMiddleware**
 `0xbd9a30a63df163dc91efd65060d47ed350061b53` (verified source: stake-and-bridge, mints
 ozUSD/ozETH; 40 txs, 19 users, full window; main L2 recipient `0xee65cca8…`, itself the #2
-deposit initiator). 61 deposits by 9 7702 accounts (largest `0xa91206fa…`, 37 txs — 20% of the
+deposit initiator). 140 of the 141 canonical deposits are likewise protocol-routed on L1
+(`l1_to`): three verified **Staking** contracts `0x212119d7…` (83), `0xda607dcc…` (28),
+`0x61b199b8…` (21), plus **BridgeTokenMiddleware** `0xdd3cafaf…` (8) and BridgeMiddleware itself
+(1) — the same OpenZK stake-and-bridge suite (medium confidence on operator). 61 deposits by 9 7702 accounts (largest `0xa91206fa…`, 37 txs — 20% of the
 chain's entire traffic). **The "suspiciously round" lifetime count of exactly 6,000** in the
 package resolves mundanely: the chain simply crossed 6,000 with txId 5999 on **2026-08-23** and
 had no further txs before the scan — timing coincidence, not a scripted cap; in-window activity is
@@ -338,3 +355,19 @@ evidence live in **`results/scripts/attribution.json`** (`protocol_meta`).
 per chain, then `results/scripts/{rescan_gaps,check_completeness,enrich,aggregate}.py` in that
 order. Every record is independently re-verifiable on-chain via (`l1_block`, `l1_tx`, `log_index`)
 on Ethereum and `canonical_hash` on the L2.
+
+### 6.4 Corrections (2026-08-26)
+An independent re-run of Phases 2–4 (fresh reclassification of all 45,711 records: zero diffs;
+boundary proofs re-executed exactly, incl. era total = max txId+1 at block 25,832,908; all 14
+protocol attributions re-confirmed against on-chain state and official registries) found three
+report-prose errors, fixed in this revision — the underlying data files were correct throughout:
+1. Post-shutdown Sophon deposit amounts: txId 10211 is 275,000 SOPH (sum 320,800), previously
+   misquoted as 260,000 (sum 305,800). Verified by decoding the L1 event independently.
+2. Deposit routing visible via `l1_to` was reported only for sophon; added the cronos, openzk,
+   lens (Across AtomicWethDepositor) and era breakdowns (counts derived from the enriched
+   records' `l1_to` field), and reworded the §1 claim that rested on the tx.from test, which is
+   tautological for true contracts.
+3. Era "other" enumeration: 6 empty self-calls (not 5); the 3 `approve()` calls target USDC.e,
+   ZK and WETH (ZK was omitted).
+Environmental note: zkcandy's public RPC and explorer became unreachable on 2026-08-26; its
+L2 spot checks are no longer reproducible with free endpoints (L1-side proofs unaffected).
