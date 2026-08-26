@@ -1,0 +1,94 @@
+{
+ "probed": "2026-08-26",
+ "purpose": "Live-verified evidence that the Phase 6 method works, plus the first real findings. Re-verify before relying on any of it.",
+
+ "l2_rpc_liveness": {
+  "method": "eth_chainId via curl, 12s timeout",
+  "era":      {"url": "https://mainnet.era.zksync.io",     "result": "0x144",   "ok": true},
+  "abstract": {"url": "https://api.mainnet.abs.xyz",        "result": "0xab5",   "ok": true},
+  "sophon":   {"url": "https://rpc.sophon.xyz",             "result": "0xc3b8",  "ok": true},
+  "lens":     {"url": "https://rpc.lens.xyz",               "result": "0xe8",    "ok": true},
+  "cronos":   {"url": "https://mainnet.zkevm.cronos.org",   "result": "0x184",   "ok": true},
+  "zero":     {"url": "https://rpc.zerion.io/v1/zero",      "result": "0x849ea", "ok": true},
+  "openzk":   {"url": "https://rpc.openzk.net",             "result": "0x541",   "ok": true},
+  "zkcandy":  {"url": "https://rpc.zkcandy.io",             "result": null,      "ok": false,
+               "note": "empty response; explorer.zkcandy.io also down. No free alternative found. 1,396 candidate txs / 1,251 recipients unresolvable."}
+ },
+
+ "capabilities_verified": {
+  "batch_eth_getCode": {"chains": ["era", "abstract", "lens", "zero"], "batch_size_tested": 60, "ok": true},
+  "archive_eth_getCode_historical": {
+    "chains": ["zero", "abstract"], "ok": true,
+    "detail": "eth_getCode(0x0, 0x34ad51) served successfully -> zero's RPC answers historical code. Note the block: the funding tx is in 0x34ad52 and the probe is one block EARLIER, because getCode(N) returns end-of-block-N state — after the tx and after anything else in N (METHOD §4). abstract also served historical code for all 354 of its contract recipients (see abstract_full_sweep). Probe the remaining 5 chains in Phase 0."
+  },
+  "eth_getCode_at_concrete_tip": {
+    "chains": ["era", "abstract", "sophon", "lens", "cronos", "zero", "openzk"], "ok": true,
+    "detail": "All 7 live endpoints served eth_getCode(0x...8006, <eth_blockNumber result>). This is why resolve_l2_code.py turns --block latest into a concrete block number before writing anything: it costs nothing and makes the one-block-per-cache rule enforceable (METHOD §2)."
+  },
+  "eth_getStorageAt_erc1967_slot": {"chains": ["abstract"], "ok": true},
+  "eth_call_identity_probes": {
+    "ok": false,
+    "detail": "name()/owner()/implementation() returned '0x' on the abstract proxy family and errored on the era sample. Do not use as primary evidence (METHOD §6 pitfall 5)."
+  }
+ },
+
+ "findings": {
+  "abstract_clone_family": {
+   "members": [
+    {"address": "0xf175e01a468b489f77450aebfbee0ecd2c7d83d1", "candidate_txs": 162, "rank_on_abstract": 1},
+    {"address": "0xa74c14b8bc7d640589f8d83e6fd50551719c1bea", "candidate_txs": 94, "rank_on_abstract": 5},
+    {"address": "0xa592221a516dc29a427a57b6951b26962605709c", "candidate_txs": 60, "rank_on_abstract": 6}
+   ],
+   "tx_total": 316,
+   "membership_note": "These are ranks 1, 5 and 6 of abstract's recipients — NOT the top three. Ranks 2-4 (0xf70da978 133, 0x83b9b447 129, 0xffef73d5 102; true top-3 total 424 txs) are outside the family and were not resolved as contracts. The three above are a SAMPLE; abstract_full_sweep has the family's real size.",
+   "code_len": 1632,
+   "codehash_sha256_prefix": "fbd752b557db3a0d",
+   "bytecode_identical": true,
+   "erc1967_implementation": "0xaa3633b417483f932969edaef7cc4f1068f6faa9",
+   "hypothesis": "proxy clones of one smart-account implementation (Abstract Global Wallet / native AA is the obvious candidate) -> actor_type 'smart-wallet', NOT a protocol",
+   "status": "UNVERIFIED — identify the implementation in Phase 4 before labelling"
+  },
+  "abstract_full_sweep": {
+   "probed": "2026-08-26, block 0x4d6a410, --classes direct-transfer,other --deposit-beneficiaries",
+   "address_lookups": 1917,
+   "kinds": {"eoa": 1563, "contract": 354},
+   "distinct_contract_bytecodes": 3,
+   "clone_family_members": 352,
+   "note": "352 of abstract's 354 contract recipients share the fbd752b5... bytecode — the sampled three were the tip of it, and the family, not the head of the tx distribution, is the unit of attribution (METHOD §5). The other two contract recipients have unique bytecode (85ee7f0e..., 3e7b5a30...).",
+   "code_time": {"contract": 354, "contract-later": 0,
+                 "detail": "all 354 already had code at <earliest tx block - 1>: on abstract the counterfactual-funding trap does not bite. Do NOT generalise to other chains — era is unprobed."},
+   "eoa_control": {"sampled": 300, "codeless_at_tx_time": 300, "had_code_at_tx_time": 0,
+                   "straddling": 0,
+                   "detail": "check_code_time.py --kinds eoa --limit 300: the METHOD §3 control found no recipient that has lost code. 89 of the 300 received >1 in-window tx and were dated at both ends."}
+  },
+  "era_recurring_contract": {
+   "address": "0x9cb1e077e7253a4f022e74862a93ee7cecab788b",
+   "candidate_txs": 19,
+   "code_len": 3104,
+   "codehash_sha256_prefix": "80c17066accb546e",
+   "status": "UNIDENTIFIED — eth_call probes failed; needs explorer/source lookup"
+  },
+  "zero_full_resolution": {
+   "distinct_recipients": 257,
+   "kinds": {"eoa": 256, "contract": 1},
+   "the_one_contract": "0x0000000000000000000000000000000000000000",
+   "code_len": 224,
+   "code_at_tx_verified": "contract — tx_id 5235 landed in L2 block 0x34ad52, getCode probed at 0x34ad51 (the block before) and already returned 224 bytes",
+   "lesson": "address zero HAS code on this chain and is the target of the 0-value tester ping — a 'contract' verdict that is NOT a protocol interaction. Apply the system-address filter first (METHOD §3, §6 pitfall 4)."
+  },
+  "lens_full_resolution": {
+   "distinct_targets_incl_deposit_beneficiaries": 4,
+   "kinds": {"eoa": 4},
+   "note": "lens has only 11 direct transfers; its traffic is 99.2% Across protocol-messages"
+  },
+  "era_top_recipients_sampled": {
+   "note": "top 10 candidate recipients on era: 9 EOAs + 1 contract (0x9cb1e077..., 19 txs). Supports H1 (recipients are overwhelmingly plain EOAs).",
+   "eoa_examples": [
+    {"address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef", "candidate_txs": 94,
+     "cross_chain": "also rank-2 recipient on abstract (133 txs) and the rank-1 L1 initiator on BOTH era (94/17,122) and abstract (133/1,654) — it sends to itself. On zero it is a minor participant: 3 txs, which places it somewhere in ranks 12-17 of zero's 257 candidate recipients — 11 recipients rank strictly above it and 6 are tied at 3 txs, so no exact rank is reproducible across tiebreaks; quote the tx count, not a rank. The population is the 257 recipients, NOT the 255 distinct l1_from (METHOD §6.10). Self-funding across chains, but concentrated on era+abstract."},
+    {"address": "0x2ce910fbba65b454bbaf6a18c952a70f3bcd8299", "candidate_txs": 54},
+    {"address": "0x6cc2a29be4ebd6ba20556508fa6c9df7965b5210", "candidate_txs": 37}
+   ]
+  }
+ }
+}

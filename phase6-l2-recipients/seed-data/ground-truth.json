@@ -1,0 +1,367 @@
+{
+ "generated_from": "results/enriched/*.jsonl (45,711 records, census run 2026-08-25)",
+ "definition": "candidate = record with class in ('direct-transfer','other') = EOA-origin priority tx (inner from == l1_from)",
+ "counting_rules": {
+  "distinct_recipients": "Per-chain distinct addresses. The per-chain values SUM to distinct_recipients_per_chain_sum, which is NOT a count of distinct addresses: use distinct_recipients_global for that.",
+  "address_lookups": "The getCode workload, per chain: the UNION of that chain's candidate recipients and its decoded deposit beneficiaries, because resolve_l2_code.py builds one address set per chain and resolves each address once. It is therefore SMALLER than distinct_recipients + distinct_decoded_deposit_beneficiaries wherever an address is in both sets on the same chain (140 pairs overall — see recipients_that_are_also_deposit_beneficiaries_same_chain). Adding the two columns instead double-counts those, which is why address_lookups_total is 22162 and not 22302.",
+  "top10_recipients": "Sorted by txs DESC, then address ASC. The cut falls inside a tie on several chains, so the tiebreak is part of the definition — reproduce it exactly or the lists will differ while both are correct."
+ },
+ "totals": {
+  "candidate_txs": 24067,
+  "candidate_txs_value_gt0": 24053,
+  "distinct_recipients_per_chain_sum": 21515,
+  "distinct_recipients_global": 21480,
+  "recipients_on_ge2_chains": 31,
+  "recipients_ge2_txs": 807,
+  "recipients_ge5_txs": 98,
+  "recipients_ge10_txs": 34,
+  "distinct_decoded_deposit_beneficiaries_per_chain_sum": 787,
+  "distinct_decoded_deposit_beneficiaries_global": 775,
+  "deposit_beneficiaries_on_ge2_chains": 11,
+  "address_lookups_total": 22162,
+  "distinct_addresses_total_global": 22106,
+  "recipients_that_are_also_deposit_beneficiaries": 149,
+  "recipients_that_are_also_deposit_beneficiaries_same_chain": 140,
+  "deposit_records_not_decoded": 140
+ },
+ "per_chain": {
+  "abstract": {
+   "candidate_txs": 3273,
+   "candidate_txs_value_gt0": 3272,
+   "distinct_recipients": 1676,
+   "recipients_ge2_txs": 397,
+   "recipients_ge5_txs": 60,
+   "recipients_ge10_txs": 20,
+   "max_txs_to_one_recipient": 162,
+   "distinct_protocol_message_recipients": 2,
+   "distinct_decoded_deposit_beneficiaries": 323,
+   "deposit_records_not_decoded": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 82,
+   "address_lookups": 1917,
+   "candidate_selectors": {
+    "": 3272,
+    "0x64e7f93b": 1
+   },
+   "top10_recipients": [
+    {
+     "address": "0xf175e01a468b489f77450aebfbee0ecd2c7d83d1",
+     "txs": 162
+    },
+    {
+     "address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+     "txs": 133
+    },
+    {
+     "address": "0x83b9b447ac2bfc35885ec049e90d96ff7b9ba63d",
+     "txs": 129
+    },
+    {
+     "address": "0xffef73d5567c3137a28066cccfb097dac180db20",
+     "txs": 102
+    },
+    {
+     "address": "0xa74c14b8bc7d640589f8d83e6fd50551719c1bea",
+     "txs": 94
+    },
+    {
+     "address": "0xa592221a516dc29a427a57b6951b26962605709c",
+     "txs": 60
+    },
+    {
+     "address": "0x1ed66234a2a16d83667c563ecb61950be50b9f5c",
+     "txs": 58
+    },
+    {
+     "address": "0xafd4fea8345de4cdf7718d1aa424d90d70e67874",
+     "txs": 32
+    },
+    {
+     "address": "0x93eb34a23146e3726e0f4af322c8176bfc7e32c1",
+     "txs": 20
+    },
+    {
+     "address": "0x9aaad29e7106f9e48a5629af40547b8ca4f6e4df",
+     "txs": 18
+    }
+   ]
+  },
+  "cronos": {
+   "candidate_txs": 2,
+   "candidate_txs_value_gt0": 2,
+   "distinct_recipients": 2,
+   "recipients_ge2_txs": 0,
+   "recipients_ge5_txs": 0,
+   "recipients_ge10_txs": 0,
+   "max_txs_to_one_recipient": 1,
+   "distinct_protocol_message_recipients": 56,
+   "distinct_decoded_deposit_beneficiaries": 30,
+   "deposit_records_not_decoded": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 0,
+   "address_lookups": 32,
+   "candidate_selectors": {
+    "": 2
+   },
+   "top10_recipients": [
+    {
+     "address": "0x0f5c5e967707e5db4fda7a33bee834de5f48c161",
+     "txs": 1
+    },
+    {
+     "address": "0x80f3574a44e264311d881b4716d7d1f6be8e0831",
+     "txs": 1
+    }
+   ]
+  },
+  "era": {
+   "candidate_txs": 19044,
+   "candidate_txs_value_gt0": 19035,
+   "distinct_recipients": 18325,
+   "recipients_ge2_txs": 268,
+   "recipients_ge5_txs": 28,
+   "recipients_ge10_txs": 11,
+   "max_txs_to_one_recipient": 94,
+   "distinct_protocol_message_recipients": 17,
+   "distinct_decoded_deposit_beneficiaries": 201,
+   "deposit_records_not_decoded": 140,
+   "recipients_that_are_also_deposit_beneficiaries": 44,
+   "address_lookups": 18482,
+   "candidate_selectors": {
+    "": 19041,
+    "0x095ea7b3": 3
+   },
+   "top10_recipients": [
+    {
+     "address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+     "txs": 94
+    },
+    {
+     "address": "0x2ce910fbba65b454bbaf6a18c952a70f3bcd8299",
+     "txs": 54
+    },
+    {
+     "address": "0x6cc2a29be4ebd6ba20556508fa6c9df7965b5210",
+     "txs": 37
+    },
+    {
+     "address": "0xaede212cda8fc657ac7b4ad5e98fd510624638b3",
+     "txs": 36
+    },
+    {
+     "address": "0x7a89638d2fb990227810d70016b13601f5159c85",
+     "txs": 21
+    },
+    {
+     "address": "0x5a558c1e98c989c1a9ab27866afd16fffc6ea0fd",
+     "txs": 19
+    },
+    {
+     "address": "0x9cb1e077e7253a4f022e74862a93ee7cecab788b",
+     "txs": 19
+    },
+    {
+     "address": "0xa0e96036cb2a3e56847df8b30cc04fa2d731eec7",
+     "txs": 17
+    },
+    {
+     "address": "0xc5f0b978e076541ce0babd8b44637b4d423d3d95",
+     "txs": 13
+    },
+    {
+     "address": "0x303edcd8dbe1607fe512d45cc15d3e41fa4db44b",
+     "txs": 12
+    }
+   ]
+  },
+  "lens": {
+   "candidate_txs": 11,
+   "candidate_txs_value_gt0": 11,
+   "distinct_recipients": 2,
+   "recipients_ge2_txs": 1,
+   "recipients_ge5_txs": 1,
+   "recipients_ge10_txs": 1,
+   "max_txs_to_one_recipient": 10,
+   "distinct_protocol_message_recipients": 3,
+   "distinct_decoded_deposit_beneficiaries": 3,
+   "deposit_records_not_decoded": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 1,
+   "address_lookups": 4,
+   "candidate_selectors": {
+    "": 11
+   },
+   "top10_recipients": [
+    {
+     "address": "0xc2c20a7736cc2a9ee07b8b3e61a64ec7caf6baf5",
+     "txs": 10
+    },
+    {
+     "address": "0xfc142d6e289384ad8e5e263f6ed5beaca90f28e6",
+     "txs": 1
+    }
+   ]
+  },
+  "openzk": {
+   "candidate_txs": 1,
+   "candidate_txs_value_gt0": 0,
+   "distinct_recipients": 1,
+   "recipients_ge2_txs": 0,
+   "recipients_ge5_txs": 0,
+   "recipients_ge10_txs": 0,
+   "max_txs_to_one_recipient": 1,
+   "distinct_protocol_message_recipients": 19,
+   "distinct_decoded_deposit_beneficiaries": 5,
+   "deposit_records_not_decoded": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 0,
+   "address_lookups": 6,
+   "candidate_selectors": {
+    "": 1
+   },
+   "top10_recipients": [
+    {
+     "address": "0x0000000000000000000000000000000000000000",
+     "txs": 1
+    }
+   ]
+  },
+  "sophon": {
+   "candidate_txs": 1,
+   "candidate_txs_value_gt0": 0,
+   "distinct_recipients": 1,
+   "recipients_ge2_txs": 0,
+   "recipients_ge5_txs": 0,
+   "recipients_ge10_txs": 0,
+   "max_txs_to_one_recipient": 1,
+   "distinct_protocol_message_recipients": 74,
+   "distinct_decoded_deposit_beneficiaries": 194,
+   "deposit_records_not_decoded": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 0,
+   "address_lookups": 195,
+   "candidate_selectors": {
+    "": 1
+   },
+   "top10_recipients": [
+    {
+     "address": "0x0000000000000000000000000000000000000000",
+     "txs": 1
+    }
+   ]
+  },
+  "zero": {
+   "candidate_txs": 339,
+   "candidate_txs_value_gt0": 338,
+   "distinct_recipients": 257,
+   "recipients_ge2_txs": 35,
+   "recipients_ge5_txs": 7,
+   "recipients_ge10_txs": 1,
+   "max_txs_to_one_recipient": 12,
+   "distinct_protocol_message_recipients": 1,
+   "distinct_decoded_deposit_beneficiaries": 21,
+   "deposit_records_not_decoded": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 8,
+   "address_lookups": 270,
+   "candidate_selectors": {
+    "": 339
+   },
+   "top10_recipients": [
+    {
+     "address": "0x9397b44adee01fc53064875e2bc54f51fb3c78d4",
+     "txs": 12
+    },
+    {
+     "address": "0x433cec62e43cffe989b075b49868eca5e9bea9d6",
+     "txs": 7
+    },
+    {
+     "address": "0x90ec745b0c0c825539c3ca9d1e8305a2ef1b76b2",
+     "txs": 6
+    },
+    {
+     "address": "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722",
+     "txs": 6
+    },
+    {
+     "address": "0xf2315e7c6671a3502a4548d619af779eb222fb51",
+     "txs": 6
+    },
+    {
+     "address": "0x21f00a127ab97d68e506ebab3379ddee849af8a5",
+     "txs": 5
+    },
+    {
+     "address": "0xaa5861528f175dc2fccb4599cb049623b8752735",
+     "txs": 5
+    },
+    {
+     "address": "0x02867114b27d686f3565e2060424e985a1e565f5",
+     "txs": 4
+    },
+    {
+     "address": "0x2f2f665974261c4129b1dc6c359bd259cd66f78a",
+     "txs": 4
+    },
+    {
+     "address": "0x38100517d75c440340397e08afc8076c1d6ecf54",
+     "txs": 4
+    }
+   ]
+  },
+  "zkcandy": {
+   "candidate_txs": 1396,
+   "candidate_txs_value_gt0": 1395,
+   "distinct_recipients": 1251,
+   "recipients_ge2_txs": 106,
+   "recipients_ge5_txs": 2,
+   "recipients_ge10_txs": 1,
+   "max_txs_to_one_recipient": 10,
+   "distinct_protocol_message_recipients": 0,
+   "distinct_decoded_deposit_beneficiaries": 10,
+   "deposit_records_not_decoded": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 5,
+   "address_lookups": 1256,
+   "candidate_selectors": {
+    "": 1396
+   },
+   "top10_recipients": [
+    {
+     "address": "0x830bc5551e429ddbc4e9ac78436f8bf13eca8434",
+     "txs": 10
+    },
+    {
+     "address": "0x7aa4c5e3a7d25276d60d14c4779d0499788e304b",
+     "txs": 6
+    },
+    {
+     "address": "0x06cc9fbf519d757b574cdf930b7161b717acf3fd",
+     "txs": 4
+    },
+    {
+     "address": "0x1b0cc0a629c11d46d8f865af3f0af1b9222c4b85",
+     "txs": 4
+    },
+    {
+     "address": "0x6a164c14bcc4fd458e4b5d2d509e1506a5c21cd7",
+     "txs": 4
+    },
+    {
+     "address": "0x7eb710e864f0fa50e423c91fb3afb5d23a94c51a",
+     "txs": 4
+    },
+    {
+     "address": "0xb37b7e09f639196a6547de0d7e75f1c96d57f2ac",
+     "txs": 4
+    },
+    {
+     "address": "0x20ff5826aa010844bd715a4ae403b35484e42a70",
+     "txs": 3
+    },
+    {
+     "address": "0x3f5242b0dba4a442326d8211d5d6b25175b7a013",
+     "txs": 3
+    },
+    {
+     "address": "0x4e3d67d218433ad822cd328e0224675d7beb3002",
+     "txs": 3
+    }
+   ]
+  }
+ }
+}

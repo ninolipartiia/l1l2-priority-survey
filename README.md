@@ -44,6 +44,14 @@ Everything in this package was **live-verified on 2026-08-25** against public RP
 | `seed-data/example-lens-2026-08-23_25.jsonl` | Real scanner output (Lens, 2 days, 19 records) |
 | `seed-data/perchain-l1-event-samples.json` | One decoded live event + L2 lookup per chain |
 
+## Follow-up phase (separate package)
+
+`phase6-l2-recipients/` is a self-contained input package for the **L2-side recipient
+census**: this census classifies every tx on the sender axis only and never resolves what
+the L2 `to` address is, so "an EOA sent value to a contract on L2" is not counted anywhere.
+That package closes the gap over the completed `results/` dataset. Start with its
+`README.md`; it treats `results/` as read-only input.
+
 ## Quickstart (sanity check before the real run)
 
 ```bash
