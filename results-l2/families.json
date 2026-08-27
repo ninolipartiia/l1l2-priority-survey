@@ -426,7 +426,8 @@
    "evidence": [
     "address 0x0000000000000000000000000000000000000000 on abstract, sophon, zero and openzk; 224 bytes of identical code",
     "verified name on abstract and sophon explorers: 'contracts-preprocessed/EmptyContract.sol:EmptyContract'",
-    "int(address,16) < 0x20000 -> is_system per METHOD \u00a73; the target of the cross-chain tester's 0-value pings, not a counterparty a user chose"
+    "int(address,16) < 0x20000 -> is_system per METHOD \u00a73; not a counterparty a user chose",
+    "the 5 txs to this address are bytecode publications, not pings: Bridgehub 0x303a465b659cbb0ab36ee643ea362c509eeb5213, selector 0xd52471c1 (requestL2TransactionDirect), 7652B calldata carrying one 7200-byte EraVM contract in factoryDeps, L2 gas limit 72,000,000; each L2 receipt emits KnownCodesStorage (0x...8004) MarkedAsKnown for bytecode hash 0x010000e1188404f17e87c75fc34cf3500754091f43168ccb2d9d7890598ed5b6. Senders 0x58551793beedca08a861c394258e0457e48a2fcc (abstract, sophon) and 0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722 (openzk, zero, zkcandy). The `to` field is incidental to the mechanism."
    ],
    "members": [
     "0x0000000000000000000000000000000000000000",

@@ -617,6 +617,43 @@ def main():
                                           "value_total": r["value_total"]}
                                          for r in con_rows
                                          if r["actor_type"] == "unknown-contract"), None),
+        # The 5 `is_system` txs to address 0x0 are bytecode publications, not the 0-value
+        # "pings" an earlier draft called them: data_len is 0 but the payload rides in
+        # factoryDeps, which the census does not decode. Observed out-of-band (L1 calldata via
+        # eth_getTransactionByHash, L2 effect via eth_getTransactionReceipt) and recorded here
+        # so REPORT-L2 §3.1 stays derivable from this file.
+        "system_bytecode_publication": {
+            "_source": "not derived from the census: L1 calldata read with "
+                       "eth_getTransactionByHash on Ethereum mainnet, L2 effect read with "
+                       "eth_getTransactionReceipt on each chain, 2026-08-27",
+            "txs": [{"chain": c, "tx_id": t, "l1_from": s}
+                    for c, t, s in (
+                        ("abstract", 24312, "0x58551793beedca08a861c394258e0457e48a2fcc"),
+                        ("openzk", 5986, "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722"),
+                        ("sophon", 9599, "0x58551793beedca08a861c394258e0457e48a2fcc"),
+                        ("zero", 5235, "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722"),
+                        ("zkcandy", 6348, "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722"))],
+            "distinct_senders": 2,
+            "l1_bridgehub": "0x303a465b659cbb0ab36ee643ea362c509eeb5213",
+            "l1_selector": "0xd52471c1",
+            "l1_selector_name": "requestL2TransactionDirect",
+            "l1_calldata_len_bytes": 7652,
+            "factory_dep_len_bytes": 7200,
+            "factory_dep_count": 1,
+            "l2_gas_limit": 72000000,
+            "published_bytecode_hash":
+                "0x010000e1188404f17e87c75fc34cf3500754091f43168ccb2d9d7890598ed5b6",
+            "known_codes_storage": "0x0000000000000000000000000000000000008004",
+            "sophon_9599_status": "0x1",
+            "sophon_9599_gas_used": 265068,
+            "contrast_era_empty_self_calls": {
+                "txs": 6, "l1_selector": "0xeb672419",
+                "l1_selector_name": "requestL2Transaction",
+                "l1_calldata_len_bytes": 292, "factory_dep_count": 0,
+                "l2_gas_limit_min": 500000, "l2_gas_limit_max": 800000,
+                "note": "these ARE empty pings; kept separate from the 5 above so the two "
+                        "are not conflated (REPORT-L2 §7)"},
+        },
         "self_funding": {
             "recipients": sum(1 for r in all_rows if r["is_own_l1_initiator"]),
             "txs": sum(r["txs"] for r in all_rows if r["is_own_l1_initiator"]),

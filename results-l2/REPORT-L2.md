@@ -18,8 +18,8 @@ wallet** — 864 to Abstract Global Wallet accounts on abstract, 1 to a Safe on 
 **24 txs (0.10% of the whole candidate set) reached something that is not a user account**: 19 to
 **Veno Finance**'s `BridgeReceiver` on era (7.167 ETH of liquid-staking flow), 4 to token
 contracts (USDC.e, ZK, WETH on era), and 1 to a single unverified private contract on abstract.
-A further **4 txs** were 0-value pings at the reserved address `0x0` (`is_system`, excluded from
-the 889). The remaining **23,174 txs (96.3%) paid a plain codeless address**. 23,174 + 889 + 4 =
+A further **4 txs** were bytecode publications addressed to the reserved address `0x0`
+(`is_system`, excluded from the 889; see §3.1). The remaining **23,174 txs (96.3%) paid a plain codeless address**. 23,174 + 889 + 4 =
 24,067.
 
 **Two of those 889 txs reverted on L2.** Receipts were fetched for all 893 contract-recipient
@@ -51,8 +51,8 @@ That zkcandy is resolved at all is the surprise: the input package expected it t
 unresolvable. Its RPC is still dead, but its **block explorer is alive again** and served all
 1,251 recipients + 10 deposit beneficiaries (§2.3). zkcandy has **zero contract recipients
 outside the reserved range** — the one exception is address `0x0`, which *does* have code on
-zkcandy and *is* one of the 1,251 (the tester ping, tx_id 6348); it carries `is_system` and sits
-in the `eoa` bucket because the creation-record method cannot see genesis contracts.
+zkcandy and *is* one of the 1,251 (the bytecode publication, tx_id 6348); it carries `is_system`
+and sits in the `eoa` bucket because the creation-record method cannot see genesis contracts.
 
 Three secondary results:
 
@@ -241,10 +241,24 @@ truncation removes. era's API caps at 5 and fails loudly with `status:0 NOTOK`.)
 | **total** | **21,515** | **24,067** | **100%** |
 
 **`is_system` is a flag inside those buckets, not a seventh one.** 5 recipients / 5 txs are
-reserved addresses — address `0x0` on abstract, openzk, sophon, zero and zkcandy, the target of
-the cross-chain tester's 0-value pings. Four of them sit in the `contract` bucket (224 bytes of
-`EmptyContract` code) and one in `eoa` (zkcandy, per §2.3). They are excluded from the headline
-and never given an `actor_type`.
+reserved addresses — address `0x0` on abstract, openzk, sophon, zero and zkcandy. Four of them
+sit in the `contract` bucket (224 bytes of `EmptyContract` code) and one in `eoa` (zkcandy, per
+§2.3). They are excluded from the headline and never given an `actor_type`.
+
+**These 5 are bytecode publications, not calls and not pings.** All five have `data_len = 0` and
+`value = 0`, but the payload is not absent — it travels in `factoryDeps`, which the census does
+not decode. The L1 side is identical on all five: `Bridgehub`
+`0x303a465b659cbb0ab36ee643ea362c509eeb5213`, selector `0xd52471c1`
+(`requestL2TransactionDirect`), 7,652 bytes of calldata carrying a single 7,200-byte EraVM
+contract, and an L2 gas limit of 72,000,000 — two orders of magnitude above the 500–800k a real
+empty ping requests (§7). The L2 receipts confirm the effect: each emits a `KnownCodesStorage`
+(`0x…8004`) `MarkedAsKnown` log for bytecode hash
+`0x010000e1188404f17e87c75fc34cf3500754091f43168ccb2d9d7890598ed5b6`, and sophon tx 9599 burns
+265,068 gas on what would otherwise be a no-op call to an empty contract. Two senders account for
+all five — `0x58551793…` (abstract, sophon) and `0x953a9df5…` (openzk, zero, zkcandy) — publishing
+the same bytecode across five chains. Sending to `0x0` is incidental to the mechanism: the
+publication happens whatever the `to` field says. The `is_system` filter and the bucket
+assignments above are unaffected; only the description of what these txs do is at issue.
 
 **Headline, system-filtered: 889 txs to 300 contract recipients.**
 
@@ -453,13 +467,13 @@ AGW wallets. The family is a bytecode fact, not a head-of-distribution fact.
 ### 5.3 zkcandy — 1,396 candidate txs, 1,251 recipients
 
 **Zero contract recipients outside the reserved range.** Of the 1,251 recipients and 10 deposit
-beneficiaries, exactly one — address `0x0`, the 0-value tester ping — has code on zkcandy; it is
-`is_system` and therefore excluded from every protocol claim, and it sits in the `eoa` bucket
-because the creation-record method cannot see genesis contracts (§2.3). The other 1,255 are plain
-addresses, established three ways: the chain's complete contract population (314 addresses)
-intersects the census set only at `0x0`; the method's recall on non-system contracts is 291/291;
-and an independent `is_contract` instrument agreed on every one of 174 sampled addresses. This
-chain was expected to be unresolvable and is now fully resolved.
+beneficiaries, exactly one — address `0x0`, the bytecode-publication target (§3.1) — has code on
+zkcandy; it is `is_system` and therefore excluded from every protocol claim, and sits in the
+`eoa` bucket because the creation-record method cannot see genesis contracts (§2.3). The other
+1,255 are plain addresses, established three ways: the chain's complete contract population
+(314 addresses) intersects the census set only at `0x0`; the method's recall on non-system
+contracts is 291/291; and an independent `is_contract` instrument agreed on every one of 174
+sampled addresses. This chain was expected to be unresolvable and is now fully resolved.
 
 Caveat that survives: EIP-7702 delegations are invisible to the substitute, so zkcandy's
 `delegated-eoa` count is unknown rather than zero — and this is not idle, since **96 of the 1,256
@@ -468,10 +482,10 @@ addresses carry a `0xef0100` delegation on Ethereum L1**. No sampled address sho
 
 ### 5.4 ZERϴ Network — 339 candidate txs, 257 recipients
 
-256 plain EOAs plus address `0x0` (224 bytes, `is_system`, the tester ping) — the seed data's
-finding reproduced exactly, including the code-time proof (funding tx in `0x34ad52`, probed at
-`0x34ad51`). No protocol recipients. The full 269-address `eoa` control ran here with 0
-contradictions.
+256 plain EOAs plus address `0x0` (224 bytes, `is_system`, the bytecode-publication target,
+§3.1) — the seed data's finding reproduced exactly, including the code-time proof (funding tx in
+`0x34ad52`, probed at `0x34ad51`). No protocol recipients. The full 269-address `eoa` control ran
+here with 0 contradictions.
 
 ### 5.5 Lens — 11 candidate txs, 2 recipients
 
@@ -487,15 +501,17 @@ decoded deposit beneficiaries are EOAs. No contracts anywhere on this chain in t
 
 ### 5.7 Sophon — 1 candidate tx, 1 recipient
 
-The single candidate tx is a 0-value tester ping to address `0x0` (`is_system`). Sophon was
+The single candidate tx (tx_id 9599) is a bytecode publication addressed to `0x0` (`is_system`,
+§3.1) — it succeeded on L2 with `status 0x1`, burning 265,068 gas. Sophon was
 resolved first because of its wind-down; its RPC answered normally. The interesting result is in
 the secondary set: **5 of its 194 deposit beneficiaries are ZKsync SSO smart accounts**
 (`AccountProxy` → beacon `SsoBeacon` → `SsoAccount`), receiving 7 deposits.
 
 ### 5.8 OpenZK — 1 candidate tx, 1 recipient
 
-Again a 0-value ping to `0x0` (`is_system`). Its secondary set is the notable part: **132 of
-openzk's 141 decoded deposits (93.6%) land on `OzkVault`** `0x7cafe5e0218454abc86c78ba23b311e9a2412e49`
+Again a bytecode publication addressed to `0x0` (`is_system`, §3.1). Its secondary set is the
+notable part: **132 of openzk's 141 decoded deposits (93.6%) land on `OzkVault`**
+`0x7cafe5e0218454abc86c78ba23b311e9a2412e49`
 — an owner-controlled vault. Source is not verified, but its creation bytecode carries the revert
 strings `"OzkVault: tx already sent"` and `"OzkVault: insufficient token amount"` and an
 `owner()/transferOwnership()/withdraw(address,address,uint256)` surface. The project link is not
@@ -552,11 +568,14 @@ only L1-initiated *call* to a non-token L2 contract in the whole window, and it 
 so on the strictest reading, the number of successful user-driven L2 contract calls from L1 in a
 year across 8 chains is **3, all of them `approve`**.
 
-The remaining **11** records are `data_len = 0`, `value = 0` pings, not calls: **5** target
-address `0x0` (abstract, sophon, zero, openzk, zkcandy — the cross-chain testers
-`0x953a9df5…` and `0x58551793…`, removed by the system filter) and **6** are empty self-calls on
-era where `to == l1_from`. Grouping those 11 by selector would yield 11 rows signed "unknown" that
-are not calls at all. 4 + 11 = 15; the class reconciles.
+The remaining **11** records all carry `data_len = 0` and `value = 0`, so none of them is a call —
+but they are two different things, not one. **5** target address `0x0` (abstract, sophon, zero,
+openzk, zkcandy, from `0x953a9df5…` and `0x58551793…`, removed by the system filter) and are
+**bytecode publications**, carrying a 7,200-byte contract in `factoryDeps` rather than in calldata
+(§3.1) — empty calldata, but not empty transactions. The other **6** are genuine empty pings:
+self-calls on era where `to == l1_from`, sent via `requestL2Transaction` with 292 bytes of L1
+calldata, no `factoryDeps`, and 500–800k L2 gas limits. Grouping those 11 by selector would yield
+11 rows signed "unknown" that are not calls at all. 4 + 11 = 15; the class reconciles.
 
 ---
 

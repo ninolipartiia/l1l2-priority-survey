@@ -119,11 +119,11 @@
   "results-l2/scripts/reproduce_ground_truth.py": "9cd061e603e5b10bf51d571cd42e374ac2b08c9abf066389fde719c30d457320",
   "results-l2/scripts/resolve_zkcandy_explorer.py": "89c201538979f42336c36c3a1a6b7ffd42a0e2ddc0dd548cc5b2eb398156cc59",
   "results-l2/scripts/fetch_contract_names.py": "9d0898681ed58cc5abb6184261c1c9a2e23cecbb11e8cad843ffe2289a81b421",
-  "results-l2/scripts/build_outputs.py": "628044160ea396e1df2802968530043e655ace4729e93cbcf25db3b383012369",
+  "results-l2/scripts/build_outputs.py": "efbd9e8daaa840029ac2f5fea2eb9924459acd3eedbcc101cbb44b013b29dd56",
   "results-l2/scripts/write_manifest.py": "c760afc8c0c92e7d20365925094edd3a75164bdeea9076819808716c4c695393",
   "results-l2/scripts/write_labels.py": "ce1a2722caa02824b4f78d6df1d63f86b7406fdaba7f7602c90f41fb298224de",
   "results-l2/scripts/check_acceptance.py": "251be23871ecd3ea549b8e4748c4dfdca02432892994f8b18758c2c53cfcb385",
-  "results-l2/scripts/attribution.json": "8d292a83d239e415801474f472f8a0d364567cf447d81bfa668d1f5f68077c3b"
+  "results-l2/scripts/attribution.json": "3594ec72651f10d9a3e600dd5924a1e760f5a641723c50d4924e87646348cecf"
  },
  "acceptance": "results-l2/scripts/check_acceptance.py re-checks every TASK.md acceptance criterion mechanically; 21/21 pass as of this run. Strengthened after an independent audit found several checks circular or vacuous: the bucket reconciliation and the lookup-coverage check now re-derive from results/enriched/ and compare KEY SETS rather than counts; the contract-later, is_system and labels checks now test the named property rather than a proxy for it; and a new check enforces OUTPUT_SPEC \u00a77's rule that every number in REPORT-L2.md is derivable from aggregates-l2.json \u2014 the one criterion the earlier checker did not test, and the one that failed.",
  "independent_audit": {
