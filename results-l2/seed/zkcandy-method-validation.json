@@ -1,0 +1,27 @@
+{
+ "why": "zkcandy has no working JSON-RPC endpoint, so resolve_l2_code.py cannot run there. results-l2/scripts/resolve_zkcandy_explorer.py substitutes two explorer endpoints for the two RPC calls. This file records the evidence that the substitute agrees with eth_getCode.",
+ "validated": "2026-08-26",
+ "substitute_method": "explorer.zkcandy.io/api?module=contract&action=getcontractcreation -> a creation record means 'contract', an empty OK result means 'no code'",
+ "cross_validation_on_era": {
+  "why_era": "era has BOTH a working archive RPC and a working ZKsync-era-style explorer API, so the substitute can be scored against eth_getCode ground truth",
+  "rpc": "https://mainnet.era.zksync.io eth_getCode @ 0x4468d6d",
+  "explorer": "https://block-explorer-api.mainnet.zksync.io/api",
+  "sample": "all 8 era contract recipients + 200 era EOA recipients (random.seed(20260826))",
+  "agree": 208, "disagree": 0, "api_errors": 0
+ },
+ "positive_control_on_zkcandy": {
+  "why": "an all-EOA sweep result is also what a broken detector returns; these are real zkcandy contracts, found independently via the explorer's own tokentx/txlist data for candidate recipients",
+  "contracts_detected": 8,
+  "addresses": ["0x97d7e6e29606edd7b6620d359813dc8058600372","0x4b8f68013043b72f5bbf57613f670436afa00e67","0x06cc31ab433205236d03123d9216c40b4b949ff1","0xc76b64a80943167da5958d547158b768c2879c2b","0x498c48797a56cb7d31ff01bf4722eff4f91ed80f","0xf77bd7c05598e094bc06e34bb81c07bd3b091db1","0x44f5663030fe1b671fe540a2ba5de309aae4b2af","0xe16bcf46b98cab58c661531ff02d64da59c39d19"],
+  "full_chunk_test": "a chunk of exactly 10 known contracts returned all 10; a mixed chunk of 5 contracts + 5 EOAs returned exactly the 5 contracts"
+ },
+ "api_address_cap": {
+  "zkcandy": {"cap": 10, "above_cap": "status:1 OK with ZERO results — SILENT truncation, which is why the script hard-caps at 10 and asserts every returned address was asked for"},
+  "era": {"cap": 5, "above_cap": "status:0 NOTOK — errors loudly"}
+ },
+ "declared_limitations": [
+  "no bytecode is returned: zkcandy contributes no code_len, no codehash and therefore no bytecode families (METHOD 5)",
+  "EIP-7702 delegated-eoa cannot be detected (a delegation is code, not a creation record) — zkcandy's delegated-eoa count is unknown, not zero",
+  "a genesis-deployed contract has no creation record and reads as codeless; verified for 0x..8007, 0x..800b, 0x..800a, 0x..10002, 0x..10005. All genesis contracts sit in the reserved range that METHOD 3 flags is_system, so no user-chosen counterparty can be mis-filed by this"
+ ]
+}

@@ -1,0 +1,2 @@
+{"actor_type": null, "chain": "cronos", "class": "direct-transfer", "family": null, "is_system": false, "protocol": null, "selector": null, "to": "0x0f5c5e967707e5db4fda7a33bee834de5f48c161", "to_kind": "eoa", "ts": 1756640459, "tx_id": 4546, "value": "871642910796894300"}
+{"actor_type": null, "chain": "cronos", "class": "direct-transfer", "family": null, "is_system": false, "protocol": null, "selector": null, "to": "0x80f3574a44e264311d881b4716d7d1f6be8e0831", "to_kind": "eoa", "ts": 1757015939, "tx_id": 4554, "value": "91994490327995998036"}

@@ -1,0 +1,47 @@
+{
+"0x7188b6975eec82ae914b6ec7ac32b3c9a18b2c81": {
+"code_at_last_tx": null,
+"code_at_tx": "contract",
+"detail": null,
+"earliest_tx_id": 2889,
+"l2_block": "0x403907",
+"last_tx_id": 7204,
+"len_at_tx": 9696,
+"probe_block": "0x403906",
+"retryable": false,
+"source": "candidate",
+"straddles_deployment": null,
+"ts": 1756822991,
+"txs_in_window": 19
+},
+"0xb234ca484866c811d0e6d3318866f583781ed045": {
+"code_at_last_tx": null,
+"code_at_tx": "contract",
+"detail": null,
+"earliest_tx_id": 2886,
+"l2_block": "0x401cfb",
+"last_tx_id": 7227,
+"len_at_tx": 4832,
+"probe_block": "0x401cfa",
+"retryable": false,
+"source": "candidate",
+"straddles_deployment": null,
+"ts": 1756783067,
+"txs_in_window": 4308
+},
+"0xe7cb3e167e7475de1331cf6e0ceb187654619e12": {
+"code_at_last_tx": null,
+"code_at_tx": "contract",
+"detail": null,
+"earliest_tx_id": 2837,
+"l2_block": "0x3e7ae2",
+"last_tx_id": 2885,
+"len_at_tx": 4832,
+"probe_block": "0x3e7ae1",
+"retryable": false,
+"source": "candidate",
+"straddles_deployment": null,
+"ts": 1756170887,
+"txs_in_window": 49
+}
+}

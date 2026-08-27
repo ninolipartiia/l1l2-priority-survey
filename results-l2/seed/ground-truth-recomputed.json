@@ -1,0 +1,694 @@
+{
+ "multi_chain_deposit_beneficiaries": [
+  {
+   "address": "0x000f9764a2c9345df184d19a2cb935a0857af000",
+   "chains": [
+    "abstract",
+    "era",
+    "sophon"
+   ]
+  },
+  {
+   "address": "0x07ae8551be970cb1cca11dd7a11f47ae82e70e67",
+   "chains": [
+    "era",
+    "lens"
+   ]
+  },
+  {
+   "address": "0x11a968128adb249441d9d279a4ddd8968e158a11",
+   "chains": [
+    "abstract",
+    "sophon"
+   ]
+  },
+  {
+   "address": "0x13283b2784a203aee36d0d8730c2fe246b602e25",
+   "chains": [
+    "era",
+    "sophon"
+   ]
+  },
+  {
+   "address": "0x198d400fc7f4a06e8161f4cb04eab856b0ae7edd",
+   "chains": [
+    "cronos",
+    "era"
+   ]
+  },
+  {
+   "address": "0x65a8f07bd9a8598e1b5b6c0a88f4779dbc077675",
+   "chains": [
+    "abstract",
+    "era"
+   ]
+  },
+  {
+   "address": "0x835322e4ed980941b20976aebf66744a20047092",
+   "chains": [
+    "abstract",
+    "sophon"
+   ]
+  },
+  {
+   "address": "0x9452ed6da616783786c6d8aaf73047ecad126c57",
+   "chains": [
+    "era",
+    "sophon"
+   ]
+  },
+  {
+   "address": "0x98464f58c04e6ef1966d04ba2fc7fd50f153ff45",
+   "chains": [
+    "abstract",
+    "era"
+   ]
+  },
+  {
+   "address": "0xe8332555fefff65b2464b863e37a05c06976d7fb",
+   "chains": [
+    "era",
+    "sophon"
+   ]
+  },
+  {
+   "address": "0xfabc88f604a25f177e2ca284256f2bccb84fd9c2",
+   "chains": [
+    "era",
+    "sophon"
+   ]
+  }
+ ],
+ "multi_chain_recipients": [
+  {
+   "address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+   "chains": [
+    "abstract",
+    "era",
+    "zero"
+   ],
+   "txs": 230
+  },
+  {
+   "address": "0x93eb34a23146e3726e0f4af322c8176bfc7e32c1",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 23
+  },
+  {
+   "address": "0x9bc2d99249b9e87991bb5c3e44fd3ad6be88f809",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 11
+  },
+  {
+   "address": "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722",
+   "chains": [
+    "zero",
+    "zkcandy"
+   ],
+   "txs": 9
+  },
+  {
+   "address": "0xf2315e7c6671a3502a4548d619af779eb222fb51",
+   "chains": [
+    "abstract",
+    "zero"
+   ],
+   "txs": 8
+  },
+  {
+   "address": "0xf62d60da2fa7fe8db5c3b31fa086108a07cb6635",
+   "chains": [
+    "era",
+    "zkcandy"
+   ],
+   "txs": 7
+  },
+  {
+   "address": "0x6f6426a9b93a7567fcccbfe5d0d6f26c1085999b",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 6
+  },
+  {
+   "address": "0x0000000000000000000000000000000000000000",
+   "chains": [
+    "abstract",
+    "openzk",
+    "sophon",
+    "zero",
+    "zkcandy"
+   ],
+   "txs": 5
+  },
+  {
+   "address": "0x15918ff7f6c44592c81d999b442956b07d26cc44",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 5
+  },
+  {
+   "address": "0x900c787fb3c82895637144a77e0c41daeb3a8d99",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 5
+  },
+  {
+   "address": "0x8a8fa799d8799d6cac92196a96708d0228825628",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 4
+  },
+  {
+   "address": "0x1113380e02a9eccd203285b96e4a9f3dfca325cc",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 3
+  },
+  {
+   "address": "0x6bf2cad604645c9e8cebfde1008d19eaab23b444",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 3
+  },
+  {
+   "address": "0xacd2ac03ad7e0c89103083be640d911ed076d53e",
+   "chains": [
+    "zero",
+    "zkcandy"
+   ],
+   "txs": 3
+  },
+  {
+   "address": "0xbff89ef6d47726e30877d4e3d18590f8b67a9486",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 3
+  },
+  {
+   "address": "0xd3a5a3b167ff2eab162e1e8a69b5cdbb9c68ba3e",
+   "chains": [
+    "abstract",
+    "zkcandy"
+   ],
+   "txs": 3
+  },
+  {
+   "address": "0x0019545c100c3441c4e9d40f24478fbffa53fd8a",
+   "chains": [
+    "zero",
+    "zkcandy"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0x012337efddedf950529f1529baad0edbbbd0ec54",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0x2229ce8e725a7ebd61f7e91adfb513ccbadfa631",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0x47a2a5a8950dd410410f0af03af0964cae6ffec4",
+   "chains": [
+    "era",
+    "zero"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0x54c5ef136d02b95c4ff217af93fa63f9e4119919",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0x54e0a1ea64e53749afb7128c0c77577321ae929b",
+   "chains": [
+    "era",
+    "zkcandy"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0x5dc0145cf938703a58ac3ced9ff5977384981099",
+   "chains": [
+    "zero",
+    "zkcandy"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0x67c2465465ce7bd7432e5f35c611f7b0c09f7582",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0x94e017d0fdcb05093c44111dbbf552b693b3e94f",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0x999a61571d7aae35bdbe8bbb6337fbe4b42d917e",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0xa31e78358c267cc1041a68fbc7ee7ede04e82ee2",
+   "chains": [
+    "zero",
+    "zkcandy"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0xbf0290c90ec042f9d116458542f04f1c6e1dcb6c",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0xc51d3470693bc049809a1c515606124c7c75908d",
+   "chains": [
+    "abstract",
+    "era"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0xd94637aa5fc91c9ad058cdc3db2505ac7e3e9f54",
+   "chains": [
+    "abstract",
+    "zero"
+   ],
+   "txs": 2
+  },
+  {
+   "address": "0xdf8979cce6f1534df0a042543a187aaafbdcb671",
+   "chains": [
+    "zero",
+    "zkcandy"
+   ],
+   "txs": 2
+  }
+ ],
+ "per_chain": {
+  "abstract": {
+   "address_lookups": 1917,
+   "candidate_selectors": {
+    "": 3272,
+    "0x64e7f93b": 1
+   },
+   "candidate_txs": 3273,
+   "candidate_txs_value_gt0": 3272,
+   "deposit_records_not_decoded": 0,
+   "distinct_decoded_deposit_beneficiaries": 323,
+   "distinct_protocol_message_recipients": 2,
+   "distinct_recipients": 1676,
+   "max_txs_to_one_recipient": 162,
+   "recipients_ge10_txs": 20,
+   "recipients_ge2_txs": 397,
+   "recipients_ge5_txs": 60,
+   "recipients_that_are_also_deposit_beneficiaries": 82,
+   "top10_recipients": [
+    {
+     "address": "0xf175e01a468b489f77450aebfbee0ecd2c7d83d1",
+     "txs": 162
+    },
+    {
+     "address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+     "txs": 133
+    },
+    {
+     "address": "0x83b9b447ac2bfc35885ec049e90d96ff7b9ba63d",
+     "txs": 129
+    },
+    {
+     "address": "0xffef73d5567c3137a28066cccfb097dac180db20",
+     "txs": 102
+    },
+    {
+     "address": "0xa74c14b8bc7d640589f8d83e6fd50551719c1bea",
+     "txs": 94
+    },
+    {
+     "address": "0xa592221a516dc29a427a57b6951b26962605709c",
+     "txs": 60
+    },
+    {
+     "address": "0x1ed66234a2a16d83667c563ecb61950be50b9f5c",
+     "txs": 58
+    },
+    {
+     "address": "0xafd4fea8345de4cdf7718d1aa424d90d70e67874",
+     "txs": 32
+    },
+    {
+     "address": "0x93eb34a23146e3726e0f4af322c8176bfc7e32c1",
+     "txs": 20
+    },
+    {
+     "address": "0x9aaad29e7106f9e48a5629af40547b8ca4f6e4df",
+     "txs": 18
+    }
+   ]
+  },
+  "cronos": {
+   "address_lookups": 32,
+   "candidate_selectors": {
+    "": 2
+   },
+   "candidate_txs": 2,
+   "candidate_txs_value_gt0": 2,
+   "deposit_records_not_decoded": 0,
+   "distinct_decoded_deposit_beneficiaries": 30,
+   "distinct_protocol_message_recipients": 56,
+   "distinct_recipients": 2,
+   "max_txs_to_one_recipient": 1,
+   "recipients_ge10_txs": 0,
+   "recipients_ge2_txs": 0,
+   "recipients_ge5_txs": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 0,
+   "top10_recipients": [
+    {
+     "address": "0x0f5c5e967707e5db4fda7a33bee834de5f48c161",
+     "txs": 1
+    },
+    {
+     "address": "0x80f3574a44e264311d881b4716d7d1f6be8e0831",
+     "txs": 1
+    }
+   ]
+  },
+  "era": {
+   "address_lookups": 18482,
+   "candidate_selectors": {
+    "": 19041,
+    "0x095ea7b3": 3
+   },
+   "candidate_txs": 19044,
+   "candidate_txs_value_gt0": 19035,
+   "deposit_records_not_decoded": 140,
+   "distinct_decoded_deposit_beneficiaries": 201,
+   "distinct_protocol_message_recipients": 17,
+   "distinct_recipients": 18325,
+   "max_txs_to_one_recipient": 94,
+   "recipients_ge10_txs": 11,
+   "recipients_ge2_txs": 268,
+   "recipients_ge5_txs": 28,
+   "recipients_that_are_also_deposit_beneficiaries": 44,
+   "top10_recipients": [
+    {
+     "address": "0xf70da97812cb96acdf810712aa562db8dfa3dbef",
+     "txs": 94
+    },
+    {
+     "address": "0x2ce910fbba65b454bbaf6a18c952a70f3bcd8299",
+     "txs": 54
+    },
+    {
+     "address": "0x6cc2a29be4ebd6ba20556508fa6c9df7965b5210",
+     "txs": 37
+    },
+    {
+     "address": "0xaede212cda8fc657ac7b4ad5e98fd510624638b3",
+     "txs": 36
+    },
+    {
+     "address": "0x7a89638d2fb990227810d70016b13601f5159c85",
+     "txs": 21
+    },
+    {
+     "address": "0x5a558c1e98c989c1a9ab27866afd16fffc6ea0fd",
+     "txs": 19
+    },
+    {
+     "address": "0x9cb1e077e7253a4f022e74862a93ee7cecab788b",
+     "txs": 19
+    },
+    {
+     "address": "0xa0e96036cb2a3e56847df8b30cc04fa2d731eec7",
+     "txs": 17
+    },
+    {
+     "address": "0xc5f0b978e076541ce0babd8b44637b4d423d3d95",
+     "txs": 13
+    },
+    {
+     "address": "0x303edcd8dbe1607fe512d45cc15d3e41fa4db44b",
+     "txs": 12
+    }
+   ]
+  },
+  "lens": {
+   "address_lookups": 4,
+   "candidate_selectors": {
+    "": 11
+   },
+   "candidate_txs": 11,
+   "candidate_txs_value_gt0": 11,
+   "deposit_records_not_decoded": 0,
+   "distinct_decoded_deposit_beneficiaries": 3,
+   "distinct_protocol_message_recipients": 3,
+   "distinct_recipients": 2,
+   "max_txs_to_one_recipient": 10,
+   "recipients_ge10_txs": 1,
+   "recipients_ge2_txs": 1,
+   "recipients_ge5_txs": 1,
+   "recipients_that_are_also_deposit_beneficiaries": 1,
+   "top10_recipients": [
+    {
+     "address": "0xc2c20a7736cc2a9ee07b8b3e61a64ec7caf6baf5",
+     "txs": 10
+    },
+    {
+     "address": "0xfc142d6e289384ad8e5e263f6ed5beaca90f28e6",
+     "txs": 1
+    }
+   ]
+  },
+  "openzk": {
+   "address_lookups": 6,
+   "candidate_selectors": {
+    "": 1
+   },
+   "candidate_txs": 1,
+   "candidate_txs_value_gt0": 0,
+   "deposit_records_not_decoded": 0,
+   "distinct_decoded_deposit_beneficiaries": 5,
+   "distinct_protocol_message_recipients": 19,
+   "distinct_recipients": 1,
+   "max_txs_to_one_recipient": 1,
+   "recipients_ge10_txs": 0,
+   "recipients_ge2_txs": 0,
+   "recipients_ge5_txs": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 0,
+   "top10_recipients": [
+    {
+     "address": "0x0000000000000000000000000000000000000000",
+     "txs": 1
+    }
+   ]
+  },
+  "sophon": {
+   "address_lookups": 195,
+   "candidate_selectors": {
+    "": 1
+   },
+   "candidate_txs": 1,
+   "candidate_txs_value_gt0": 0,
+   "deposit_records_not_decoded": 0,
+   "distinct_decoded_deposit_beneficiaries": 194,
+   "distinct_protocol_message_recipients": 74,
+   "distinct_recipients": 1,
+   "max_txs_to_one_recipient": 1,
+   "recipients_ge10_txs": 0,
+   "recipients_ge2_txs": 0,
+   "recipients_ge5_txs": 0,
+   "recipients_that_are_also_deposit_beneficiaries": 0,
+   "top10_recipients": [
+    {
+     "address": "0x0000000000000000000000000000000000000000",
+     "txs": 1
+    }
+   ]
+  },
+  "zero": {
+   "address_lookups": 270,
+   "candidate_selectors": {
+    "": 339
+   },
+   "candidate_txs": 339,
+   "candidate_txs_value_gt0": 338,
+   "deposit_records_not_decoded": 0,
+   "distinct_decoded_deposit_beneficiaries": 21,
+   "distinct_protocol_message_recipients": 1,
+   "distinct_recipients": 257,
+   "max_txs_to_one_recipient": 12,
+   "recipients_ge10_txs": 1,
+   "recipients_ge2_txs": 35,
+   "recipients_ge5_txs": 7,
+   "recipients_that_are_also_deposit_beneficiaries": 8,
+   "top10_recipients": [
+    {
+     "address": "0x9397b44adee01fc53064875e2bc54f51fb3c78d4",
+     "txs": 12
+    },
+    {
+     "address": "0x433cec62e43cffe989b075b49868eca5e9bea9d6",
+     "txs": 7
+    },
+    {
+     "address": "0x90ec745b0c0c825539c3ca9d1e8305a2ef1b76b2",
+     "txs": 6
+    },
+    {
+     "address": "0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722",
+     "txs": 6
+    },
+    {
+     "address": "0xf2315e7c6671a3502a4548d619af779eb222fb51",
+     "txs": 6
+    },
+    {
+     "address": "0x21f00a127ab97d68e506ebab3379ddee849af8a5",
+     "txs": 5
+    },
+    {
+     "address": "0xaa5861528f175dc2fccb4599cb049623b8752735",
+     "txs": 5
+    },
+    {
+     "address": "0x02867114b27d686f3565e2060424e985a1e565f5",
+     "txs": 4
+    },
+    {
+     "address": "0x2f2f665974261c4129b1dc6c359bd259cd66f78a",
+     "txs": 4
+    },
+    {
+     "address": "0x38100517d75c440340397e08afc8076c1d6ecf54",
+     "txs": 4
+    }
+   ]
+  },
+  "zkcandy": {
+   "address_lookups": 1256,
+   "candidate_selectors": {
+    "": 1396
+   },
+   "candidate_txs": 1396,
+   "candidate_txs_value_gt0": 1395,
+   "deposit_records_not_decoded": 0,
+   "distinct_decoded_deposit_beneficiaries": 10,
+   "distinct_protocol_message_recipients": 0,
+   "distinct_recipients": 1251,
+   "max_txs_to_one_recipient": 10,
+   "recipients_ge10_txs": 1,
+   "recipients_ge2_txs": 106,
+   "recipients_ge5_txs": 2,
+   "recipients_that_are_also_deposit_beneficiaries": 5,
+   "top10_recipients": [
+    {
+     "address": "0x830bc5551e429ddbc4e9ac78436f8bf13eca8434",
+     "txs": 10
+    },
+    {
+     "address": "0x7aa4c5e3a7d25276d60d14c4779d0499788e304b",
+     "txs": 6
+    },
+    {
+     "address": "0x06cc9fbf519d757b574cdf930b7161b717acf3fd",
+     "txs": 4
+    },
+    {
+     "address": "0x1b0cc0a629c11d46d8f865af3f0af1b9222c4b85",
+     "txs": 4
+    },
+    {
+     "address": "0x6a164c14bcc4fd458e4b5d2d509e1506a5c21cd7",
+     "txs": 4
+    },
+    {
+     "address": "0x7eb710e864f0fa50e423c91fb3afb5d23a94c51a",
+     "txs": 4
+    },
+    {
+     "address": "0xb37b7e09f639196a6547de0d7e75f1c96d57f2ac",
+     "txs": 4
+    },
+    {
+     "address": "0x20ff5826aa010844bd715a4ae403b35484e42a70",
+     "txs": 3
+    },
+    {
+     "address": "0x3f5242b0dba4a442326d8211d5d6b25175b7a013",
+     "txs": 3
+    },
+    {
+     "address": "0x4e3d67d218433ad822cd328e0224675d7beb3002",
+     "txs": 3
+    }
+   ]
+  }
+ },
+ "totals": {
+  "address_lookups_total": 22162,
+  "candidate_txs": 24067,
+  "candidate_txs_value_gt0": 24053,
+  "deposit_beneficiaries_on_ge2_chains": 11,
+  "deposit_records_not_decoded": 140,
+  "distinct_addresses_total_global": 22106,
+  "distinct_decoded_deposit_beneficiaries_global": 775,
+  "distinct_decoded_deposit_beneficiaries_per_chain_sum": 787,
+  "distinct_recipients_global": 21480,
+  "distinct_recipients_per_chain_sum": 21515,
+  "recipients_ge10_txs": 34,
+  "recipients_ge2_txs": 807,
+  "recipients_ge5_txs": 98,
+  "recipients_on_ge2_chains": 31,
+  "recipients_that_are_also_deposit_beneficiaries": 149,
+  "recipients_that_are_also_deposit_beneficiaries_same_chain": 140
+ }
+}

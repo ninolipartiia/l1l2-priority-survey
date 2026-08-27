@@ -1,0 +1,26 @@
+{
+"0x07ae8551be970cb1cca11dd7a11f47ae82e70e67": {
+"block": "0x5ed1fb",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0xc2c20a7736cc2a9ee07b8b3e61a64ec7caf6baf5": {
+"block": "0x5ed1fb",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0xfc142d6e289384ad8e5e263f6ed5beaca90f28e6": {
+"block": "0x5ed1fb",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0xfebc231959550ffecd1ad1ae22a3d6bb55471b6a": {
+"block": "0x5ed1fb",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+}
+}

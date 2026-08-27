@@ -1,0 +1,38 @@
+{
+"0x0000000000000000000000000000000000000000": {
+"block": "0x23b0",
+"codehash": "85ee7f0e91288bb1c13d0280fba2693ddc7b6660aab68cf9eb9940edaec8ef07",
+"kind": "contract",
+"len": 224
+},
+"0x0c78af0fb1f4e09df9421ba9abd75c4dc018db05": {
+"block": "0x23b0",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0x37490b0c0cacaaa28eeca071803beeb0a742c326": {
+"block": "0x23b0",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0x7cafe5e0218454abc86c78ba23b311e9a2412e49": {
+"block": "0x23b0",
+"codehash": "645ea2612eb17eb0ef34a0a5c1351641c7da815bf0b9589fba60ba48d5577c77",
+"kind": "contract",
+"len": 1595
+},
+"0xa91206fa0b82e08ab62522382577cca84ccf3837": {
+"block": "0x23b0",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0xbe2de7674f493c22bb8b649ebbc516e09e902ffe": {
+"block": "0x23b0",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+}
+}

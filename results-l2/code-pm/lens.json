@@ -1,0 +1,20 @@
+{
+"0x7188b6975eec82ae914b6ec7ac32b3c9a18b2c81": {
+"block": "0x5ed1fb",
+"codehash": "82781571cef7eaa757e252fb6160bc33e927c5fe2e1e8ece8061fd3e780ef83f",
+"kind": "contract",
+"len": 9696
+},
+"0xb234ca484866c811d0e6d3318866f583781ed045": {
+"block": "0x5ed1fb",
+"codehash": "1143a59a1ec0b0778b7fbc160f5391fa632027e6608dfb5ddbea719476f7ea8e",
+"kind": "contract",
+"len": 4832
+},
+"0xe7cb3e167e7475de1331cf6e0ceb187654619e12": {
+"block": "0x5ed1fb",
+"codehash": "1143a59a1ec0b0778b7fbc160f5391fa632027e6608dfb5ddbea719476f7ea8e",
+"kind": "contract",
+"len": 4832
+}
+}
