@@ -1,0 +1,32 @@
+{
+"0x0000000000000000000000000000000000000000": {
+"code_at_last_tx": null,
+"code_at_tx": "contract",
+"detail": null,
+"earliest_tx_id": 5986,
+"l2_block": "0x235d",
+"last_tx_id": 5986,
+"len_at_tx": 224,
+"probe_block": "0x235c",
+"retryable": false,
+"source": "candidate",
+"straddles_deployment": null,
+"ts": 1783192199,
+"txs_in_window": 1
+},
+"0x7cafe5e0218454abc86c78ba23b311e9a2412e49": {
+"code_at_last_tx": null,
+"code_at_tx": "contract",
+"detail": null,
+"earliest_tx_id": 5818,
+"l2_block": "0x1983",
+"last_tx_id": 5996,
+"len_at_tx": 1595,
+"probe_block": "0x1982",
+"retryable": false,
+"source": "deposit-beneficiary",
+"straddles_deployment": null,
+"ts": 1756170575,
+"txs_in_window": 132
+}
+}

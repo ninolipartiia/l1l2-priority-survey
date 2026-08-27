@@ -1,0 +1,104 @@
+{
+"0x07ae8551be970cb1cca11dd7a11f47ae82e70e67": {
+"block": "0x4468d6d",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0x1bc5c10cae378fdbd7d52ec4f9f34590a619c68e": {
+"block": "0x4468d6d",
+"codehash": "cf0a5af336050c3aa370416415ab3f04630f81a503ff4f621a8e3ee17ed96e0d",
+"kind": "contract",
+"len": 16608
+},
+"0x21cf759a1523fa0aa50b16fadd2fbc9b4d6471ac": {
+"block": "0x4468d6d",
+"codehash": "6afa7e94ac95b2e3bf0ef9ad1f466fcadda5e7ec47e9f5ac261d7753832fa8d3",
+"kind": "contract",
+"len": 16800
+},
+"0x2c1b65da72d5cf19b41de6edccfb7dd83d1b529e": {
+"block": "0x4468d6d",
+"codehash": "29e6407d946eb8bf07d4d194b68aee1bf1c86af9faf07d99ea1c70d297e0482e",
+"kind": "contract",
+"len": 8800
+},
+"0x40f58bd4616a6e76021f1481154db829953bf01b": {
+"block": "0x4468d6d",
+"codehash": "fd4abd5b70d7a850aff89371b18107aafd191fd9b21d6591b6365d0e29898786",
+"kind": "contract",
+"len": 2665
+},
+"0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e": {
+"block": "0x4468d6d",
+"codehash": "fc11c64adec8ea36f31b954e40a9350d562cc5749f8270e6cefa778510d9535f",
+"kind": "contract",
+"len": 11168
+},
+"0x6aacd3ed8443a7f4cb19eb4f289a5829842da2b1": {
+"block": "0x4468d6d",
+"codehash": "48cbb6a77ab72bc5d5eb2508718fdf2c980833233ec79912bb2cf68175739391",
+"kind": "contract",
+"len": 3040
+},
+"0x708f741b5fa76c9f4a70355207b4f0226ce265f3": {
+"block": "0x4468d6d",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0x78a50ff4438670de218f3644573d789069b1d4a8": {
+"block": "0x4468d6d",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0xa36bc6867c9963de1a5daaf7882efb5b56899e8c": {
+"block": "0x4468d6d",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0xbb8bc29695232088b1a2dbc117e8c6006478c295": {
+"block": "0x4468d6d",
+"codehash": null,
+"kind": "eoa",
+"len": 0
+},
+"0xc203a2df4ddff9ede2200f1f02054fd721182535": {
+"block": "0x4468d6d",
+"codehash": "7aa8d32c393e04a17b2dc4d99efdcb4738d0b1d0ad8c6a44a552d80d46f2c323",
+"kind": "contract",
+"len": 5280
+},
+"0xdb1e46b448e68a5e35cb693a99d59f784ad115cc": {
+"block": "0x4468d6d",
+"codehash": "4e9be37e8ee207beaafe4089270ddb7f5835c3ebde6548ab491f2c4072a091d7",
+"kind": "contract",
+"len": 7584
+},
+"0xe0b015e54d54fc84a6cb9b666099c46ade9335ff": {
+"block": "0x4468d6d",
+"codehash": "580f1200e492f48a5f414b9ac3e4e9eca1156a1d86aaab2be1a9d935d907f120",
+"kind": "contract",
+"len": 5216
+},
+"0xe1d6a50e7101c8f8db77352897ee3f1ac53f782b": {
+"block": "0x4468d6d",
+"codehash": "054be05b2e6739ad5f57cbed5c6ac0da2ce4e51697ea2e3573ae9f86c9f6e684",
+"kind": "contract",
+"len": 12768
+},
+"0xe30b2b4cbf9068c48bbc282279b81fad3b2bb3f5": {
+"block": "0x4468d6d",
+"codehash": "ddf37bca522f8535b09b2b108235b2d1e7eee548e35f5586b370e583fe5de9c0",
+"kind": "contract",
+"len": 2080
+},
+"0xf69a42efe9d2a3ad87436bd7589f2c497f910cef": {
+"block": "0x4468d6d",
+"codehash": "8f5d1cd4aae7a6c195725a794775625ba6f3127cc9734aef6d2339ce664aa6d9",
+"kind": "contract",
+"len": 2665
+}
+}

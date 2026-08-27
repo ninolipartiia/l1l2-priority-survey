@@ -1,0 +1,37 @@
+{
+ "abstract": {
+  "block": "0x4d6b534",
+  "block_dec": 81179956,
+  "rpc": "https://api.mainnet.abs.xyz"
+ },
+ "cronos": {
+  "block": "0x285621",
+  "block_dec": 2643489,
+  "rpc": "https://mainnet.zkevm.cronos.org"
+ },
+ "era": {
+  "block": "0x4468d6d",
+  "block_dec": 71732589,
+  "rpc": "https://mainnet.era.zksync.io"
+ },
+ "lens": {
+  "block": "0x5ed1fb",
+  "block_dec": 6214139,
+  "rpc": "https://rpc.lens.xyz"
+ },
+ "openzk": {
+  "block": "0x23b0",
+  "block_dec": 9136,
+  "rpc": "https://rpc.openzk.net"
+ },
+ "sophon": {
+  "block": "0x1c48007",
+  "block_dec": 29655047,
+  "rpc": "https://rpc.sophon.xyz"
+ },
+ "zero": {
+  "block": "0x34bc68",
+  "block_dec": 3456104,
+  "rpc": "https://rpc.zerion.io/v1/zero"
+ }
+}

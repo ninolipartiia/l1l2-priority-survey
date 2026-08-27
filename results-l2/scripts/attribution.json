@@ -1,0 +1,238 @@
+{
+ "_about": "Phase 4 attribution registry. Keys are 'chain:address' (lowercase) for per-address verdicts and 'family:<codehash>' for bytecode families (METHOD §5: a family is the unit of attribution, one verdict covers every member). A per-address entry overrides its family. Every entry carries actor_type per METHOD §3 Axis B and, where applicable, protocol + category + confidence + evidence. Confidence semantics are the parent census's (results/REPORT.md §5): high = both sides verified on-chain/source or an exact registry match; medium = verified name on one side, project inferred; low = name-only or single tx. is_system addresses (METHOD §3) get NO actor_type here — precedence is enforced in build_outputs.py, not by omitting them.",
+ "_evidence_dates": "all explorer/RPC lookups 2026-08-26",
+
+ "_families_by_prefix": "keys are the first 8 hex chars of the family's sha256 clustering codehash; build_outputs.py resolves each prefix against the code caches and ABORTS if a prefix matches zero or more than one family, so a stale prefix can never silently attribute nothing.",
+ "families_by_prefix": {
+  "fbd752b5": {
+   "actor_type": "smart-wallet",
+   "protocol": "Abstract Global Wallet (AGW)",
+   "category": "smart-wallet",
+   "confidence": "high",
+   "erc1967_impl": "0xaa3633b417483f932969edaef7cc4f1068f6faa9",
+   "evidence": [
+    "every member's verified contract name on block-explorer-api.mainnet.abs.xyz is 'contracts/AccountProxy.sol:AccountProxy'",
+    "all 352 members share one ERC1967 implementation slot value 0xaa3633b417483f932969edaef7cc4f1068f6faa9, read live via eth_getStorageAt at block 0x4d6b534",
+    "that implementation's verified name on the same explorer is 'contracts/AGWAccount.sol:AGWAccount' — Abstract's native account-abstraction wallet",
+    "byte-identical bytecode (1,632 bytes, sha256 fbd752b5…) across all members, so the family is a bytecode fact rather than a head-of-distribution artefact"
+   ],
+   "reporting_note": "user-controlled smart accounts. METHOD §3/§6.7: these must NOT be counted as protocol usage — they are the same users' own wallets."
+  },
+  "85ee7f0e": {
+   "actor_type": null,
+   "protocol": null,
+   "confidence": "high",
+   "evidence": [
+    "address 0x0000000000000000000000000000000000000000 on abstract, sophon, zero and openzk; 224 bytes of identical code",
+    "verified name on abstract and sophon explorers: 'contracts-preprocessed/EmptyContract.sol:EmptyContract'",
+    "int(address,16) < 0x20000 -> is_system per METHOD §3; not a counterparty a user chose",
+    "the 5 txs to this address are bytecode publications, not pings: Bridgehub 0x303a465b659cbb0ab36ee643ea362c509eeb5213, selector 0xd52471c1 (requestL2TransactionDirect), 7652B calldata carrying one 7200-byte EraVM contract in factoryDeps, L2 gas limit 72,000,000; each L2 receipt emits KnownCodesStorage (0x...8004) MarkedAsKnown for bytecode hash 0x010000e1188404f17e87c75fc34cf3500754091f43168ccb2d9d7890598ed5b6. Senders 0x58551793beedca08a861c394258e0457e48a2fcc (abstract, sophon) and 0x953a9df5dc482a36ff3e0ab7d3c38f3fc40cb722 (openzk, zero, zkcandy). The `to` field is incidental to the mechanism."
+   ]
+  },
+  "80c17066": {
+   "actor_type": "protocol-contract",
+   "protocol": "Veno Finance",
+   "category": "defi",
+   "confidence": "high",
+   "evidence": [
+    "verified source on block-explorer-api.mainnet.zksync.io: 'src/BridgeReceiver.sol:BridgeReceiver', doc comment 'BridgeReceiver is the receiver for bridged ETH to the chain ... flow back into LiquidToken contract'",
+    "source tree contains src/interfaces/IVenoNft.sol and src/interfaces/ILiquidToken.sol (CRC20/CRC21 naming, Veno's Cronos heritage)",
+    "constructor argument _liquidToken = 0xe7895ed01a1a6aacf1c2e955af14e7cf612e7f9d; live eth_call on it returns name() = 'Liquid ETH', symbol() = 'LETH' — Veno's liquid-staking token",
+    "Veno Finance launched ETH-native liquid staking on ZKsync Era in Jan 2024 (docs.veno.finance; thedefiant.io/chainwire press coverage)",
+    "all 19 in-window txs come from one L1 initiator 0x24ebbe07f22bb7cf667030a3902c81d3439365bf, consistent with a protocol operator returning unbonded ETH"
+   ]
+  },
+  "fc11c64a": {
+   "actor_type": "token",
+   "protocol": "ZKsync ZK token",
+   "category": "token",
+   "confidence": "high",
+   "evidence": [
+    "verified TransparentUpgradeableProxy at 0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e; ERC1967 impl slot -> 0x4fcd824d304e9b1584cdbb582c104bdcbfb11274, verified 'src/ZkTokenV3.sol:ZkTokenV3'",
+    "live eth_call symbol() = 'ZK'",
+    "already labelled from the sender side by the parent census (results/scripts/labels.json: ZKsync Governance Era L2 ProxyAdmin of ZK token)"
+   ]
+  },
+  "b097d90d": {
+   "actor_type": "token",
+   "protocol": "Bridged USDC (ZKsync) — USDC.e",
+   "category": "token",
+   "confidence": "high",
+   "evidence": [
+    "verified BeaconProxy at 0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4; ERC1967 beacon slot -> 0x1eb710030273e529a6ad7e1e14d4e601765ba3c6 (UpgradeableBeacon), whose implementation() returns 0x05b00ef3489e21e57b3e93a72bc9f59c57bb199b, verified 'contracts/bridge/BridgedStandardERC20.sol:BridgedStandardERC20'",
+    "live eth_call name() = 'Bridged USDC (zkSync)', symbol() = 'USDC.e'",
+    "matches results/scripts/labels.json entry 'USDC.e (era)'"
+   ]
+  },
+  "1a064771": {
+   "actor_type": "token",
+   "protocol": "WETH (ZKsync Era)",
+   "category": "token",
+   "confidence": "high",
+   "evidence": [
+    "verified TransparentUpgradeableProxy at 0x5aea5775959fbc2557cc8789bc1bf90a239d9a91; ERC1967 impl slot -> 0x2ff821c3ca6569140fafce9411049c395f41526a, verified 'cache-zk/solpp-generated-contracts/bridge/L2WETH.sol:L2WETH'",
+    "live eth_call symbol() = 'WETH'",
+    "matches results/scripts/labels.json entry 'WETH (era)'"
+   ]
+  },
+  "4c0d9dfd": {
+   "actor_type": "smart-wallet",
+   "protocol": "Safe (Gnosis Safe)",
+   "category": "smart-wallet",
+   "confidence": "high",
+   "evidence": [
+    "verified contract name on block-explorer-api.mainnet.zksync.io: 'GnosisSafeProxy.sol:GnosisSafeProxy'",
+    "171 bytes — the standard Safe proxy size",
+    "a Safe is user/multisig-controlled, so METHOD §3 Axis B puts it under smart-wallet, not protocol-contract"
+   ]
+  },
+  "3e7b5a30": {
+   "actor_type": "unknown-contract",
+   "protocol": null,
+   "confidence": null,
+   "evidence": [
+    "abstract 0xed68e19181108758d17c2b1992a5e6b46a60f7d5, 51,936 bytes, source NOT verified on block-explorer-api.mainnet.abs.xyz (getsourcecode returns 'Contract source code not verified')",
+    "no ERC1967 impl/beacon/admin slot set; name() and symbol() eth_calls return no data",
+    "selector 0x64e7f93b is unknown to openchain.xyz and 4byte.directory (0 results in both)",
+    "created by 0x94a8ce783060c8e519ca85fe2de8068bf3917d22, which is also the ONLY address that has ever called it (3 calls, all 0x64e7f93b) and the only L1 initiator that paid it — a single-user private contract, not a shared protocol",
+    "its FUNCTION is identifiable even though its owner is not: the 0x64e7f93b calldata carries pool addresses, and 0x157beaa1c7dcc2aad79846ec693c558609ebc0ea answers factory() = 0xa1160e73b63f322ae88cc2d8e700833e71d0b2a1, whose verified name on abstract is 'contracts/UniswapV3Factory.sol:UniswapV3Factory', with token0() = 0x3439153eb7af838ad19d56e1571fbd09333c2809 (verified WETH9). Further words in the same calldata are tick bounds. So this is an automated Uniswap-V3 concentrated-liquidity position manager operated by one user.",
+    "NO PROJECT ATTRIBUTION: verified source, proxy implementation, bytecode equality, seed registries, selector DBs and targeted search were all tried and none names an owner or project. actor_type stays `unknown-contract` because Axis B asks whose contract it is, and that remains unknown — but 'what it does' is answered above, so this is not an opaque blob.",
+    "the single tx that paid it REVERTED on chain (status 0x0), so the 0.0163 ETH was never delivered"
+   ]
+  }
+ },
+
+ "addresses": {
+  "era:0x9cb1e077e7253a4f022e74862a93ee7cecab788b": {
+   "role": "Veno Finance BridgeReceiver — receives bridged ETH and forwards it to LiquidToken (LETH)"
+  },
+  "era:0xe0b015e54d54fc84a6cb9b666099c46ade9335ff": {
+   "actor_type": "protocol-contract",
+   "protocol": "Across Protocol",
+   "category": "bridge",
+   "confidence": "high",
+   "role": "Across ZkSync_SpokePool (era)",
+   "evidence": [
+    "verified ERC1967Proxy; impl 0xb3123f569d960b5518a0de1c373f049e74e3eab5 verified as 'contracts/spoke-pools/ZkSync_SpokePool.sol:ZkSync_SpokePool'",
+    "exact match to results/scripts/labels.json 'Across ZkSync_SpokePool (era)' and KNOWN_ADDRESSES.md",
+    "reached here only as a canonical-deposit beneficiary (19 deposits, all from the Across dataworker EOA 0xf7bac63f…) — the parent census found it from the sender side"
+   ]
+  },
+  "era:0x6f32a6f54f879019cc117b57bec8bffff02ec084": {
+   "actor_type": "protocol-contract",
+   "protocol": "Domani Protocol",
+   "category": "defi",
+   "confidence": "high",
+   "role": "RewardsManager (staking rewards distributor)",
+   "evidence": [
+    "verified source 'contracts/staking/RewardsManager.sol:RewardsManager' with header '@author Domani Protocol' and 'Copyright 2023 Memento Blockchain Pte. Ltd.'",
+    "'Domani Protocol' is the name in the deployed source; the project has since rebranded to Memento (the copyright line names Memento Blockchain Pte. Ltd.). Both names refer to the same team.",
+    "reached as a canonical-deposit beneficiary only: 3 deposits from 3 distinct L1 initiators",
+    "NOT attributed by the parent census — visible only from the recipient side"
+   ]
+  },
+  "era:0x519d3e388027e965ccca498b4709bc8ccf08a1b7": {
+   "actor_type": "smart-wallet",
+   "protocol": "Safe (Gnosis Safe)",
+   "category": "smart-wallet",
+   "confidence": "high",
+   "role": "Safe proxy, deposit beneficiary",
+   "evidence": [
+    "verified contract name 'GnosisSafeProxy.sol:GnosisSafeProxy' on block-explorer-api.mainnet.zksync.io",
+    "the parent census saw the same address on the L1 side as a deposit router (results/REPORT.md §3.1: '5 via a GnosisSafe (0x519d3e38…)')"
+   ]
+  },
+  "openzk:0x7cafe5e0218454abc86c78ba23b311e9a2412e49": {
+   "actor_type": "protocol-contract",
+   "protocol": "OpenZK OzkVault",
+   "category": "defi",
+   "confidence": "medium",
+   "role": "OzkVault — owner-controlled token vault with replay-protected withdrawals",
+   "evidence": [
+    "source not verified, but the creation bytecode returned by explorer.openzk.net getcontractcreation contains the revert strings 'OzkVault: tx already sent' and 'OzkVault: insufficient token amount'",
+    "ABI surface from the same bytecode: owner()/transferOwnership()/withdraw(address,address,uint256)/approve — an owned vault, not a user wallet",
+    "created by 0x0c78af0fb1f4e09df9421ba9abd75c4dc018db05 (also its factory), block 5981",
+    "live eth_call owner() returns 0xee65cca8fe8f2f657c05755779fcad29348c76e2 — an address the PARENT census independently attributed (results/scripts/labels.json) as 'OpenZK BridgeMiddleware main L2 recipient / L1 deposit initiator'. That is the project link, and it comes from a separate investigation on the sender side rather than from the name.",
+    "MEDIUM per METHOD §7 ('verified name on one side, project inferred'): the contract's own identity is solid (owned vault, replay-protected withdrawals, name from its revert strings) and the OpenZK link is corroborated by the owner, but the source is NOT verified on OpenZK's explorer and no official registry entry or public disclosure of OzkVault was found. Two reviewers split on low-vs-medium; the owner() corroboration is what settles it at medium."
+   ]
+  },
+  "sophon:0x26f18fa0d481f31328b6cb5ec5090896b13c0258": {"_use": "sso"},
+  "sophon:0x931658da49e86eec125e41c4144101c583235d2e": {"_use": "sso"},
+  "sophon:0xa2637982b8a00cb01112c1e887b5794eca5a669a": {"_use": "sso"},
+  "sophon:0xb04282b8979d1e9bd255fa81e19be1dde3bacf87": {"_use": "sso"},
+  "sophon:0xe6e00275f231a7bb6851524e6903e9e2e3bd2201": {"_use": "sso"},
+
+  "era:0x21cf759a1523fa0aa50b16fadd2fbc9b4d6471ac": {
+   "actor_type": "protocol-contract", "protocol": "Chainlink", "category": "infra",
+   "confidence": "high", "role": "ZKSyncSequencerUptimeFeed (era)",
+   "evidence": ["verified name 'tmp/chainlink/v0.8/l2ep/dev/zksync/ZKSyncSequencerUptimeFeed.sol:ZKSyncSequencerUptimeFeed'", "matches results/scripts/labels.json"]},
+  "era:0x6aacd3ed8443a7f4cb19eb4f289a5829842da2b1": {
+   "actor_type": "protocol-contract", "protocol": "Rocket Pool", "category": "infra",
+   "confidence": "high", "role": "RocketZkSyncPriceOracle (era)",
+   "evidence": ["verified name 'RocketZkSyncPriceOracle'", "matches results/scripts/labels.json"]},
+  "era:0xc203a2df4ddff9ede2200f1f02054fd721182535": {
+   "actor_type": "protocol-contract", "protocol": "zkLink Nova", "category": "messaging",
+   "confidence": "high", "role": "ZkSyncL2Gateway (era)",
+   "evidence": ["verified ERC1967Proxy; impl 0x8463989308de8ea3d80dc26fa650600d391b899f verified 'contracts/gateway/zksync/ZkSyncL2Gateway.sol:ZkSyncL2Gateway'", "matches results/scripts/labels.json"]},
+  "era:0x2c1b65da72d5cf19b41de6edccfb7dd83d1b529e": {
+   "actor_type": "protocol-contract", "protocol": "Nodle", "category": "bridge",
+   "confidence": "high", "role": "L2Bridge / NODL (era)",
+   "evidence": ["verified name 'src/bridge/L2Bridge.sol:L2Bridge'", "matches results/scripts/labels.json"]},
+  "era:0xe1d6a50e7101c8f8db77352897ee3f1ac53f782b": {
+   "actor_type": "protocol-contract", "protocol": "Lido", "category": "bridge",
+   "confidence": "high", "role": "L2 wstETH bridge (era)",
+   "evidence": ["verified name 'common/proxy/OssifiableProxy.sol:OssifiableProxy' (Lido's proxy)", "matches results/scripts/labels.json"]},
+  "era:0xdb1e46b448e68a5e35cb693a99d59f784ad115cc": {
+   "actor_type": "protocol-contract", "protocol": "ZKsync Governance (ZK Nation)", "category": "governance",
+   "confidence": "high", "role": "Era L2 ProxyAdmin of the ZK token",
+   "evidence": ["verified name resolves to a generic OZ ProxyAdmin (displayed under Unlock's UnlockV13.sol filename — an explorer bytecode-match artefact the parent census already corrected)", "matches results/scripts/labels.json"]},
+  "era:0x1bc5c10cae378fdbd7d52ec4f9f34590a619c68e": {
+   "actor_type": "protocol-contract", "protocol": "Aave", "category": "governance",
+   "confidence": "medium", "role": "a.DI ZkSync adapter (era)",
+   "evidence": ["source NOT verified on the era explorer", "inner sender un-aliases to Aave's GovernanceV3 CrossChainController; matches results/scripts/labels.json (recorded there as unverified)"]},
+  "era:0x40f58bd4616a6e76021f1481154db829953bf01b": {
+   "actor_type": "unknown-contract", "protocol": null, "confidence": null,
+   "role": "receiveHashes()-style relay target",
+   "evidence": ["source NOT verified", "inner sender un-aliases to 0xab23df3fd78f45e54466d08926c3a886211ac5a1, labelled by the parent census as an unverified Hashi-pattern hash-oracle relayer", "selector 0x28373390"]},
+  "era:0xf69a42efe9d2a3ad87436bd7589f2c497f910cef": {
+   "actor_type": "unknown-contract", "protocol": null, "confidence": null,
+   "role": "receiveHashes()-style relay target",
+   "evidence": ["source NOT verified", "same aliased sender and selector 0x28373390 as era:0x40f58bd4…", "created by the same L1 initiator 0x9a56ffd72f4b526c523c733f1f74197a51c495e1"]},
+  "era:0xe30b2b4cbf9068c48bbc282279b81fad3b2bb3f5": {
+   "actor_type": "smart-wallet", "protocol": "Safe (Gnosis Safe)", "category": "smart-wallet",
+   "confidence": "high", "role": "Safe proxy reached by one protocol-message",
+   "evidence": ["verified name 'contracts/proxies/GnosisSafeProxy.sol:GnosisSafeProxy'"]},
+  "lens:0xb234ca484866c811d0e6d3318866f583781ed045": {
+   "actor_type": "protocol-contract", "protocol": "Across Protocol", "category": "bridge",
+   "confidence": "high", "role": "Lens_SpokePool (current)",
+   "evidence": ["verified ERC1967Proxy; impl 0xd4f78a65dc910a79353bef66827f851b68755360 verified 'contracts/Lens_SpokePool.sol:Lens_SpokePool'", "matches results/scripts/labels.json and KNOWN_ADDRESSES.md"]},
+  "lens:0xe7cb3e167e7475de1331cf6e0ceb187654619e12": {
+   "actor_type": "protocol-contract", "protocol": "Across Protocol", "category": "bridge",
+   "confidence": "high", "role": "Lens_SpokePool (initial deployment)",
+   "evidence": ["verified ERC1967Proxy; impl 0xc7772ce23a3ed7f87fe51b87617c7c7d21f15d39 verified 'contracts/Lens_SpokePool.sol:Lens_SpokePool'", "matches results/scripts/labels.json"]},
+  "lens:0x7188b6975eec82ae914b6ec7ac32b3c9a18b2c81": {
+   "actor_type": "protocol-contract", "protocol": "Bridged USDC Standard (Circle)", "category": "bridge",
+   "confidence": "high", "role": "L2USDCBridge (lens)",
+   "evidence": ["verified TransparentUpgradeableProxy; impl 0xf179e13c90140e6b2ed6b005e4a8ff7011fbba98 verified 'src/L2USDCBridge.sol:L2USDCBridge'", "matches results/scripts/labels.json"]},
+  "sophon:0x0f44bac3ec514be912aa4359017593b35e868d74": {
+   "actor_type": "protocol-contract", "protocol": "Bridged USDC Standard (Circle)", "category": "bridge",
+   "confidence": "high", "role": "L2USDCBridge (sophon)",
+   "evidence": ["verified TransparentUpgradeableProxy; impl 0x1eea0f29bcd9e52b5fd1ac7c616caf61993c86e4 verified 'src/L2USDCBridge.sol:L2USDCBridge'", "matches results/scripts/labels.json"]}
+ },
+
+ "shared": {
+  "sso": {
+   "actor_type": "smart-wallet",
+   "protocol": "ZKsync SSO",
+   "category": "smart-wallet",
+   "confidence": "high",
+   "erc1967_beacon": "0x8a72809d8518ee29602430dfb6fbe907d7e679f3",
+   "evidence": [
+    "verified contract name on api-explorer.sophon.xyz: 'src/AccountProxy.sol:AccountProxy'",
+    "all five share one ERC1967 beacon slot 0x8a72809d8518ee29602430dfb6fbe907d7e679f3, verified 'src/SsoBeacon.sol:SsoBeacon'",
+    "that beacon's implementation() returns 0x0bbffb52f005a2594cf1e04a44d87b2eb7e20af9, verified 'src/SsoAccount.sol:SsoAccount' — ZKsync's Smart Sign-On account",
+    "user-controlled smart accounts, so smart-wallet rather than protocol-contract (METHOD §3 Axis B)"
+   ]
+  }
+ }
+}

@@ -1,0 +1,17 @@
+{
+"0x0000000000000000000000000000000000000000": {
+"code_at_last_tx": null,
+"code_at_tx": "contract",
+"detail": null,
+"earliest_tx_id": 5235,
+"l2_block": "0x34ad52",
+"last_tx_id": 5235,
+"len_at_tx": 224,
+"probe_block": "0x34ad51",
+"retryable": false,
+"source": "candidate",
+"straddles_deployment": null,
+"ts": 1783080179,
+"txs_in_window": 1
+}
+}

@@ -1,0 +1,62 @@
+{
+"0x07ae8551be970cb1cca11dd7a11f47ae82e70e67": {
+"code_at_last_tx": "eoa",
+"code_at_tx": "eoa",
+"detail": null,
+"earliest_tx_id": 2890,
+"l2_block": "0x403908",
+"last_tx_id": 2893,
+"len_at_tx": 0,
+"probe_block": "0x403907",
+"retryable": false,
+"source": "deposit-beneficiary",
+"straddles_deployment": false,
+"ts": 1756822991,
+"txs_in_window": 2
+},
+"0xc2c20a7736cc2a9ee07b8b3e61a64ec7caf6baf5": {
+"code_at_last_tx": "eoa",
+"code_at_tx": "eoa",
+"detail": null,
+"earliest_tx_id": 6849,
+"l2_block": "0x5d1705",
+"last_tx_id": 6862,
+"len_at_tx": 0,
+"probe_block": "0x5d1704",
+"retryable": false,
+"source": "candidate",
+"straddles_deployment": false,
+"ts": 1784796815,
+"txs_in_window": 10
+},
+"0xfc142d6e289384ad8e5e263f6ed5beaca90f28e6": {
+"code_at_last_tx": "eoa",
+"code_at_tx": "eoa",
+"detail": null,
+"earliest_tx_id": 6846,
+"l2_block": "0x5d153d",
+"last_tx_id": 6847,
+"len_at_tx": 0,
+"probe_block": "0x5d153c",
+"retryable": false,
+"source": "deposit-beneficiary",
+"straddles_deployment": false,
+"ts": 1784789975,
+"txs_in_window": 2
+},
+"0xfebc231959550ffecd1ad1ae22a3d6bb55471b6a": {
+"code_at_last_tx": null,
+"code_at_tx": "eoa",
+"detail": null,
+"earliest_tx_id": 6835,
+"l2_block": "0x5d0b62",
+"last_tx_id": 6835,
+"len_at_tx": 0,
+"probe_block": "0x5d0b61",
+"retryable": false,
+"source": "deposit-beneficiary",
+"straddles_deployment": null,
+"ts": 1784722391,
+"txs_in_window": 1
+}
+}
