@@ -166,10 +166,14 @@ What earns the verdict instead is zkcandy-side evidence:
 2. **Recall measured exhaustively, not sampled.** Running `getcontractcreation` over all 314
    known contracts finds 294 and misses 20 — **291/291 on non-system contracts, 0/20 on
    genesis**, every miss inside the reserved range.
-3. **A second, independent instrument.** Blockscout also serves `/api/v2/addresses/{addr}` with a
-   direct `is_contract` flag — a truer `eth_getCode` equivalent than a creation record. 184
-   addresses sampled (the 40 highest-tx recipients plus 150 random): 174 answered, **0 contracts,
-   0 disagreements** with the shipped verdicts.
+3. **A second, independent instrument, run exhaustively.** Blockscout also serves
+   `/api/v2/addresses/{addr}` with a direct `is_contract` flag — a truer `eth_getCode` equivalent
+   than a creation record. An independent auditor ran it over **all 1,256 census addresses**: 0
+   unresolved and **exactly one `is_contract: true`**, namely `0x0`. That is the declared genesis
+   limitation showing up exactly where it should, and nowhere else. (A separate 184-address
+   sample by this phase's author agreed on all 174 that answered.) The same audit re-verified 204
+   addresses one at a time against the batched verdicts with 0 disagreements, and checked 30
+   canonical hashes against the census with 0 field mismatches.
 
 Chain identity was established without `eth_chainId`, which this endpoint cannot serve: the
 explorer indexes the census's canonical hashes with matching `to`/`from`/`value`, and those
