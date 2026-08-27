@@ -46,9 +46,13 @@ for c in CHAINS:
         "code_cache_block": pins.get(c, {}).get("block", "latest-via-explorer"),
         "archive_getcode": c != "zkcandy",
         "archive_probe": (
-            "eth_getCode(0x…10003) served at tip, tip-1k, tip-100k and tip-1M; cronos and zero "
-            "returned a DIFFERENT code size at tip-1M (39,392 B vs 42,528 B), which proves "
-            "historical state rather than a latest-block fallback"
+            "eth_getCode(0x…10003) served at tip, tip-1k, tip-100k and tip-1M. On cronos and "
+            "zero this DISCRIMINATES: a different code size at tip-1M (39,392 B vs 42,528 B) "
+            "proves historical state. On the other chains the probe shows only that the call "
+            "was served at depth, which a silent latest-block fallback would also do — an "
+            "independent review re-test confirmed real historical state on era, abstract, "
+            "sophon, lens and openzk via eth_getCode(<contract>, 0x1) == 0x while latest "
+            "returns code. See REPORT-L2.md §2.2."
             if c not in ("zkcandy", "openzk") else
             "openzk's tip is only 9,136 blocks, so tip-100k/tip-1M clamp to block 1; archive was "
             "confirmed at tip-1k" if c == "openzk" else
@@ -110,8 +114,9 @@ manifest = {
             "/ zkcandy-mainnet.rpc.caldera.xyz": "no response / 404",
             "chainid.network registry": "lists only rpc.zkcandy.io for chainId 320",
         },
-        "what_worked": "the block explorer is ALIVE at https://explorer.zkcandy.io/api "
-                       "(ZKsync-era-style, Etherscan-compatible subset) and indexes the "
+        "what_worked": "the block explorer is ALIVE at https://explorer.zkcandy.io/api — a "
+                       "BLOCKSCOUT instance with an Etherscan-compatible subset (NOT the "
+                       "matter-labs/block-explorer software era runs) — and it indexes the "
                        "census's canonical hashes. INPUTS.md recorded the explorer as down; it "
                        "answers now — the live chain wins over the package (TASK constraint 4).",
         "script": "results-l2/scripts/resolve_zkcandy_explorer.py",
@@ -120,27 +125,67 @@ manifest = {
                   "funding tx's block, compared against the creation block. Code-time is "
                   "DERIVED (created_block < funding_block) rather than probed at block-1; the "
                   "semantics match (code existed before the funding tx's block).",
-        "validation": "results-l2/seed/zkcandy-method-validation.json — cross-validated on era, "
-                      "which has both a working archive RPC and the same explorer API: 208/208 "
-                      "agreement (all 8 era contract recipients + 200 random era EOA recipients, "
-                      "0 disagreements, 0 API errors). Positive control on zkcandy itself found "
-                      "8 real contracts.",
-        "api_trap_handled": "contractaddresses caps at 10 and returns status:1 'OK' with ZERO "
-                            "results above it — silent truncation that would have produced a "
-                            "whole chain of false 'EOA' verdicts. The script hard-caps at 10 and "
-                            "asserts every returned address was asked for. (era's copy of the "
-                            "same API caps at 5 but errors loudly with status:0 NOTOK.)",
+        "validation": "results-l2/seed/zkcandy-method-validation.json. REBUILT 2026-08-27: the "
+                      "original argument leaned on a 208/208 cross-validation against era on the "
+                      "premise that era runs 'the same explorer API'. That premise is FALSE "
+                      "(Blockscout vs matter-labs/block-explorer), and the two diverge precisely "
+                      "on this method's blind spot — era's explorer returns creation records for "
+                      "genesis contracts, zkcandy's does not — so the era run had no power over "
+                      "the failure mode that exists here. It is retained (and was independently "
+                      "reproduced at 208/208) but demoted. The load-bearing evidence is now "
+                      "zkcandy-side: (1) listcontracts enumerates the chain's COMPLETE contract "
+                      "population, 314 addresses, whose intersection with the census's 1,256 is "
+                      "exactly {0x0}; (2) recall measured over all 314, 291/291 on non-system "
+                      "contracts and 0/20 on genesis; (3) an independent instrument, Blockscout "
+                      "/api/v2/addresses/{addr} -> is_contract, agreeing on 174 of 174 answered "
+                      "of 184 sampled.",
+        "chain_identity_without_eth_chainId": "the endpoint cannot serve eth_chainId, so identity "
+                      "rests on: the explorer indexing the census's canonical hashes with "
+                      "matching to/from/value, and those hashes coming from NewPriorityRequest "
+                      "logs on the L1 diamond 0xf2704433d11842d15aa76bbf0e00407267a99c92, whose "
+                      "getChainId() returns 0x140 = 320. 320.rpc.thirdweb.com answering 0x140 is "
+                      "evidence about a DIFFERENT host and was not relied on.",
+        "api_trap_handled": "contractaddresses caps at 10 and, above the cap, SILENTLY TRUNCATES "
+                            "TO THE FIRST 10 while still answering status:1 'OK' — a caller "
+                            "chunking at 60 would mint false 'EOA' verdicts for 83% of every "
+                            "chunk. The script hard-caps at 10 and asserts every returned address "
+                            "was asked for. (An earlier note here said the API returns results "
+                            "for NONE of them above the cap; that was a misdiagnosis from a probe "
+                            "that placed the only contract in position 11 — exactly the address "
+                            "truncation removes. era's API caps at 5 and errors loudly with "
+                            "status:0 NOTOK.)",
         "declared_limitations": [
-            "no bytecode: zkcandy contributes no code_len, no codehash and no bytecode family",
+            "no bytecode FROM THE ENDPOINT CHOSEN — so no code_len, no codehash, no families. "
+            "Corrected 2026-08-27: this is not a property of the host. The same Blockscout "
+            "instance serves /api/v2/smart-contracts/{addr} with deployed_bytecode, so the "
+            "capability existed and was not used. Moot for the headline (no contract recipients "
+            "to cluster).",
             "EIP-7702 delegated-eoa is undetectable — zkcandy's delegated-eoa count is UNKNOWN, "
-            "not zero",
-            "genesis-deployed contracts have no creation record and read as codeless; verified "
-            "for 0x…8007/800a/800b/10002/10005. All genesis contracts are inside the reserved "
-            "range that METHOD §3 flags is_system, so no user-chosen counterparty is mis-filed — "
-            "but it IS why address 0x0 lands in zkcandy's `eoa` bucket while it is `contract` on "
-            "abstract, sophon, zero and openzk.",
+            "not zero. Not idle: 96 of the 1,256 addresses carry a 0xef0100 delegation on "
+            "Ethereum L1. No sampled address showed a Blockscout eip7702 proxy_type, but there "
+            "is no positive control on zkcandy, so 'unknown' stands.",
+            "genesis-deployed contracts have no creation record and read as codeless — measured "
+            "exhaustively: 20 of the chain's 314 contracts, ALL inside the reserved range. "
+            "Correct examples are 0x0, 0x…8006, 0x…800a, 0x…800b, 0x…8014, 0x…10000. An earlier "
+            "version cited 0x…8007/10002/10005, which are NOT contracts on zkcandy at all and "
+            "return nothing merely because they are codeless. This is why address 0x0 lands in "
+            "zkcandy's `eoa` bucket while it is `contract` on abstract, sophon, zero and openzk.",
+            "getcontractcreation cannot distinguish 'indexed, no code' from 'never indexed' — "
+            "closed empirically (all 1,256 are known to the indexer) but not by the method.",
+            "the verdict is at the explorer's tip WITH INDEXER LAG, not at a pinned block as on "
+            "the seven RPC chains.",
+            "zkcandy has NO METHOD §3 `eoa`-control coverage — the control needs an archive "
+            "endpoint and there is none, so codetime-eoa-control/zkcandy.json does not exist. "
+            "The one chain resolved by a substitute instrument is the one chain with no negative "
+            "control.",
+            "METHOD §3's self-destruct concern is INAPPLICABLE on a ZK-stack chain (no "
+            "SELFDESTRUCT opcode), so the 'had code when paid, none now' failure mode cannot "
+            "occur here.",
         ],
-        "result": "1,256/1,256 zkcandy addresses resolved; 0 unresolvable; 0 contract recipients.",
+        "result": "1,256/1,256 zkcandy addresses resolved; 0 unresolvable; 0 contract recipients "
+                  "OUTSIDE THE RESERVED RANGE. Address 0x0 is a contract on zkcandy and is one "
+                  "of the 1,251 candidate recipients (tx_id 6348), but carries is_system and "
+                  "sits in the `eoa` bucket per the genesis limitation above.",
     },
 
     "deviations_from_the_package": [
@@ -164,6 +209,35 @@ manifest = {
          "justified": True},
         {"what": "--no-chain-check was NEVER used; --allow-input-name-mismatch was NEVER used",
          "why": "every RPC run passed the eth_chainId assertion and every file named its chain.",
+         "justified": True},
+        {"what": "code/zkcandy.json carries the sentinel block \"latest-via-explorer\" and "
+                 "len: null, where OUTPUT_SPEC §1 requires a concrete block number and the "
+                 "other 7 caches carry len: 0 for EOAs",
+         "why": "the explorer substitute answers about contract-creation RECORDS, not about "
+                "state at a block, so there is no block number to record and no code length to "
+                "measure. A fabricated block number would be worse than a sentinel. Downstream "
+                "consequence: code_len is null on all 1,251 zkcandy recipient rows and is not "
+                "comparable across chains — stated in REPORT-L2.md §10.",
+         "justified": True},
+        {"what": "REPORT-L2.md has ELEVEN top-level sections where OUTPUT_SPEC §7 lists ten",
+         "why": "a section 6 'Deposit beneficiaries (secondary set)' was inserted, shifting the "
+                "spec's §6-§10 to §7-§11. All ten required topics are present and in the spec's "
+                "order; the secondary set needed its own section to keep it from being read as "
+                "part of the candidate headline. A reader following the spec's numbering will "
+                "land one section early from §6 onward.",
+         "justified": True},
+        {"what": "the input package's committed state (aa71a57) differs from the commit this "
+                 "phase started against (a88ecdf) in 4 files: README.md, "
+                 "scripts/check_code_time.py, scripts/resolve_l2_code.py, "
+                 "seed-data/probe-samples.json",
+         "why": "those edits were present as uncommitted working-tree changes when this phase "
+                "began and were folded into the input-package commit, not made by this phase's "
+                "work. They add an --out filename guard to both scripts and correct a ranking "
+                "claim in probe-samples.json, and they match what README.md and METHOD.md "
+                "already described. seed-data/ground-truth.json and all of results/ are "
+                "byte-identical between a88ecdf and HEAD, so the Phase 0 gate and the source "
+                "dataset are unaffected. script_versions below pins the MODIFIED hashes; "
+                "`git diff a88ecdf HEAD -- phase6-l2-recipients/` shows the drift.",
          "justified": True},
         {"what": "the 140 era canonical-deposit records carrying the v26 selector 0x9c884fd1 "
                  "were NOT decoded",
@@ -203,7 +277,32 @@ manifest = {
     )},
 
     "acceptance": "results-l2/scripts/check_acceptance.py re-checks every TASK.md acceptance "
-                  "criterion mechanically; 20/20 pass as of this run.",
+                  "criterion mechanically; 21/21 pass as of this run. Strengthened after an "
+                  "independent audit found several checks circular or vacuous: the bucket "
+                  "reconciliation and the lookup-coverage check now re-derive from "
+                  "results/enriched/ and compare KEY SETS rather than counts; the "
+                  "contract-later, is_system and labels checks now test the named property "
+                  "rather than a proxy for it; and a new check enforces OUTPUT_SPEC §7's rule "
+                  "that every number in REPORT-L2.md is derivable from aggregates-l2.json — "
+                  "the one criterion the earlier checker did not test, and the one that failed.",
+    "independent_audit": {
+        "when": "2026-08-27",
+        "what": "four independent agents re-derived the numbers from results/enriched/ without "
+                "using this phase's scripts, re-verified verdicts against the live L2 RPCs and "
+                "explorers, attacked the zkcandy substitute, and audited the report against the "
+                "spec.",
+        "outcome": "no arithmetic error was found in aggregates-l2.json, families.json or the "
+                   "per-row outputs, and contract-later = 0 survived independent on-chain "
+                   "re-testing. Defects found and fixed: the parent-census correction in §9 was "
+                   "understated ~8x (it omitted the 154 canonical deposits landing on protocol "
+                   "contracts); a categorical claim about 298 control records was true for 293; "
+                   "the eoa-control coverage divided a 1,298-address sample by a 21,211 "
+                   "population it was not drawn from; §4 claimed family coverage of the control "
+                   "set it does not cluster; txs_value_gt0 was defaulted rather than counted on "
+                   "all 787 deposit rows; OzkVault's confidence was medium where the rubric "
+                   "says low; the merged registry had overwritten 10 parent label texts; and "
+                   "'the sender's own wallet' was an inference stated as measurement.",
+    },
     "per_chain": per_chain,
     "reconciliation_checks": agg.get("totals", {}).get("reconciliation_checks", {}),
     "headline": {

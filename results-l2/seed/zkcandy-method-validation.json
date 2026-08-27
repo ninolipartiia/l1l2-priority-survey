@@ -1,27 +1,77 @@
 {
- "why": "zkcandy has no working JSON-RPC endpoint, so resolve_l2_code.py cannot run there. results-l2/scripts/resolve_zkcandy_explorer.py substitutes two explorer endpoints for the two RPC calls. This file records the evidence that the substitute agrees with eth_getCode.",
- "validated": "2026-08-26",
- "substitute_method": "explorer.zkcandy.io/api?module=contract&action=getcontractcreation -> a creation record means 'contract', an empty OK result means 'no code'",
- "cross_validation_on_era": {
-  "why_era": "era has BOTH a working archive RPC and a working ZKsync-era-style explorer API, so the substitute can be scored against eth_getCode ground truth",
-  "rpc": "https://mainnet.era.zksync.io eth_getCode @ 0x4468d6d",
-  "explorer": "https://block-explorer-api.mainnet.zksync.io/api",
-  "sample": "all 8 era contract recipients + 200 era EOA recipients (random.seed(20260826))",
-  "agree": 208, "disagree": 0, "api_errors": 0
+ "_about": "Evidence that zkcandy's 1,256 verdicts are correct. REWRITTEN 2026-08-27 after an independent audit showed the original argument rested on a false premise. The conclusion did not change; the justification was rebuilt around stronger, zkcandy-side evidence.",
+ "why_a_substitute_was_needed": "zkcandy has no working public JSON-RPC endpoint, so resolve_l2_code.py cannot run there at all. results-l2/scripts/resolve_zkcandy_explorer.py substitutes two block-explorer endpoints for the two RPC calls.",
+ "verdict": "zkcandy has ZERO contract recipients outside the reserved system range. Address 0x0 IS a contract on zkcandy and IS one of the 1,251 candidate recipients (tx_id 6348, the tester ping); it carries is_system and sits in the `eoa` bucket because the creation-record method cannot see genesis contracts.",
+
+ "primary_evidence_complete_enumeration": {
+  "why_this_is_the_strongest_argument": "It does not depend on the substitute method being sensitive at all. Enumerate every contract that exists on zkcandy, then intersect with the census address set. If the intersection is empty, no census recipient can be a contract regardless of how getcontractcreation behaves.",
+  "call": "https://explorer.zkcandy.io/api?module=contract&action=listcontracts&page=1&offset=1000",
+  "zkcandy_contract_population": 314,
+  "page_2_empty": true,
+  "census_addresses": 1256,
+  "intersection": ["0x0000000000000000000000000000000000000000"],
+  "conclusion": "the ONLY address that is both a census address and a contract on zkcandy is 0x0, which is is_system"
  },
- "positive_control_on_zkcandy": {
-  "why": "an all-EOA sweep result is also what a broken detector returns; these are real zkcandy contracts, found independently via the explorer's own tokentx/txlist data for candidate recipients",
-  "contracts_detected": 8,
-  "addresses": ["0x97d7e6e29606edd7b6620d359813dc8058600372","0x4b8f68013043b72f5bbf57613f670436afa00e67","0x06cc31ab433205236d03123d9216c40b4b949ff1","0xc76b64a80943167da5958d547158b768c2879c2b","0x498c48797a56cb7d31ff01bf4722eff4f91ed80f","0xf77bd7c05598e094bc06e34bb81c07bd3b091db1","0x44f5663030fe1b671fe540a2ba5de309aae4b2af","0xe16bcf46b98cab58c661531ff02d64da59c39d19"],
-  "full_chunk_test": "a chunk of exactly 10 known contracts returned all 10; a mixed chunk of 5 contracts + 5 EOAs returned exactly the 5 contracts"
+
+ "secondary_evidence_recall_measured_on_zkcandy_itself": {
+  "why": "the original run measured the method's recall on 8 addresses. Recall is measurable exhaustively against the enumerated population, so it now is.",
+  "method": "getcontractcreation, chunks of 10, over all 314 known zkcandy contracts",
+  "found": 294,
+  "missed": 20,
+  "recall_on_non_system_contracts": "291/291 = 100%",
+  "recall_on_genesis_contracts": "0/20",
+  "all_misses_in_reserved_range": true,
+  "conclusion": "the method has perfect recall on exactly the population that can be a user-chosen counterparty, and zero recall on genesis contracts — which METHOD §3 filters out as is_system anyway"
  },
+
+ "tertiary_evidence_independent_instrument": {
+  "why": "getcontractcreation infers code from a creation RECORD. Blockscout also serves a direct code fact, which is a true eth_getCode equivalent and fails differently.",
+  "call": "https://explorer.zkcandy.io/api/v2/addresses/{address} -> is_contract",
+  "sampled": 184,
+  "successful_lookups": 174,
+  "failed_lookups_rate_limited": 10,
+  "contracts_found": 0,
+  "disagreements_with_code_zkcandy_json": 0,
+  "sample_composition": "the 40 highest-tx recipients plus 150 random addresses (seed 20260827)"
+ },
+
+ "chain_identity": {
+  "why": "the substitute endpoint cannot serve eth_chainId, so the usual guard does not apply and identity must be established another way.",
+  "evidence": [
+   "the explorer indexes the census's canonical hashes and returns matching to/from/value: verified for the record tx_id 4953 (to 0xc5b6939b…, value 550000000000000, block 335834) and by an independent auditor for 30 randomly sampled hashes, 30/30 matching",
+   "those canonical hashes come from NewPriorityRequest logs emitted by the L1 diamond 0xf2704433d11842d15aa76bbf0e00407267a99c92, whose getChainId() returns 0x140 = 320 (CHAINS.md's zkcandy)",
+   "https://320.rpc.thirdweb.com answers eth_chainId 0x140 but is a DIFFERENT HOST and is therefore not evidence about this explorer"
+  ]
+ },
+
+ "era_cross_validation": {
+  "status": "DEMOTED — retained for transparency, no longer load-bearing",
+  "what_was_run": "all 8 era contract recipients + 200 random era EOA recipients, eth_getCode @ mainnet.era.zksync.io vs getcontractcreation @ block-explorer-api.mainnet.zksync.io",
+  "agree": 208, "disagree": 0, "api_errors": 0,
+  "independently_reproduced": "yes — an auditor re-ran it with its own sample (seed 424242) and got 208/208, and strengthened the thin positive arm with 78 freshly harvested era contracts + 20 EOAs: 0 false negatives, 0 false positives",
+  "why_it_was_demoted": "the original report claimed era 'has the same explorer API', which is FALSE. zkcandy runs Blockscout (/api/v2/addresses, /api/v2/smart-contracts, 10-address cap, silent truncation above it); era runs matter-labs/block-explorer (no /api/v2/addresses route, 5-address cap, loud status:0 NOTOK above it). Worse, the two diverge precisely on the failure mode that matters: era's explorer DOES return creation records for genesis contracts (0x0, 0x…8006, 0x…800a, 0x…800b all resolve) while zkcandy's does not. The era run therefore had no power over zkcandy's only real blind spot, and transferring it was an unjustified leap. It shows the endpoint FAMILY behaves sensibly; it does not validate zkcandy."
+ },
+
  "api_address_cap": {
-  "zkcandy": {"cap": 10, "above_cap": "status:1 OK with ZERO results — SILENT truncation, which is why the script hard-caps at 10 and asserts every returned address was asked for"},
-  "era": {"cap": 5, "above_cap": "status:0 NOTOK — errors loudly"}
+  "zkcandy": {
+   "cap": 10,
+   "above_cap": "TRUNCATES TO THE FIRST 10 and answers status:1 OK — it does not blank the batch. Measured: asking 11, 12 and 15 known non-system contracts each returns exactly the first 10 asked.",
+   "correction": "the original run recorded this as 'returns ZERO results above the cap'. That was a misdiagnosis from a confounded probe: the test asked 10 EOAs followed by 1 contract in position 11, so the truncated-away address was the only one that could have produced a result. Re-measured with the contract in position 1 it returns 1 row, and with 11 contracts it returns 10.",
+   "why_the_cap_still_matters": "silent truncation at 10 means a caller chunking at 60 would receive no record for addresses 11..60 and, under the 'no record means no code' rule, would mint confident false EOA verdicts for 83% of every chunk. The script hard-caps at 10 and asserts every returned address was one it asked for."
+  },
+  "era": {"cap": 5, "above_cap": "status:0 NOTOK 'Maximum 5 contract addresses per request' — fails loudly"}
  },
+
  "declared_limitations": [
-  "no bytecode is returned: zkcandy contributes no code_len, no codehash and therefore no bytecode families (METHOD 5)",
-  "EIP-7702 delegated-eoa cannot be detected (a delegation is code, not a creation record) — zkcandy's delegated-eoa count is unknown, not zero",
-  "a genesis-deployed contract has no creation record and reads as codeless; verified for 0x..8007, 0x..800b, 0x..800a, 0x..10002, 0x..10005. All genesis contracts sit in the reserved range that METHOD 3 flags is_system, so no user-chosen counterparty can be mis-filed by this"
- ]
+  "GENESIS CONTRACTS have no creation record and read as codeless. Measured: 20 of zkcandy's 314 contracts are missed, all inside the reserved range (0x…0000-0008, 0x…8001-800b, 0x…8014, 0x…10000). None is a user-chosen counterparty. NOTE: the original run cited 0x…8007, 0x…10002 and 0x…10005 as examples — that was WRONG, those three are not contracts on zkcandy at all (is_contract false), so they return nothing because they are codeless. Correct examples are 0x0, 0x…8006, 0x…800a, 0x…800b, 0x…8014, 0x…10000.",
+  "EIP-7702 delegations are invisible to getcontractcreation, so zkcandy's delegated-eoa count is UNKNOWN, not zero. This is not hypothetical: 96 of the 1,256 recipient addresses carry a 0xef0100 delegation on ETHEREUM L1. Partial mitigation: Blockscout stores 7702 delegation code and would set proxy_type 'eip7702'; no sampled address showed one. Not upgraded to 'zero' — there is no positive control for 7702 on zkcandy.",
+  "THE CHOSEN ENDPOINT returns no bytecode, so zkcandy contributes no code_len, no codehash and no bytecode family. CORRECTION: the original run stated this as a property of the instrument. It is not — the same host serves /api/v2/smart-contracts/{addr} with deployed_bytecode and creation_bytecode. It is a limitation of the endpoint that was chosen, and it cost this run a real capability. Moot for the headline (there are no contract recipients to cluster) but the earlier sentence was wrong.",
+  "getcontractcreation CANNOT DISTINGUISH 'indexed, no code' from 'never indexed' — an address the indexer has never seen returns the same empty result. Closed empirically here (all 1,256 have coin_balance and block_number_balance_updated_at set, so all are known to the indexer), but the shipped method has no way to tell the two apart.",
+  "THE VERDICT IS AT THE EXPLORER'S TIP WITH INDEXER LAG, not at a pinned block. The seven RPC chains are each resolved at one concrete block recorded in the cache; zkcandy's cache carries the sentinel 'latest-via-explorer' because there is no block to pin.",
+  "FACTORY-CREATED CONTRACTS depend on Blockscout's internal-transaction indexer. Tested here rather than assumed: the 294/294 non-system recall includes factory-created contracts, which come back with contractFactory populated.",
+  "METHOD §3's self-destruct concern is INAPPLICABLE on a ZK-stack chain (no SELFDESTRUCT opcode), so the 'had code when paid, none now' failure mode cannot occur here. The report inherits that caveat from the RPC chains; it does not bind zkcandy.",
+  "ZKCANDY HAS NO `eoa` CONTROL COVERAGE. The METHOD §3 control needs an archive endpoint; there is none, so codetime-eoa-control/zkcandy.json does not exist and eoa_control_sampled is 0. The one chain resolved by a substitute instrument is the one chain with no negative control."
+ ],
+
+ "audit_trail": "independently audited 2026-08-27. The auditor performed ~3,500 address/transaction checks including all 1,256 addresses via is_contract, the complete 314-address contract enumeration, 204 unbatched re-verifications against the shipped batched verdicts (0 disagreements), and eth_getCode on all 1,256 against Ethereum L1 (0 contracts, 96 EIP-7702 delegations). Verdict: the number is correct; the original justification was rebuilt. Every claim in this file was re-measured first-hand before being written here."
 }

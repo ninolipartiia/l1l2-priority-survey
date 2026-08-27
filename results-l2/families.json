@@ -556,7 +556,9 @@
     "no ERC1967 impl/beacon/admin slot set; name() and symbol() eth_calls return no data",
     "selector 0x64e7f93b is unknown to openchain.xyz and 4byte.directory (0 results in both)",
     "created by 0x94a8ce783060c8e519ca85fe2de8068bf3917d22, which is also the ONLY address that has ever called it (3 calls, all 0x64e7f93b) and the only L1 initiator that paid it \u2014 a single-user private contract, not a shared protocol",
-    "UNATTRIBUTABLE: verified source, proxy implementation, bytecode equality, seed registries, selector DBs and targeted search were all tried"
+    "its FUNCTION is identifiable even though its owner is not: the 0x64e7f93b calldata carries pool addresses, and 0x157beaa1c7dcc2aad79846ec693c558609ebc0ea answers factory() = 0xa1160e73b63f322ae88cc2d8e700833e71d0b2a1, whose verified name on abstract is 'contracts/UniswapV3Factory.sol:UniswapV3Factory', with token0() = 0x3439153eb7af838ad19d56e1571fbd09333c2809 (verified WETH9). Further words in the same calldata are tick bounds. So this is an automated Uniswap-V3 concentrated-liquidity position manager operated by one user.",
+    "NO PROJECT ATTRIBUTION: verified source, proxy implementation, bytecode equality, seed registries, selector DBs and targeted search were all tried and none names an owner or project. actor_type stays `unknown-contract` because Axis B asks whose contract it is, and that remains unknown \u2014 but 'what it does' is answered above, so this is not an opaque blob.",
+    "the single tx that paid it REVERTED on chain (status 0x0), so the 0.0163 ETH was never delivered"
    ],
    "members": [
     "0xed68e19181108758d17c2b1992a5e6b46a60f7d5"
@@ -605,6 +607,7 @@
    "confidence": "high",
    "evidence": [
     "verified source 'contracts/staking/RewardsManager.sol:RewardsManager' with header '@author Domani Protocol' and 'Copyright 2023 Memento Blockchain Pte. Ltd.'",
+    "'Domani Protocol' is the name in the deployed source; the project has since rebranded to Memento (the copyright line names Memento Blockchain Pte. Ltd.). Both names refer to the same team.",
     "reached as a canonical-deposit beneficiary only: 3 deposits from 3 distinct L1 initiators",
     "NOT attributed by the parent census \u2014 visible only from the recipient side"
    ],
@@ -686,7 +689,8 @@
     "source not verified, but the creation bytecode returned by explorer.openzk.net getcontractcreation contains the revert strings 'OzkVault: tx already sent' and 'OzkVault: insufficient token amount'",
     "ABI surface from the same bytecode: owner()/transferOwnership()/withdraw(address,address,uint256)/approve \u2014 an owned vault, not a user wallet",
     "created by 0x0c78af0fb1f4e09df9421ba9abd75c4dc018db05 (also its factory), block 5981",
-    "medium: the 'Ozk' prefix ties it to OpenZK by name only; no verified source or official registry entry was found"
+    "live eth_call owner() returns 0xee65cca8fe8f2f657c05755779fcad29348c76e2 \u2014 an address the PARENT census independently attributed (results/scripts/labels.json) as 'OpenZK BridgeMiddleware main L2 recipient / L1 deposit initiator'. That is the project link, and it comes from a separate investigation on the sender side rather than from the name.",
+    "MEDIUM per METHOD \u00a77 ('verified name on one side, project inferred'): the contract's own identity is solid (owned vault, replay-protected withdrawals, name from its revert strings) and the OpenZK link is corroborated by the owner, but the source is NOT verified on OpenZK's explorer and no official registry entry or public disclosure of OzkVault was found. Two reviewers split on low-vs-medium; the owner() corroboration is what settles it at medium."
    ],
    "members": [
     "0x7cafe5e0218454abc86c78ba23b311e9a2412e49"

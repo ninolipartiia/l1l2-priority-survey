@@ -672,7 +672,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "L2USDCBridge (sophon)"
+   "l2_side_label": "L2USDCBridge (sophon)"
   },
   "0x0f80be69143c9ff4f3928623ceab647334c0f0df": {
    "label": "Abstract Global Wallet (AGW)",
@@ -1182,7 +1182,7 @@
    "origin": "new \u2014 found only from the L2 recipient side"
   },
   "0x1bc5c10cae378fdbd7d52ec4f9f34590a619c68e": {
-   "label": "a.DI ZkSync adapter (era)",
+   "label": "Aave a.DI ZkSync adapter (era, unverified)",
    "protocol": "Aave",
    "actor_type": "protocol-contract",
    "confidence": "medium",
@@ -1201,7 +1201,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "Aave a.DI ZkSync adapter (era, unverified)"
+   "l2_side_label": "a.DI ZkSync adapter (era)"
   },
   "0x1be5859dcdcbfd8bba897bd0bdf7fb349d81dab0": {
    "label": "Abstract Global Wallet (AGW)",
@@ -1549,7 +1549,7 @@
    "origin": "new \u2014 found only from the L2 recipient side"
   },
   "0x21cf759a1523fa0aa50b16fadd2fbc9b4d6471ac": {
-   "label": "ZKSyncSequencerUptimeFeed (era)",
+   "label": "Chainlink ZKSyncSequencerUptimeFeed (era)",
    "protocol": "Chainlink",
    "actor_type": "protocol-contract",
    "confidence": "high",
@@ -1568,7 +1568,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "Chainlink ZKSyncSequencerUptimeFeed (era)"
+   "l2_side_label": "ZKSyncSequencerUptimeFeed (era)"
   },
   "0x2239639858d5032ce062c5417742c0c72fec36e0": {
    "label": "Abstract Global Wallet (AGW)",
@@ -1985,7 +1985,7 @@
    "origin": "new \u2014 found only from the L2 recipient side"
   },
   "0x2c1b65da72d5cf19b41de6edccfb7dd83d1b529e": {
-   "label": "L2Bridge / NODL (era)",
+   "label": "Nodle L2Bridge / NODL (era)",
    "protocol": "Nodle",
    "actor_type": "protocol-contract",
    "confidence": "high",
@@ -2004,7 +2004,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "Nodle L2Bridge / NODL (era)"
+   "l2_side_label": "L2Bridge / NODL (era)"
   },
   "0x2d02b651ea9630351719c8c55210e042e940d69a": {
    "label": "Nodle L1Bridge",
@@ -2272,7 +2272,7 @@
    "origin": "new \u2014 found only from the L2 recipient side"
   },
   "0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4": {
-   "label": "Bridged USDC (ZKsync) \u2014 USDC.e",
+   "label": "USDC.e (era)",
    "protocol": "Bridged USDC (ZKsync) \u2014 USDC.e",
    "actor_type": "token",
    "confidence": "high",
@@ -2292,7 +2292,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "USDC.e (era)"
+   "l2_side_label": "Bridged USDC (ZKsync) \u2014 USDC.e"
   },
   "0x3673e0629b2625c5f943e178680a08e77719a15f": {
    "label": "Abstract Global Wallet (AGW)",
@@ -3439,7 +3439,7 @@
    "origin": "new \u2014 found only from the L2 recipient side"
   },
   "0x5aea5775959fbc2557cc8789bc1bf90a239d9a91": {
-   "label": "WETH (ZKsync Era)",
+   "label": "WETH (era)",
    "protocol": "WETH (ZKsync Era)",
    "actor_type": "token",
    "confidence": "high",
@@ -3459,7 +3459,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "WETH (era)"
+   "l2_side_label": "WETH (ZKsync Era)"
   },
   "0x5b94c444b56abcf52a708b574551d06337a2969f": {
    "label": "Abstract Global Wallet (AGW)",
@@ -3885,7 +3885,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "RocketZkSyncPriceOracle (era)"
+   "l2_side_label": "RocketZkSyncPriceOracle (era)"
   },
   "0x6c22a6eb3e2a4b75425f77f9a210a41510dffffd": {
    "label": "Abstract Global Wallet (AGW)",
@@ -4030,6 +4030,7 @@
    "is_system": false,
    "evidence": [
     "verified source 'contracts/staking/RewardsManager.sol:RewardsManager' with header '@author Domani Protocol' and 'Copyright 2023 Memento Blockchain Pte. Ltd.'",
+    "'Domani Protocol' is the name in the deployed source; the project has since rebranded to Memento (the copyright line names Memento Blockchain Pte. Ltd.). Both names refer to the same team.",
     "reached as a canonical-deposit beneficiary only: 3 deposits from 3 distinct L1 initiators",
     "NOT attributed by the parent census \u2014 visible only from the recipient side"
    ],
@@ -4079,7 +4080,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "L2USDCBridge (lens)"
+   "l2_side_label": "L2USDCBridge (lens)"
   },
   "0x71c348d54c8f0f42f8438d29cbf7d6f8e5d11160": {
    "label": "Abstract Global Wallet (AGW)",
@@ -4427,7 +4428,8 @@
     "source not verified, but the creation bytecode returned by explorer.openzk.net getcontractcreation contains the revert strings 'OzkVault: tx already sent' and 'OzkVault: insufficient token amount'",
     "ABI surface from the same bytecode: owner()/transferOwnership()/withdraw(address,address,uint256)/approve \u2014 an owned vault, not a user wallet",
     "created by 0x0c78af0fb1f4e09df9421ba9abd75c4dc018db05 (also its factory), block 5981",
-    "medium: the 'Ozk' prefix ties it to OpenZK by name only; no verified source or official registry entry was found"
+    "live eth_call owner() returns 0xee65cca8fe8f2f657c05755779fcad29348c76e2 \u2014 an address the PARENT census independently attributed (results/scripts/labels.json) as 'OpenZK BridgeMiddleware main L2 recipient / L1 deposit initiator'. That is the project link, and it comes from a separate investigation on the sender side rather than from the name.",
+    "MEDIUM per METHOD \u00a77 ('verified name on one side, project inferred'): the contract's own identity is solid (owned vault, replay-protected withdrawals, name from its revert strings) and the OpenZK link is corroborated by the owner, but the source is NOT verified on OpenZK's explorer and no official registry entry or public disclosure of OzkVault was found. Two reviewers split on low-vs-medium; the owner() corroboration is what settles it at medium."
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "new \u2014 found only from the L2 recipient side"
@@ -6316,7 +6318,7 @@
    "origin": "new \u2014 found only from the L2 recipient side"
   },
   "0xb234ca484866c811d0e6d3318866f583781ed045": {
-   "label": "Lens_SpokePool (current)",
+   "label": "Across Lens_SpokePool (lens, current)",
    "protocol": "Across Protocol",
    "actor_type": "protocol-contract",
    "confidence": "high",
@@ -6335,7 +6337,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "Across Lens_SpokePool (lens, current)"
+   "l2_side_label": "Lens_SpokePool (current)"
   },
   "0xb2b49a7bb303def3f6bf7c48f1b81059a6ded526": {
    "label": "Abstract Global Wallet (AGW)",
@@ -6753,7 +6755,7 @@
    "origin": "new \u2014 found only from the L2 recipient side"
   },
   "0xc203a2df4ddff9ede2200f1f02054fd721182535": {
-   "label": "ZkSyncL2Gateway (era)",
+   "label": "zkLink Nova ZkSyncL2Gateway (era)",
    "protocol": "zkLink Nova",
    "actor_type": "protocol-contract",
    "confidence": "high",
@@ -6772,7 +6774,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "zkLink Nova ZkSyncL2Gateway (era)"
+   "l2_side_label": "ZkSyncL2Gateway (era)"
   },
   "0xc22c90e23c18904dc32cbc1efc144f4854424463": {
    "label": "Abstract Global Wallet (AGW)",
@@ -7634,7 +7636,7 @@
    "source": "parent census (sender side)"
   },
   "0xdb1e46b448e68a5e35cb693a99d59f784ad115cc": {
-   "label": "Era L2 ProxyAdmin of the ZK token",
+   "label": "ZKsync Governance - Era L2 ProxyAdmin of ZK token (era)",
    "protocol": "ZKsync Governance (ZK Nation)",
    "actor_type": "protocol-contract",
    "confidence": "high",
@@ -7653,7 +7655,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "ZKsync Governance - Era L2 ProxyAdmin of ZK token (era)"
+   "l2_side_label": "Era L2 ProxyAdmin of the ZK token"
   },
   "0xdb6a85f5d81f8af62a7f6d7c47cc3eccd5aa8232": {
    "label": "Abstract Global Wallet (AGW)",
@@ -7844,7 +7846,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "Across ZkSync_SpokePool (era)"
+   "l2_side_label": "Across ZkSync_SpokePool (era)"
   },
   "0xe0f06f8784fdf421c61ab891301bfd492e3f3c89": {
    "label": "Abstract Global Wallet (AGW)",
@@ -7870,7 +7872,7 @@
    "origin": "new \u2014 found only from the L2 recipient side"
   },
   "0xe1d6a50e7101c8f8db77352897ee3f1ac53f782b": {
-   "label": "L2 wstETH bridge (era)",
+   "label": "Lido L2 wstETH bridge (era)",
    "protocol": "Lido",
    "actor_type": "protocol-contract",
    "confidence": "high",
@@ -7889,7 +7891,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "Lido L2 wstETH bridge (era)"
+   "l2_side_label": "L2 wstETH bridge (era)"
   },
   "0xe30b2b4cbf9068c48bbc282279b81fad3b2bb3f5": {
    "label": "Safe proxy reached by one protocol-message",
@@ -8045,7 +8047,7 @@
    "origin": "new \u2014 found only from the L2 recipient side"
   },
   "0xe7cb3e167e7475de1331cf6e0ceb187654619e12": {
-   "label": "Lens_SpokePool (initial deployment)",
+   "label": "Across Lens_SpokePool (lens, initial deployment)",
    "protocol": "Across Protocol",
    "actor_type": "protocol-contract",
    "confidence": "high",
@@ -8064,7 +8066,7 @@
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "confirmed \u2014 in the parent registry and re-verified here from the L2 side",
-   "parent_label": "Across Lens_SpokePool (lens, initial deployment)"
+   "l2_side_label": "Lens_SpokePool (initial deployment)"
   },
   "0xe802a444ea619bc0bca08361715b419cae6e2623": {
    "label": "Abstract Global Wallet (AGW)",
@@ -8374,7 +8376,9 @@
     "no ERC1967 impl/beacon/admin slot set; name() and symbol() eth_calls return no data",
     "selector 0x64e7f93b is unknown to openchain.xyz and 4byte.directory (0 results in both)",
     "created by 0x94a8ce783060c8e519ca85fe2de8068bf3917d22, which is also the ONLY address that has ever called it (3 calls, all 0x64e7f93b) and the only L1 initiator that paid it \u2014 a single-user private contract, not a shared protocol",
-    "UNATTRIBUTABLE: verified source, proxy implementation, bytecode equality, seed registries, selector DBs and targeted search were all tried"
+    "its FUNCTION is identifiable even though its owner is not: the 0x64e7f93b calldata carries pool addresses, and 0x157beaa1c7dcc2aad79846ec693c558609ebc0ea answers factory() = 0xa1160e73b63f322ae88cc2d8e700833e71d0b2a1, whose verified name on abstract is 'contracts/UniswapV3Factory.sol:UniswapV3Factory', with token0() = 0x3439153eb7af838ad19d56e1571fbd09333c2809 (verified WETH9). Further words in the same calldata are tick bounds. So this is an automated Uniswap-V3 concentrated-liquidity position manager operated by one user.",
+    "NO PROJECT ATTRIBUTION: verified source, proxy implementation, bytecode equality, seed registries, selector DBs and targeted search were all tried and none names an owner or project. actor_type stays `unknown-contract` because Axis B asks whose contract it is, and that remains unknown \u2014 but 'what it does' is answered above, so this is not an opaque blob.",
+    "the single tx that paid it REVERTED on chain (status 0x0), so the 0.0163 ETH was never delivered"
    ],
    "source": "phase 6 (L2 recipient side)",
    "origin": "new \u2014 found only from the L2 recipient side"

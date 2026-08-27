@@ -77,7 +77,11 @@ for addr, e in seen.items():
              "evidence": e["evidence"], "source": "phase 6 (L2 recipient side)"}
     if addr in parent:
         entry["origin"] = "confirmed — in the parent registry and re-verified here from the L2 side"
-        entry["parent_label"] = parent[addr]
+        # Keep the PARENT's label as the primary text: it carries protocol attribution that a
+        # bare explorer contract name drops ("Across Lens_SpokePool" vs "Lens_SpokePool").
+        # Re-verification must not silently downgrade the registry.
+        entry["l2_side_label"] = entry["label"]
+        entry["label"] = parent[addr]
         confirmed += 1
     else:
         entry["origin"] = "new — found only from the L2 recipient side"
@@ -92,6 +96,19 @@ json.dump({"_about": "address -> label. Extends results/scripts/labels.json (57 
            "new_from_l2_side": new, "total": len(merged),
            "labels": dict(sorted(merged.items()))},
           open(f"{OUT}/labels-l2.json", "w"), indent=1)
+# Feed the counts back into aggregates-l2.json so the report's registry line is derivable
+# from that file, per OUTPUT_SPEC §7's closing rule.
+aggp = f"{OUT}/aggregates-l2.json"
+if os.path.exists(aggp):
+    agg = json.load(open(aggp))
+    agg.setdefault("report_figures", {})["labels_registry"] = {
+        "parent_entries": len(parent), "new_from_l2_side": new,
+        "confirmed_from_l2_side": confirmed, "total": len(merged),
+        "note": "total = parent_entries + new_from_l2_side; the confirmed are a SUBSET of the "
+                "parent entries, not a third addend",
+        "source": "labels-l2.json"}
+    json.dump(agg, open(aggp, "w"), indent=1)
+
 print(f"wrote {OUT}/labels-l2.json: {len(parent)} parent + {new} new + {confirmed} confirmed "
       f"= {len(merged)} entries")
 for addr, e in sorted(merged.items()):

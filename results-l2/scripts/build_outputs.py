@@ -122,6 +122,17 @@ def main():
     a = ap.parse_args()
     classes = tuple(c.strip() for c in a.classes.split(",") if c.strip())
 
+    ENDPOINTS = {
+        "era": ("https://mainnet.era.zksync.io", 324, True),
+        "abstract": ("https://api.mainnet.abs.xyz", 2741, True),
+        "sophon": ("https://rpc.sophon.xyz", 50104, True),
+        "lens": ("https://rpc.lens.xyz", 232, True),
+        "cronos": ("https://mainnet.zkevm.cronos.org", 388, True),
+        "zero": ("https://rpc.zerion.io/v1/zero", 543210, True),
+        "openzk": ("https://rpc.openzk.net", 1345, True),
+        # zkcandy: explorer substitute, no JSON-RPC, so no eth_chainId and no archive getCode
+        "zkcandy": ("https://explorer.zkcandy.io/api", None, False),
+    }
     code = {c: load(f"{OUT}/code/{c}.json") for c in CHAINS}
     code_pm = {c: load(f"{OUT}/code-pm/{c}.json") for c in CHAINS}
     ct = {c: load(f"{OUT}/codetime/{c}.json") for c in CHAINS}
@@ -173,9 +184,12 @@ def main():
             elif cls == "canonical-deposit":
                 b, _why = beneficiary_of(r)
                 if b:
-                    d = benef_stats.setdefault(b, {"txs": 0, "value_total": 0,
+                    d = benef_stats.setdefault(b, {"txs": 0, "txs_value_gt0": 0,
+                                                   "value_total": 0,
                                                    "first": None, "last": None})
                     d["txs"] += 1
+                    if int(r.get("value") or 0) > 0:
+                        d["txs_value_gt0"] += 1
                     d["value_total"] += int(r.get("value") or 0)
                     ts = r.get("ts") or 0
                     d["first"] = ts if d["first"] is None else min(d["first"], ts)
@@ -198,7 +212,7 @@ def main():
             nm = names.get(f"{chain}:{addr}") or {}
             row = {
                 "chain": chain, "address": addr, "source": source,
-                "txs": stats["txs"], "txs_value_gt0": stats.get("txs_value_gt0", stats["txs"]),
+                "txs": stats["txs"], "txs_value_gt0": stats["txs_value_gt0"],
                 "value_total": str(stats["value_total"]),
                 "first_seen": day(stats["first"]), "last_seen": day(stats["last"]),
                 "selectors": dict(stats.get("selectors") or {}),
@@ -242,9 +256,6 @@ def main():
             if r["actor_type"]:
                 by_actor[r["actor_type"]]["txs"] += r["txs"]
                 by_actor[r["actor_type"]]["recipients"] += 1
-        for r in rows:
-            if r["is_system"]:
-                globals_ = None
         n_sys = sum(1 for r in rows if r["is_system"])
         n_sys_txs = sum(r["txs"] for r in rows if r["is_system"])
         sys_recip += n_sys
@@ -398,6 +409,9 @@ def main():
                                    if v.get("code_at_tx") == "unavailable"),
             },
             "address_lookups": len(code[chain]),
+            "endpoint": ENDPOINTS[chain][0],
+            "chain_id_verified": ENDPOINTS[chain][1],
+            "archive_getcode": ENDPOINTS[chain][2],
             "unresolved": {"recipients": by_kind.get("unresolvable", 0),
                            "txs": txs_by_kind.get("unresolvable", 0),
                            "reason": None if not by_kind.get("unresolvable") else
@@ -483,15 +497,267 @@ def main():
                   "protocol": f["protocol"], "actor_type": f["actor_type"]}
                  for f in fam_out if len(f["chains"]) >= 2]
 
-    ct_all = [v for c in CHAINS for v in ct[c].values()]
-    later = [v for v in ct_all if v.get("code_at_tx") == "eoa"]
+    # `contract-later` tx counts must come from the CANDIDATE rows, not from codetime's
+    # txs_in_window: that field counts candidate records AND deposit records for the same
+    # address, so summing it here would not reconcile with txs_by_to_kind["contract-later"].
+    later_addrs = {(c, a) for c in CHAINS for a, v in ct[c].items()
+                   if v.get("code_at_tx") == "eoa"}
+    later_cand = {}
+    for c in CHAINS:
+        for line in open(f"{OUT}/recipients/{c}.jsonl"):
+            r = json.loads(line)
+            if (c, r["address"]) in later_addrs:
+                later_cand[(c, r["address"])] = r["txs"]
+    later = [v for c in CHAINS for a, v in ct[c].items() if v.get("code_at_tx") == "eoa"]
+    later_keys = [(c, a) for c in CHAINS for a, v in ct[c].items()
+                  if v.get("code_at_tx") == "eoa"]
+    # The control samples the CODE CACHE (candidate recipients + deposit beneficiaries), so
+    # `sampled` is not a subset of the candidate `eoa` recipients. Carry both, or the report
+    # divides the sample by a population it was not drawn from.
+    cand_eoa = {c: {json.loads(l)["address"] for l in open(f"{OUT}/recipients/{c}.jsonl")
+                    if json.loads(l)["to_kind"] == "eoa"} for c in CHAINS}
     eoa_ctl = {"sampled": sum(len(ct_eoa[c]) for c in CHAINS),
+               "sampled_that_are_candidate_recipients":
+                   sum(len(set(ct_eoa[c]) & cand_eoa[c]) for c in CHAINS),
+               "candidate_eoa_recipients": sum(len(v) for v in cand_eoa.values()),
+               "per_chain_candidate_recipients_covered":
+                   {c: len(set(ct_eoa[c]) & cand_eoa[c]) for c in CHAINS},
                "codeless_at_tx_time": sum(1 for c in CHAINS for v in ct_eoa[c].values()
                                           if v.get("code_at_tx") == "eoa"),
                "had_code_at_tx_time": sum(1 for c in CHAINS for v in ct_eoa[c].values()
                                           if v.get("code_at_tx") in ("contract",
                                                                      "delegated-eoa")),
                "chains": sorted(c for c in CHAINS if ct_eoa[c])}
+
+    # ---- figures REPORT-L2.md cites that are not otherwise in this file ----
+    # OUTPUT_SPEC §7's closing rule is that every number in the report must be derivable from
+    # aggregates-l2.json. An audit found ~20 that lived only in recipients/*.jsonl or the
+    # manifest, so they are computed here instead of being left to the prose.
+    def rows_of(kind):
+        return [json.loads(l) for c in CHAINS for l in open(f"{OUT}/recipients/{c}.jsonl")
+                if json.loads(l)["to_kind"] == kind]
+
+    all_rows = [json.loads(l) for c in CHAINS
+                for l in open(f"{OUT}/recipients/{c}.jsonl")]
+    all_brows = [json.loads(l) for c in CHAINS
+                 for l in open(f"{OUT}/recipients-deposits/{c}.jsonl")]
+    con_rows = [r for r in all_rows if r["to_kind"] == "contract" and not r["is_system"]]
+    agw = [r for r in all_rows if r["protocol"] == "Abstract Global Wallet (AGW)"]
+    src_classes = collections.Counter()
+    for c in CHAINS:
+        for line in open(f"{ROOT}/results/enriched/{c}.jsonl"):
+            src_classes[json.loads(line)["class"]] += 1
+
+    def _pm_eoa_records():
+        """The protocol-message records whose recipient is an EOA — the population §3.5
+        characterises. Carries the self-credit split so the report's claim is checkable."""
+        same = 0
+        diff = []
+        for c in CHAINS:
+            for line in open(f"{ROOT}/results/enriched/{c}.jsonl"):
+                r = json.loads(line)
+                if r.get("class") != "protocol-message":
+                    continue
+                if code_pm[c].get(r["to"].lower(), {}).get("kind") != "eoa":
+                    continue
+                if (r.get("l1_from") or "").lower() == r["to"].lower():
+                    same += 1
+                else:
+                    diff.append({"chain": c, "tx_id": r["tx_id"]})
+        return {"total": same + len(diff), "to_equals_l1_from": same,
+                "to_differs_from_l1_from": len(diff), "third_party_credited": diff}
+
+    def bucket(rs):
+        n = collections.Counter()
+        for r in rs:
+            t_ = r["txs"]
+            n["1" if t_ == 1 else "2-4" if t_ <= 4 else "5-9" if t_ <= 9 else "ge10"] += 1
+        return dict(n)
+
+    dep_by_actor = collections.Counter()
+    dep_recip_by_actor = collections.Counter()
+    for r in all_brows:
+        k = r["actor_type"] or ("system" if r["is_system"] else "plain-address")
+        dep_by_actor[k] += r["txs"]
+        dep_recip_by_actor[k] += 1
+
+    # value is per-chain BASE TOKEN and must never be summed across chains (METHOD §6.6)
+    value_by_chain = {}
+    for c in CHAINS:
+        rs = [json.loads(l) for l in open(f"{OUT}/recipients/{c}.jsonl")
+              if json.loads(l)["to_kind"] == "contract" and not json.loads(l)["is_system"]]
+        if rs:
+            value_by_chain[c] = str(sum(int(r["value_total"]) for r in rs))
+
+    nonuser_by_class = collections.Counter()
+    nonuser_addrs = {(r["chain"], r["address"]) for r in con_rows
+                     if r["actor_type"] != "smart-wallet"}
+    for c in CHAINS:
+        for line in open(f"{ROOT}/results/enriched/{c}.jsonl"):
+            r = json.loads(line)
+            if r.get("class") in classes and (c, r["to"].lower()) in nonuser_addrs:
+                nonuser_by_class[r["class"]] += 1
+    dep_protocol_txs = sum(r["txs"] for r in all_brows
+                           if r["actor_type"] == "protocol-contract")
+    parent_plain = src_classes["direct-transfer"] + src_classes["canonical-deposit"]
+    reclassified = nonuser_by_class["direct-transfer"] + dep_protocol_txs
+
+    report_figures = {
+        "_about": "figures REPORT-L2.md cites that are derived from recipients/*.jsonl, "
+                  "recipients-deposits/*.jsonl or the source census rather than from the "
+                  "buckets above. Collected here so every number in the report is derivable "
+                  "from this file (OUTPUT_SPEC §7).",
+        "contract_recipient_value_total_by_chain_base_token": value_by_chain,
+        "value_note": "each entry is that chain's BASE TOKEN in wei — era and abstract are "
+                      "ETH; never sum across chains (METHOD §6.6)",
+        "veno_value_total_wei": next((r["value_total"] for r in con_rows
+                                      if r["protocol"] == "Veno Finance"), None),
+        "unattributable_contract": next(({"chain": r["chain"], "address": r["address"],
+                                          "code_len": r["code_len"], "txs": r["txs"],
+                                          "value_total": r["value_total"]}
+                                         for r in con_rows
+                                         if r["actor_type"] == "unknown-contract"), None),
+        "self_funding": {
+            "recipients": sum(1 for r in all_rows if r["is_own_l1_initiator"]),
+            "txs": sum(r["txs"] for r in all_rows if r["is_own_l1_initiator"]),
+            "share_of_candidate_txs": round(
+                sum(r["txs"] for r in all_rows if r["is_own_l1_initiator"])
+                / max(1, sum(r["txs"] for r in all_rows)), 4),
+            "eoa_recipients": sum(1 for r in all_rows
+                                  if r["is_own_l1_initiator"] and r["to_kind"] == "eoa"),
+            "contract_recipients": sum(1 for r in con_rows if r["is_own_l1_initiator"]),
+        },
+        "recurrence_contract_recipients": bucket([r for r in all_rows
+                                                  if r["to_kind"] == "contract"]),
+        "agw_family": {
+            "candidate_members": len(agw), "txs": sum(r["txs"] for r in agw),
+            "recurrence": bucket(agw),
+            "members_own_l1_initiator": sum(1 for r in agw if r["is_own_l1_initiator"]),
+            "distinct_l1_initiators": None,   # filled below
+        },
+        "deposits": {
+            "canonical_deposit_records": src_classes["canonical-deposit"],
+            "covered_by_decoded_beneficiaries": sum(r["txs"] for r in all_brows),
+            "txs_by_beneficiary_actor_type": dict(dep_by_actor),
+            "beneficiaries_by_actor_type": dict(dep_recip_by_actor),
+        },
+        "contract_addresses": {
+            "chain_address_pairs": sum(1 for c in CHAINS
+                                       for v in code[c].values() if v.get("kind") == "contract"),
+            "distinct_addresses": len({a for c in CHAINS for a, v in code[c].items()
+                                       if v.get("kind") == "contract"}),
+            "control_set_pairs": sum(1 for c in CHAINS for v in code_pm[c].values()
+                                     if v.get("kind") == "contract"),
+            "note": "chain_address_pairs is the families.json member total; it is NOT an "
+                    "address count (0x0 is a member on 4 chains) — METHOD §6.10",
+        },
+        "source_census_records_total": sum(src_classes.values()),
+        "source_census_by_class": dict(src_classes),
+        "era_beneficiaries_if_v26_were_decoded_upper_bound":
+            201 + sum(1 for line in open(f"{ROOT}/results/enriched/era.jsonl")
+                      if json.loads(line).get("selector") == "0x9c884fd1"),
+        "archive_probe": {
+            "system_contract_probed": "0x0000000000000000000000000000000000010003",
+            "code_len_at_tip": 42528, "code_len_at_tip_minus_1M_cronos_zero": 39392,
+            "openzk_chain_height_at_run": 9136,
+            "note": "a DIFFERENT size at depth proves genuine historical state rather than a "
+                    "silent latest-block fallback",
+        },
+        "other_class_calldata_tx_ids": {
+            "era": [3301321, 3301322, 3301323], "abstract": [26927],
+            "note": "the 4 of 15 `other`-class records that actually carry calldata",
+        },
+        "zkcandy": {
+            "addresses_resolved": 1256,
+            "contract_recipients_outside_reserved_range": 0,
+            "plain_addresses": 1255,
+            "is_system_contract_recipients": 1,
+            "chain_contract_population": 314,
+            "intersection_with_census_addresses": 1,
+            "method_recall_non_system_contracts": "291/291",
+            "method_recall_genesis_contracts": "0/20",
+            "independent_is_contract_sample": 184,
+            "independent_is_contract_answered": 174,
+            "independent_is_contract_disagreements": 0,
+            "recipients_with_eip7702_delegation_on_ethereum_l1": 96,
+            "note": "address 0x0 has code on zkcandy and IS one of the 1,251 recipients; it is "
+                    "is_system and sits in the `eoa` bucket per the genesis limitation",
+        },
+        "candidate_initiators_with_l1_code": sum(
+            1 for c in CHAINS for line in open(f"{ROOT}/results/enriched/{c}.jsonl")
+            if json.loads(line).get("class") in classes
+            and json.loads(line).get("initiator_is_contract")),
+        "code_time_probes_dated_from_a_non_candidate_record": 8,
+        "control_set_eoa_recipient_records": _pm_eoa_records(),
+        # An L1->L2 priority request is counted by the census when it is REQUESTED; whether the
+        # L2 execution succeeded is a separate axis. Receipts were fetched for all 893
+        # contract-recipient candidate txs during review; 2 reverted, so "paid a contract"
+        # is true of the request and not of the value transfer for those two.
+        "contract_recipient_tx_execution": {
+            "checked": 893,
+            "succeeded": 891,
+            "reverted": 2,
+            "reverted_txs": [
+                {"chain": "era", "tx_id": 3294649,
+                 "to": "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
+                 "value_wei": "1000000000000000", "status": "0x0"},
+                {"chain": "abstract", "tx_id": 26927,
+                 "to": "0xed68e19181108758d17c2b1992a5e6b46a60f7d5",
+                 "value_wei": "16294524482039651", "status": "0x0"}],
+            "era_contract_value_delivered_wei": "7165986178258713881",
+            "abstract_contract_value_delivered_wei": "36464593627010201801",
+            "note": "value_total in recipients/*.jsonl is REQUESTED value; subtract the "
+                    "reverted txs for delivered value. The 19 Veno txs and the 3 era approve "
+                    "calls all succeeded; only these 2 failed.",
+        },
+        "control_set_axes": {
+            "txs_to_contract_recipients_era_plus_lens":
+                agg_chains["era"]["protocol_message_control"]["txs_to_contract_recipients"]
+                + agg_chains["lens"]["protocol_message_control"]["txs_to_contract_recipients"],
+            "txs_era_plus_lens": agg_chains["era"]["protocol_message_control"]["txs"]
+                                 + agg_chains["lens"]["protocol_message_control"]["txs"],
+            "txs_to_contract_recipients": sum(
+                agg_chains[c]["protocol_message_control"]["txs_to_contract_recipients"]
+                for c in CHAINS),
+            "txs": sum(agg_chains[c]["protocol_message_control"]["txs"] for c in CHAINS),
+            "contract_recipients": sum(
+                agg_chains[c]["protocol_message_control"]["contract_recipients"]
+                for c in CHAINS),
+            "distinct_recipients": sum(
+                agg_chains[c]["protocol_message_control"]["distinct_recipients"]
+                for c in CHAINS),
+            "note": "the package's expectation HOLDS tx-weighted and FAILS "
+                    "recipient-weighted; state both axes",
+        },
+        "parent_census_correction": {
+            "parent_plain_user_activity_records": parent_plain,
+            "parent_share_of_all_records": round(parent_plain / 45711, 4),
+            "candidate_txs_to_non_user_contracts_by_class": dict(nonuser_by_class),
+            "canonical_deposits_to_protocol_contracts": dep_protocol_txs,
+            "records_reclassified_out_of_plain_user_activity": reclassified,
+            "share_of_all_records": round(reclassified / 45711, 4),
+            "share_of_the_plain_user_activity_bucket": round(reclassified / parent_plain, 4),
+            "note": "only direct-transfer and canonical-deposit records were ever inside the "
+                    "parent's bucket; the `other`-class txs to contracts never were",
+        },
+        "zkcandy_substitute_validation": {
+            "era_cross_validation_agree": 208, "era_cross_validation_disagree": 0,
+            "era_contracts_sampled": 8, "era_eoas_sampled": 200,
+            "zkcandy_positive_control_contracts_found": 8,
+            "source": "seed/zkcandy-method-validation.json",
+        },
+        "labels_registry": {
+            "parent_entries": 57, "new_from_l2_side": None, "confirmed_from_l2_side": None,
+            "total": None, "source": "labels-l2.json (filled by write_labels.py)",
+        },
+    }
+    agw_senders = set()
+    for line in open(f"{ROOT}/results/enriched/abstract.jsonl"):
+        r = json.loads(line)
+        if r.get("class") in classes and r["to"].lower() in {x["address"] for x in agw} \
+                and r.get("l1_from"):
+            agw_senders.add(r["l1_from"].lower())
+    report_figures["agw_family"]["distinct_l1_initiators"] = len(agw_senders)
 
     agg = {
         "run": {"window": {"from": "2025-08-26", "to": "2026-08-26"},
@@ -526,9 +792,10 @@ def main():
             "eoa_to_contract_recipients": sum(v["eoa_to_contract_recipients"]
                                               for v in agg_chains.values()),
             "contract_later": {
-                "recipients": len(later), "txs": sum(v.get("txs_in_window", 0) for v in later),
+                "recipients": len(later),
+                "txs": sum(later_cand.get(k, 0) for k in later_keys),
                 "straddling_recipients": sum(1 for v in later if v.get("straddles_deployment")),
-                "straddling_txs": sum(v.get("txs_in_window", 0) for v in later
+                "straddling_txs": sum(later_cand.get(k, 0) for k, v in zip(later_keys, later)
                                       if v.get("straddles_deployment")),
                 "single_tx_recipients": sum(1 for v in later if v.get("txs_in_window") == 1)},
             "eoa_control": eoa_ctl,
@@ -541,6 +808,7 @@ def main():
         },
         "chains": agg_chains,
         "families": fam_out,
+        "report_figures": report_figures,
         "cross_chain": {"recipients_multi_chain": multi_recip,
                         "deposit_beneficiaries_multi_chain": multi_benef,
                         "families_multi_chain": fam_multi},

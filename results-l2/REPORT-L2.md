@@ -13,36 +13,62 @@ capability are in `run-manifest-l2.json`.
 
 Of the **24,067 EOA-origin L1→L2 priority transactions**, **889 (3.7%) paid an address that
 already had code when the money arrived** — verified at the block *before* each funding tx, not
-at today's chain tip. Of those 889, **865 (97.3%) went to the sender's own smart-contract
+at today's chain tip. Of those 889, **865 (97.3%) went to a user-controlled smart-contract
 wallet** — 864 to Abstract Global Wallet accounts on abstract, 1 to a Safe on era — and only
 **24 txs (0.10% of the whole candidate set) reached something that is not a user account**: 19 to
 **Veno Finance**'s `BridgeReceiver` on era (7.167 ETH of liquid-staking flow), 4 to token
 contracts (USDC.e, ZK, WETH on era), and 1 to a single unverified private contract on abstract.
-The remaining **23,174 txs (96.3%) paid a plain codeless address**.
+A further **4 txs** were 0-value pings at the reserved address `0x0` (`is_system`, excluded from
+the 889). The remaining **23,174 txs (96.3%) paid a plain codeless address**. 23,174 + 889 + 4 =
+24,067.
+
+**Two of those 889 txs reverted on L2.** Receipts were fetched for all 893 contract-recipient
+candidate txs during review: 891 succeeded, and 2 failed with `status 0x0` — era tx 3294649
+(0.001 ETH to the ZK token) and abstract tx 26927 (0.0163 ETH to the unattributed contract). A
+priority request is counted by the census when it is *requested*, so those two are correctly
+inside the 24,067 and inside the 889 "paid an address with code"; but the value was **not
+delivered**, and every ETH figure below is requested value unless stated otherwise. All 19 Veno
+txs and all 3 era `approve` calls succeeded.
+
+On "user-controlled": the wallets are AGW/Safe smart accounts, which is established (§4). That
+the *payer* owns the wallet they funded is an **inference, not a measurement** — no output here
+proves the link, and 10 of the 294 AGW accounts were funded by 2–4 distinct L1 initiators. What
+the data supports is the load-bearing claim: these are user accounts, not protocol contracts.
 
 So the honest headline is: **genuine protocol interaction in the EOA-origin set is one protocol
 and 19 transactions.** The "EOA → contract" number is real but it is almost entirely *users
-funding their own wallets*: reporting it without the Axis-B split would present 889 txs as
+funding smart accounts*: reporting it without the Axis-B split would present 889 txs as
 protocol usage where 19 of them are — a 47× overstatement.
 
-**Coverage is complete — there are no unresolved denominators.** All **22,162 (chain, address)
-lookups** got a verdict; **0** are `unresolvable`, `contract-later`, `delegated-eoa` or
-`code-time-unverified`. That includes **zkcandy**, which the input package expected to be
-unresolvable: its RPC is still dead, but its **block explorer is alive again** and served all
-1,251 recipients + 10 deposit beneficiaries (§2.3). Every one of them is a plain address —
-zkcandy has **zero** contract recipients.
+**Coverage is complete — there are no unresolved denominators**, with one instrument caveat
+stated up front. All **22,162 (chain, address) lookups** got a verdict; **0** are
+`unresolvable`, `contract-later`, `delegated-eoa` or `code-time-unverified`. The `delegated-eoa`
+zero is a genuine measurement on the 7 RPC chains but **not** on zkcandy's 1,256 addresses
+(5.7% of the workload): the explorer substitute reads creation records, and an EIP-7702
+delegation is code without one, so zkcandy's delegated-eoa count is **unknown, not zero**.
+
+That zkcandy is resolved at all is the surprise: the input package expected it to be
+unresolvable. Its RPC is still dead, but its **block explorer is alive again** and served all
+1,251 recipients + 10 deposit beneficiaries (§2.3). zkcandy has **zero contract recipients
+outside the reserved range** — the one exception is address `0x0`, which *does* have code on
+zkcandy and *is* one of the 1,251 (the tester ping, tx_id 6348); it carries `is_system` and sits
+in the `eoa` bucket because the creation-record method cannot see genesis contracts.
 
 Three secondary results:
 
-- **The counterfactual-deployment trap did not bite anywhere.** All 371 contract addresses
-  already had code at `funding_block − 1`; `contract-later` is **0**, so the error term METHOD §4
+- **The counterfactual-deployment trap did not bite anywhere.** All 371 contract
+  (chain, address) pairs already had code at `funding_block − 1`; `contract-later` is **0**, so the error term METHOD §4
   exists to size is empty (0 straddling recipients, 0 straddling txs).
-- **The `eoa` bucket held up under its control.** 1,298 recipients across 7 chains that are
-  codeless today were also codeless when they were paid; **0** contradictions.
-- **The `protocol-message` control refuted its own stated expectation** and that is a finding,
-  not a fault (§3.5): on cronos, openzk, abstract and zero, *every* protocol-message recipient is
-  a plain EOA. That class is defined by the **sender** being a contract; on the small chains the
-  sender is a deposit-wrapper contract paying the user's own L2 address.
+- **The `eoa` bucket held up under its control.** 1,298 addresses across 7 chains that are
+  codeless today were also codeless when they were paid; **0** contradictions. (Those 1,298 are
+  drawn from the code caches, so only 1,011 of them are candidate `eoa` recipients — §10 sizes
+  the coverage honestly.)
+- **The `protocol-message` control's outcome depends on which axis you measure**, and both are
+  reported (§3.5): tx-weighted the package's expectation *holds* (18,282 of 18,580 txs, 98.4%,
+  went to contracts), but recipient-weighted it *fails* (16 of 172 recipients, 9.3%). On cronos,
+  openzk, abstract and zero *every* protocol-message recipient is a plain EOA. That is structural,
+  not a broken method: the class is defined by the **sender** being a contract, and on the small
+  chains that sender is a deposit-wrapper contract crediting a user address.
 
 ---
 
@@ -66,17 +92,24 @@ under the stated tiebreak (txs DESC, address ASC) — with zero discrepancies
 = `finalizeDeposit(uint256,bytes32,bytes)`, whose receiver is nested inside the `bytes` blob;
 METHOD §1 puts them out of scope for the shipped resolver, and they are reported as a counted
 skip on every run. Consequences, stated rather than buried: era's beneficiary count is 201 rather
-than up to 341, the workload total is 22,162 rather than larger, and the deposit-side coverage in
-§6 is **2,924 of 3,064** canonical deposits (95.4%).
+than at most 341 (`report_figures.era_beneficiaries_if_v26_were_decoded_upper_bound`), the
+workload total is 22,162 rather than larger, and the deposit-side coverage in §6 is **2,924 of
+3,064** canonical deposits (95.4%).
 
 ### 2.2 How code-time was proven
 
 `eth_getCode(recipient, blockNumber − 1)` of the recipient's earliest in-window tx — the block
 **before** the funding tx, because `getCode(N)` returns end-of-block-`N` state and would include
 a deployment done later in the same block. All 7 live endpoints serve full archive state; the
-probe is in `run-manifest-l2.json` and is more than a smoke test: on cronos and zero,
+probe is in `run-manifest-l2.json`. On cronos and zero it is more than a smoke test:
 `eth_getCode(0x…10003)` returns a *different* code size at tip−1M (39,392 B) than at the tip
 (42,528 B), which proves genuine historical state rather than a silent latest-block fallback.
+For the other five the recorded probe shows only that the call was *served* at depth — which a
+latest-block fallback would also do. The stronger evidence that they are genuinely archival is
+indirect but decisive: had any of them silently answered at the tip, every contract recipient
+would have read as `contract` and `contract-later` would be 0 **by construction**. An independent
+re-test during review confirmed real historical state on era, abstract, sophon, lens and openzk
+(`eth_getCode(<contract>, 0x1)` returns `0x` while `latest` returns code).
 
 | chain | endpoint | archive `getCode` | code cache block |
 |---|---|---|---|
@@ -114,31 +147,67 @@ Its **block explorer**, however, answers — and it indexes the census's canonic
 Code-time on zkcandy is therefore **derived** (`created_block < funding_block`) rather than
 probed; the semantics match the block−1 probe ("code existed before the funding tx's block").
 
-**Validated, not assumed** (`seed/zkcandy-method-validation.json`). era has both a working archive
-RPC *and* the same explorer API, so the substitute was scored against `eth_getCode` ground truth
-there: **208/208 agreement** — all 8 era contract recipients and 200 randomly sampled era EOA
-recipients, 0 disagreements, 0 API errors. A positive control on zkcandy itself found 8 real
-zkcandy contracts (discovered independently through the explorer's own `tokentx`/`txlist` data),
-so the all-EOA sweep result is not a broken detector.
+**Validated, and the validation was rebuilt after review** (`seed/zkcandy-method-validation.json`).
+The original argument leaned on a cross-validation against era — 208/208 agreement between
+`eth_getCode` and the same explorer call — on the premise that "era has the same explorer API".
+**That premise is false.** zkcandy runs Blockscout; era runs matter-labs/block-explorer. They
+differ in routes, response schema, address cap (10 vs 5) and over-cap behaviour, and — decisively
+— they differ *precisely* on this method's one blind spot: era's explorer returns creation records
+for genesis contracts, zkcandy's does not. The era run therefore had no power over the failure
+mode that actually exists here. It is retained for transparency (and was independently reproduced
+at 208/208 with a fresh sample) but it is no longer load-bearing.
 
-One API trap was load-bearing: `contractaddresses` caps at **10** and returns `status:1 "OK"` with
-**zero** results above it — silent truncation that would have produced a whole chain of confident
-false "EOA" verdicts. The script hard-caps at 10 and asserts every returned address was one it
-asked for. (era's copy of the same API caps at 5 but fails loudly with `status:0 NOTOK`; that
-difference is exactly why the cap was measured per host rather than assumed.)
+What earns the verdict instead is zkcandy-side evidence:
+
+1. **Complete enumeration.** `listcontracts` returns the chain's entire contract population —
+   **314 addresses**, page 2 empty. Intersected with the census's 1,256 addresses, the only
+   member is `0x0`. This does not depend on the substitute method being sensitive at all: if no
+   census address is a contract on the chain, no verdict can be a false negative.
+2. **Recall measured exhaustively, not sampled.** Running `getcontractcreation` over all 314
+   known contracts finds 294 and misses 20 — **291/291 on non-system contracts, 0/20 on
+   genesis**, every miss inside the reserved range.
+3. **A second, independent instrument.** Blockscout also serves `/api/v2/addresses/{addr}` with a
+   direct `is_contract` flag — a truer `eth_getCode` equivalent than a creation record. 184
+   addresses sampled (the 40 highest-tx recipients plus 150 random): 174 answered, **0 contracts,
+   0 disagreements** with the shipped verdicts.
+
+Chain identity was established without `eth_chainId`, which this endpoint cannot serve: the
+explorer indexes the census's canonical hashes with matching `to`/`from`/`value`, and those
+hashes come from `NewPriorityRequest` logs on the L1 diamond
+`0xf2704433d11842d15aa76bbf0e00407267a99c92`, whose `getChainId()` returns `0x140` = 320.
+
+One API trap was load-bearing: `contractaddresses` caps at **10** and, above it, **silently
+truncates to the first 10** while still answering `status:1 "OK"`. A caller chunking at 60 would
+get no record for addresses 11–60 and mint confident false "EOA" verdicts for 83% of every chunk.
+The script hard-caps at 10 and asserts every returned address was one it asked for. (This report
+previously described the over-cap behaviour as returning results for *none* of them — a
+misdiagnosis from a probe that put the only contract in position 11, i.e. exactly the address
+truncation removes. era's API caps at 5 and fails loudly with `status:0 NOTOK`.)
 
 **Declared limitations of the substitute:**
 
-1. **No bytecode.** zkcandy contributes no `code_len`, no `codehash`, and therefore **no bytecode
-   families**. Had it contained contract recipients, they could not have been clustered.
+1. **No bytecode — from the endpoint chosen, not from the host.** zkcandy contributes no
+   `code_len`, no `codehash` and therefore **no bytecode families**. This was previously stated
+   as a property of the instrument; it is not. The same Blockscout host serves
+   `/api/v2/smart-contracts/{addr}` with `deployed_bytecode`, so the capability was available and
+   the run did not use it. Moot for the headline — there are no contract recipients to cluster —
+   but the earlier claim was wrong.
 2. **EIP-7702 is undetectable** — a delegation is code, not a creation record. zkcandy's
    `delegated-eoa` count is **unknown, not zero**.
-3. **Genesis contracts have no creation record** and read as codeless. Verified for `0x…8007`,
-   `0x…800a`, `0x…800b`, `0x…10002`, `0x…10005`. Every genesis contract on a ZK-stack chain lives
-   inside the reserved range METHOD §3 flags `is_system`, so no user-chosen counterparty can be
-   mis-filed — but it is why address `0x0` sits in zkcandy's `eoa` bucket while it is `contract`
-   on abstract, sophon, zero and openzk. That single address is the only known divergence between
-   the two methods, and it is `is_system` on both sides.
+3. **Genesis contracts have no creation record** and read as codeless — 20 of the chain's 314
+   contracts, every one inside the reserved range METHOD §3 flags `is_system`, so no user-chosen
+   counterparty can be mis-filed. Correct examples are `0x0`, `0x…8006`, `0x…800a`, `0x…800b`,
+   `0x…8014`, `0x…10000`. (An earlier draft cited `0x…8007`, `0x…10002` and `0x…10005`; those are
+   not contracts on zkcandy at all, so they return nothing merely because they are codeless.)
+   This is why address `0x0` sits in zkcandy's `eoa` bucket while it is `contract` on abstract,
+   sophon, zero and openzk — the only known divergence between the two methods, and `is_system`
+   on both sides.
+4. **Four further limitations**, added after review: `getcontractcreation` cannot distinguish
+   "indexed, no code" from "never indexed" (closed empirically here — all 1,256 are known to the
+   indexer); the verdict is at the explorer's tip with indexer lag rather than at a pinned block;
+   zkcandy has **no `eoa`-control coverage at all**, so the one chain resolved by a substitute is
+   the one chain with no negative control; and METHOD §3's self-destruct worry is *inapplicable*
+   on a ZK-stack chain, which has no `SELFDESTRUCT`.
 
 ### 2.4 Other deviations from the package
 
@@ -185,10 +254,10 @@ and never given an `actor_type`.
 | `unknown-contract` | 1 | 1 | 0.004% |
 | **total** | **300** | **889** | **3.69%** |
 
-Collapsing Axis B would turn 865 txs of *users funding their own AGW wallets* into "protocol
+Collapsing Axis B would turn 865 txs of *users funding AGW smart accounts* into "protocol
 usage": 889 txs presented as protocol interaction where 19 actually are, a **47×** overstatement.
-The distinction is not a technicality — an AGW account is the user's wallet, reached from L1 by
-the same person who owns it.
+The distinction is not a technicality — an AGW account is a user's wallet, not a protocol's
+contract, whoever funded it.
 
 ### 3.3 Recurrence — the one-shot skew is the shape of the data
 
@@ -204,8 +273,9 @@ and summed, never across chains. Contract recipients are *over*-represented in t
 (24 of the 98 recipients at ≥5 txs are contracts, vs. 1.4% of the population overall), which is
 what you would expect if the recurring head is people topping up wallets they control.
 
-**Self-funding is the dominant EOA pattern and is entirely absent among contracts.** 4,354
-recipients (6,239 txs, 25.9%) are addresses that also appear as an `l1_from` on the same chain —
+**Self-funding is a major EOA pattern and is entirely absent among contracts.** 4,354
+recipients — 20.5% of the 21,211 `eoa` recipients, carrying 6,239 txs (25.9% of all candidate
+txs) — are addresses that also appear as an `l1_from` on the same chain —
 the user paying themselves across the bridge. **Zero** of the 300 contract recipients do this,
 which is the expected signature of a counterfactual smart account: the wallet address is not the
 key that signs on L1.
@@ -217,7 +287,8 @@ key that signs on L1.
   addresses. era, which carries 79% of the candidate traffic, has **5 contract recipients out of
   18,325**.
 - **H2 — "contract recipients cluster into a few bytecode families dominated by smart wallets, not
-  protocols": CONFIRMED.** 352 of the 371 contract addresses (95%) are one family, AGW, and it is
+  protocols": CONFIRMED.** 352 of the 371 contract (chain, address) pairs (95%) are one family,
+  AGW — 371 pairs are 368 distinct addresses, since `0x0` recurs on 4 chains — and it is
   a smart-account family. Across the whole dataset, `smart-wallet` outweighs `protocol-contract`
   by 865 txs to 19.
 - **H3 — "genuine protocol interactions are rare and concentrated on era/abstract": CONFIRMED for
@@ -228,7 +299,14 @@ key that signs on L1.
 ### 3.5 The `protocol-message` control
 
 The package predicted the control's recipients "should be overwhelmingly contracts; if not,
-something is wrong with the method." They are not, and nothing is wrong with the method.
+something is wrong with the method." **Which axis you measure decides the answer**, and the
+report states both rather than picking the flattering one:
+
+- **tx-weighted the expectation HOLDS**: 18,282 of 18,580 control txs (98.4%) went to a contract.
+- **recipient-weighted it FAILS**: only 16 of 172 distinct control recipients (9.3%) are
+  contracts.
+
+Nothing is wrong with the method; the two axes are measuring different things.
 
 | chain | pm txs | txs → contract recipient | txs → EOA recipient |
 |---|---|---|---|
@@ -245,9 +323,11 @@ Where the class means what its name suggests — era and lens, i.e. Across, Chai
 zkLink, Lido, Nodle — recipients are contracts, 18,175 of 18,220 txs. The exceptions are
 structural: `protocol-message` is defined by the **sender** being a contract (aliased inner
 `from` ≠ `l1_from`), and on cronos, openzk and sophon the sender is the chain's own
-deposit-wrapper contract (`ZkCroMintAndBridge`, `BridgeMiddleware`, `BridgeHubWrapper`) paying the
-user's own L2 address — every one of those 298 records has `to == l1_from`, `data_len ≤ 2`, and
-non-zero value. The control therefore confirms the method rather than failing it, and it
+deposit-wrapper contract (`ZkCroMintAndBridge`, `BridgeMiddleware`, `BridgeHubWrapper`) crediting
+a user address. All 298 of those records have `data_len ≤ 2` and non-zero value, and **293 of the
+298 have `to == l1_from`** — the depositor crediting themselves. The 5 that do not are the same
+wrapper flow crediting a *third-party* address: zero tx_id 4907, cronos 4774, and sophon 9467,
+9999 and 10181. The control therefore confirms the method rather than failing it, and it
 incidentally corrects a reasonable-looking assumption in the input package.
 
 All 16 contract recipients in the control set were code-time verified: 16/16 `contract`.
@@ -258,7 +338,11 @@ All 16 contract recipients in the control set were code-time verified: 16/16 `co
 
 A family is a set of recipients whose `getCode` output is byte-identical, keyed by the sha256 of
 the lowercased code hex — a **clustering key, not the EVM keccak codehash**. 13 families cover all
-371 contract addresses found across the candidate, deposit-beneficiary and control sets.
+371 contract **(chain, address) pairs** — 368 distinct addresses, since `0x0` recurs on 4
+chains — across the candidate and deposit-beneficiary sets. The **control set is not clustered
+here**: its 16 contract recipients contribute 14 further addresses and 13 further codehashes that
+appear in no family, including both Across `Lens_SpokePool` deployments and Circle's lens
+`L2USDCBridge`. They are attributed individually in §3.5, §5.5 and `labels-l2.json`.
 
 | codehash (sha256, 12) | bytes | members | candidate txs | chains | actor_type | attribution | conf. |
 |---|---|---|---|---|---|---|---|
@@ -287,13 +371,22 @@ protocol. Its distribution is itself long-tailed — of the 294 members that are
 received exactly 1 tx, 81 got 2–4, 18 got 5–9, and 5 got ≥10; the other 58 members appear only as
 deposit beneficiaries.
 
-**The one unattributable contract.** abstract `0xed68e19181108758d17c2b1992a5e6b46a60f7d5`,
-51,936 bytes, 1 tx (0.0163 ETH). Tried and failed: source is not verified on abstract's explorer;
-no ERC1967 impl/beacon/admin slot is set; `name()`/`symbol()` return nothing; its selector
-`0x64e7f93b` is unknown to both openchain.xyz and 4byte.directory. What *is* known is decisive
-about its nature: it was created by `0x94a8ce783060c8e519ca85fe2de8068bf3917d22`, and that address
-is the only one that has ever called it (3 calls, all `0x64e7f93b`) and the only L1 initiator that
-paid it. It is a single-user private contract, not shared infrastructure.
+**The one contract with no project attribution.** abstract
+`0xed68e19181108758d17c2b1992a5e6b46a60f7d5`, 51,936 bytes, 1 tx (0.0163 ETH requested — the tx
+**reverted**, so nothing was delivered). Tried and failed: source is not verified on abstract's
+explorer; no ERC1967 impl/beacon/admin slot is set; `name()`/`symbol()` return nothing; its
+selector `0x64e7f93b` is unknown to both openchain.xyz and 4byte.directory.
+
+Its **function**, however, is identifiable, and calling it simply "unattributable" understated
+what the calldata shows. The `0x64e7f93b` argument list carries pool addresses and tick bounds:
+`0x157beaa1c7dcc2aad79846ec693c558609ebc0ea` answers `factory()` =
+`0xa1160e73b63f322ae88cc2d8e700833e71d0b2a1`, whose verified name on abstract is
+`contracts/UniswapV3Factory.sol:UniswapV3Factory`, with `token0()` = the verified `WETH9`. So it
+is an automated **Uniswap-V3 concentrated-liquidity position manager**. `actor_type` stays
+`unknown-contract` because Axis B asks *whose* contract it is and that is still unknown — it was
+created by `0x94a8ce783060c8e519ca85fe2de8068bf3917d22`, the only address that has ever called it
+(3 calls) and the only L1 initiator that paid it, i.e. one user's private bot rather than shared
+infrastructure.
 
 Only one family spans chains — `85ee7f0e` (`EmptyContract` at `0x0`), on abstract, openzk, sophon
 and zero. AGW is abstract-only; ZKsync SSO is sophon-only in this dataset.
@@ -316,12 +409,13 @@ and zero. AGW is abstract-only; ZKsync SSO is sophon-only in this dataset.
 ### 5.1 ZKsync Era — 19,044 candidate txs, 18,325 recipients
 
 Almost perfectly one-shot: 18,057 recipients received exactly one tx. Only **5** recipients have
-code, carrying 24 txs (8.167 ETH).
+code, carrying 24 txs and **8.167 ETH requested / 7.166 ETH delivered** — era tx 3294649
+(0.001 ETH to the ZK token) reverted.
 
 | address | txs | actor_type | identity |
 |---|---|---|---|
 | `0x9cb1e077e7253a4f022e74862a93ee7cecab788b` | 19 | `protocol-contract` | **Veno Finance** `BridgeReceiver` |
-| `0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e` | 2 | `token` | ZK token |
+| `0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e` | 2 | `token` | ZK token — one 0-value `approve`, one reverted transfer, so it received nothing |
 | `0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4` | 1 | `token` | USDC.e |
 | `0x5aea5775959fbc2557cc8789bc1bf90a239d9a91` | 1 | `token` | WETH |
 | `0xab8454126722dbcb3da5ab2cbb647663c2e56659` | 1 | `smart-wallet` | Safe |
@@ -343,7 +437,8 @@ hypothesis H1.
 
 The one chain where "EOA → contract" is a meaningful share: **296 of 1,676** recipients have code
 — 295 of them user addresses, the 296th being the reserved `0x0` — and those 295 take **865 of
-3,273 txs (26.4%)**, 36.481 ETH. But **864 of those 865 are AGW smart
+3,273 txs (26.4%)**, 36.481 ETH requested / 36.465 ETH delivered (abstract tx 26927 reverted).
+But **864 of those 865 are AGW smart
 wallets**, so abstract's number is a measure of *account-abstraction onboarding*, not protocol
 usage: 305 distinct L1 initiators funded 294 AGW accounts. Abstract has **zero**
 protocol-contract recipients in the candidate set.
@@ -353,10 +448,19 @@ AGW wallets. The family is a bytecode fact, not a head-of-distribution fact.
 
 ### 5.3 zkcandy — 1,396 candidate txs, 1,251 recipients
 
-**All 1,251 recipients and all 10 deposit beneficiaries are plain addresses; 0 contracts.** This
-chain was expected to be unresolvable and is now fully resolved via its explorer (§2.3). Caveat
-that survives: EIP-7702 delegations are invisible to the substitute method, so zkcandy's
-`delegated-eoa` count is unknown rather than zero.
+**Zero contract recipients outside the reserved range.** Of the 1,251 recipients and 10 deposit
+beneficiaries, exactly one — address `0x0`, the 0-value tester ping — has code on zkcandy; it is
+`is_system` and therefore excluded from every protocol claim, and it sits in the `eoa` bucket
+because the creation-record method cannot see genesis contracts (§2.3). The other 1,255 are plain
+addresses, established three ways: the chain's complete contract population (314 addresses)
+intersects the census set only at `0x0`; the method's recall on non-system contracts is 291/291;
+and an independent `is_contract` instrument agreed on every one of 174 sampled addresses. This
+chain was expected to be unresolvable and is now fully resolved.
+
+Caveat that survives: EIP-7702 delegations are invisible to the substitute, so zkcandy's
+`delegated-eoa` count is unknown rather than zero — and this is not idle, since **96 of the 1,256
+addresses carry a `0xef0100` delegation on Ethereum L1**. No sampled address showed a Blockscout
+`eip7702` proxy type, but there is no positive control, so "unknown" stands.
 
 ### 5.4 ZERϴ Network — 339 candidate txs, 257 recipients
 
@@ -390,8 +494,15 @@ Again a 0-value ping to `0x0` (`is_system`). Its secondary set is the notable pa
 openzk's 141 decoded deposits (93.6%) land on `OzkVault`** `0x7cafe5e0218454abc86c78ba23b311e9a2412e49`
 — an owner-controlled vault. Source is not verified, but its creation bytecode carries the revert
 strings `"OzkVault: tx already sent"` and `"OzkVault: insufficient token amount"` and an
-`owner()/transferOwnership()/withdraw(address,address,uint256)` surface. Confidence **medium**:
-the name ties it to OpenZK, but no verified source or official registry entry was found.
+`owner()/transferOwnership()/withdraw(address,address,uint256)` surface. The project link is not
+just the name: live `owner()` returns `0xee65cca8fe8f2f657c05755779fcad29348c76e2`, which the
+**parent census independently attributed** — from the sender side, in a separate investigation —
+as "OpenZK BridgeMiddleware main L2 recipient / L1 deposit initiator". Confidence **medium**
+(METHOD §7: "verified name on one side, project inferred"): the contract's own identity is solid
+and the OpenZK link is corroborated by its owner, but the source is not verified on OpenZK's
+explorer and no public disclosure of "OzkVault" exists. Two reviewers split low-vs-medium on this
+during review; the `owner()` corroboration is what settles it. This is the deliverable's only
+non-`high` attribution.
 
 ---
 
@@ -428,11 +539,14 @@ the true size of "a user sent a *call* from L1 to an L2 contract":
 | era | 3301321 | `0x3355df6d…` USDC.e | `0x095ea7b3` | `approve(address,uint256)` | 0 |
 | era | 3301322 | `0x5a7d6b2f…` ZK token | `0x095ea7b3` | `approve(address,uint256)` | 0 |
 | era | 3301323 | `0x5aea5775…` WETH | `0x095ea7b3` | `approve(address,uint256)` | 0 |
-| abstract | 26927 | `0xed68e191…` (unverified) | `0x64e7f93b` | unknown to openchain.xyz and 4byte.directory | 0.0163 ETH |
+| abstract | 26927 | `0xed68e191…` (unverified) | `0x64e7f93b` | unknown to openchain.xyz and 4byte.directory; a Uniswap-V3 position call by function (§4) | 0.0163 ETH — **reverted** |
 
 The three era `approve` calls all come from one L1 initiator
 `0x000040d6c85a13a1aa74565fde87e499dc023c6f` within two minutes — one user approving three tokens
-from L1 in a single session.
+from L1 in a single session; all three **succeeded**. The fourth record, abstract 26927, is the
+only L1-initiated *call* to a non-token L2 contract in the whole window, and it **reverted** —
+so on the strictest reading, the number of successful user-driven L2 contract calls from L1 in a
+year across 8 chains is **3, all of them `approve`**.
 
 The remaining **11** records are `data_len = 0`, `value = 0` pings, not calls: **5** target
 address `0x0` (abstract, sophon, zero, openzk, zkcandy — the cross-chain testers
@@ -469,13 +583,24 @@ notable given they all run the same stack.
 The parent census reported that "plain user activity (direct base-token transfers + canonical
 deposits) accounts for ~59% of all records" and classified every tx on the **sender** axis only.
 This phase resolved the recipient axis for the first time — no `eth_getCode` had ever been run
-against an L2 RPC. Three corrections and confirmations:
+against an L2 RPC. Four corrections and confirmations:
 
-1. **"~59% plain user activity" survives, with one qualification.** Of the 24,067 EOA-origin txs,
-   24,043 (99.90%) went to a plain address or to the sender's own smart wallet — both are user
-   activity. Only **24 txs (0.10%)** paid something that is not a user account. The share of the
-   full 45,711-record census that this phase re-classifies away from "plain user activity" is
-   **0.05%**. The parent's headline was right, and it is now measured rather than assumed.
+1. **"~59% plain user activity" survives, but the correction is larger than the candidate set
+   alone suggests.** The parent's bucket is `direct-transfer` (24,052) + `canonical-deposit`
+   (3,064) = **27,116 records, 59.32% of 45,711**. Two slices come out of it:
+
+   - **20 `direct-transfer` txs** paid a contract that is not a user account (19 Veno + 1 token;
+     the other 4 of the 24 in §1 are `other`-class records, which were never inside the parent's
+     bucket).
+   - **154 canonical deposits** were delivered to a protocol contract — OpenZK's `OzkVault`
+     (132), Across's era `ZkSync_SpokePool` (19) and Domani's `RewardsManager` (3). These are
+     squarely inside the parent's 59% and are only visible once the `finalizeDeposit`
+     beneficiary is decoded (§6).
+
+   Total re-classified: **174 records = 0.38% of the census, 0.64% of the parent's bucket** — not
+   the 0.05% a candidate-set-only reading gives. The parent's headline still stands (99.36% of
+   that bucket really is plain user activity), but the honest correction is ~8× the figure the
+   candidate set alone would suggest, and the deposit half of it is the larger half.
 2. **The recipient axis found a protocol the sender axis could not: Veno Finance.** The parent
    attributed 14 protocols, all from the sender side, and none of them is Veno. Its 19 txs look
    like ordinary `direct-transfer` records from the sender side because they *are* ordinary
@@ -487,10 +612,16 @@ against an L2 RPC. Three corrections and confirmations:
    abstract's 3,273 candidate txs (26.4%) fund AGW smart accounts. That is still user activity by
    the Axis-B rule, but it is qualitatively different from an EOA-to-EOA transfer and the parent
    census had no way to see it.
+4. **Three of the parent's own attributions are re-confirmed from the opposite side.** Across's
+   era `ZkSync_SpokePool`, Circle's lens/sophon `L2USDCBridge` and the ZK token were all found
+   independently here as recipients, matching the parent's sender-side labels exactly — a useful
+   cross-check that the two axes agree where they overlap.
 
-Nothing in the parent's numbers is contradicted. One assumption in the *Phase 6 input package* is:
-zkcandy is no longer unresolvable (§2.3), and the `protocol-message` control's expected outcome
-was wrong for 4 of 8 chains (§3.5).
+Nothing in the parent's numbers is contradicted — the 174 records above are a *refinement* of a
+bucket the parent measured correctly, not an error in it. Two assumptions in the *Phase 6 input
+package* did not survive: zkcandy is no longer unresolvable (§2.3), and the `protocol-message`
+control's expected outcome holds only tx-weighted, failing on the recipient axis and failing
+outright on 4 of 8 chains (§3.5).
 
 ---
 
@@ -500,6 +631,21 @@ was wrong for 4 of 8 chains (§3.5).
   abstract, zero, zkcandy; SOPH, GHO, zkCRO, ozETH elsewhere. The 8.167 and 36.481 figures in §5
   are ETH because era and abstract are ETH chains; **never sum value across chains.** 14 of the
   24,067 candidates carry `value = 0`.
+- **Value figures are REQUESTED, not delivered, unless stated.** The census counts a priority
+  transaction when it is requested on L1; its L2 execution can still revert. Receipts for all 893
+  contract-recipient candidate txs were checked during review and 2 reverted (§1), which is why
+  §5.1 and §5.2 give both figures. The other 23,174 txs — those paying codeless addresses — were
+  **not** receipt-checked; a plain value transfer to an address with no code has nothing to
+  revert in, but this is an argument, not a measurement.
+- **Eight of the 371 code-time probes are dated from a record that is not the earliest
+  *candidate* tx** (an earlier deposit or contract-origin transfer to the same address). The bias
+  is one-directional and conservative — it probes strictly earlier, a harder test to pass — so no
+  verdict is affected.
+- **"EOA-origin" is the input package's term, inherited.** It means `class ∈ {direct-transfer,
+  other}`, i.e. inner `from == l1_from`, which METHOD §5 makes authoritative. On the parent
+  census's separate `initiator_is_contract` flag, 1,189 of the 24,067 initiators carry code on L1
+  (EIP-7702 delegated accounts); they are still user accounts, but a reader should not take
+  "EOA-origin" to mean "the L1 sender provably had no code".
 - **One code-time verdict covers all of a recipient's txs.** Only the earliest tx is dated. Here
   the error term is provably empty: `contract-later` is 0, so there are **0 straddling recipients
   and 0 straddling txs**. Had any recipient been deployed mid-window, its later txs would have
@@ -508,20 +654,31 @@ was wrong for 4 of 8 chains (§3.5).
   block* as its funding tx reads as codeless, so `contract` is a lower bound. A per-tx-index probe
   is not available over JSON-RPC.
 - **The `eoa` bucket is a latest-block verdict for everything the control did not sample.** The
-  control covered 1,298 of 21,211 `eoa` recipients (6.1%) — all of cronos, lens, openzk, sophon
-  and zero, plus 400 each on era and abstract — and found 0 contradictions. A recipient that had
-  code when paid and self-destructed since would be silently filed as `eoa`; nothing in the
-  sample behaved that way, but the remaining 93.9% rest on the latest-block test.
+  control ran on **1,298 addresses** across 7 chains and found 0 contradictions — but those
+  addresses come from the *code caches*, i.e. the union of candidate recipients and deposit
+  beneficiaries, so they are not all candidate recipients. Only **1,011 of the 21,211 candidate
+  `eoa` recipients (4.8%)** were covered; **95.2% rest on the latest-block test**. Per chain the
+  candidate `eoa` recipients covered are: era 398, abstract 353, zero 256 (all of them), lens 2
+  (all), cronos 2 (all), **sophon 0 and openzk 0** — those two chains have no candidate `eoa`
+  recipient at all (their single candidate recipient is `0x0`), so their 189 and 4 control
+  entries are entirely deposit beneficiaries. zkcandy is not covered by this control. A recipient
+  that had code when paid and self-destructed since would be silently filed as `eoa`; nothing in
+  the sample behaved that way.
 - **zkcandy's verdicts come from a different instrument.** See §2.3 for the validation (208/208
   on era) and the three declared limitations: no bytecode/families, no EIP-7702 detection, and
-  genesis contracts reading as codeless.
+  genesis contracts reading as codeless. Two schema consequences: `code/zkcandy.json` carries the
+  sentinel `"block": "latest-via-explorer"` where OUTPUT_SPEC §1 requires a concrete block number
+  (there is none — the explorer answers about creation records, not about a block), and
+  `code_len` is `null` rather than `0` on all 1,251 zkcandy rows, so that field is not comparable
+  across chains. Both are recorded as deviations in `run-manifest-l2.json`.
 - **140 era deposits are undecoded** (v26 selector), so deposit-side coverage is 95.4%, not 100%.
 - **`codehash` here is sha256 of the lowercased code hex** — a clustering key only, **not** the
   EVM keccak codehash.
 - **Confidence semantics** (unchanged from `../results/REPORT.md` §5): **high** = both sides
   verified on-chain/source or an exact registry match; **medium** = verified name on one side,
-  project inferred; **low** = name-only or single tx. One attribution is medium (OpenZK
-  `OzkVault`, §5.8) and one contract is explicitly unattributable (§4); everything else is high.
+  project inferred; **low** = name-only or single tx. One attribution is **medium** (OpenZK
+  `OzkVault`, §5.8) and one contract has no project attribution at all — though its *function* is
+  identified (§4); everything else is high.
 
 ---
 
@@ -533,7 +690,7 @@ was wrong for 4 of 8 chains (§3.5).
 | `REPORT-L2.md` | this document |
 | `run-manifest-l2.json` | endpoints + the `eth_chainId` each returned, substitutions, archive probes, code-cache blocks, call counts, script hashes, deviations |
 | `families.json` | the 13 bytecode families with members, tx counts, implementations, attribution, evidence |
-| `labels-l2.json` | merged address→label registry: 57 inherited + 368 new + 14 confirmed = 425. `../results/scripts/labels.json` is **not** modified |
+| `labels-l2.json` | merged address→label registry: the parent's **57** entries + **368** found only from the L2 side = **425**. 14 of the 57 were independently re-verified here and are marked `confirmed` (they are a subset of the 57, not a third addend); their parent label text is preserved. `../results/scripts/labels.json` is **not** modified |
 | `recipients/<chain>.jsonl` | one row per distinct candidate recipient (the analytical unit) |
 | `recipients-deposits/<chain>.jsonl` | the same for decoded deposit beneficiaries, kept separable |
 | `txs/<chain>.jsonl` | one row per candidate tx, joining back to `../results/enriched/` on `(chain, tx_id)` |
@@ -543,4 +700,4 @@ was wrong for 4 of 8 chains (§3.5).
 | `codetime-pm/`, `codetime-eoa-control/` | control-set and METHOD §3 `eoa`-control verdicts |
 | `seed/zkcandy-method-validation.json` | the era cross-validation and zkcandy positive control |
 | `seed/proxy-slots.json`, `seed/contract-names.json` | ERC1967 slot reads; explorer-verified names |
-| `scripts/` | `reproduce_ground_truth.py`, `resolve_zkcandy_explorer.py`, `fetch_contract_names.py`, `build_outputs.py`, `write_manifest.py`, `write_labels.py`, `attribution.json` |
+| `scripts/` | `reproduce_ground_truth.py`, `resolve_zkcandy_explorer.py`, `fetch_contract_names.py`, `build_outputs.py`, `write_manifest.py`, `write_labels.py`, `check_acceptance.py`, `attribution.json` |

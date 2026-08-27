@@ -10,8 +10,9 @@ zkcandy's JSON-RPC (`https://rpc.zkcandy.io`) is dead, and every free alternativ
 therefore cannot run on zkcandy at all — it aborts at the `eth_chainId` check, exactly as
 METHOD §6.3 says it should.
 
-Its **block explorer is alive** (`https://explorer.zkcandy.io/api`, a ZKsync-era-style
-explorer with an Etherscan-compatible subset), and it indexes the census's canonical hashes.
+Its **block explorer is alive** (`https://explorer.zkcandy.io/api`, a **Blockscout** instance
+with an Etherscan-compatible subset — NOT the same software era runs), and it indexes the
+census's canonical hashes.
 This script substitutes two explorer endpoints for the two RPC calls the shipped scripts use:
 
   RPC method                         ->  explorer substitute
@@ -23,25 +24,40 @@ What this buys and what it costs (state both in the report)
 -----------------------------------------------------------
 + zkcandy's 1,256 addresses stop being `unresolvable`, and contract verdicts come with an
   exact creation block, so code-time is *derived*, not probed — no archive endpoint needed.
-- No bytecode is returned, so there is **no `code_len` and no `codehash`**: zkcandy
+- This endpoint returns no bytecode, so there is **no `code_len` and no `codehash`**: zkcandy
   contributes nothing to the bytecode-family analysis (METHOD §5). Entries carry
   `"method": "explorer-getcontractcreation"` so no downstream step can mistake a null
-  codehash for "resolved but unclustered".
+  codehash for "resolved but unclustered". NOTE this is a limit of the endpoint CHOSEN, not
+  of the host: the same Blockscout instance serves `/api/v2/smart-contracts/{addr}` with
+  `deployed_bytecode`, and `/api/v2/addresses/{addr}` with a direct `is_contract` flag that
+  is a truer `eth_getCode` equivalent than a creation record. A re-implementation should
+  prefer those.
 - `delegated-eoa` (EIP-7702) cannot be detected at all — a delegation is code, not a
   creation record. zkcandy's `delegated-eoa` count is therefore *unknown*, not zero.
-- A contract deployed **at genesis** has no creation record and reads as `eoa`. Verified:
-  `0x…8007`, `0x…800b`, `0x…10002`, `0x…10005` all return an empty result while
-  `0x…10003`/`0x…10004` (deployed in block 136) return one. Every genesis contract on a
-  ZK-stack chain lives in the reserved range that METHOD §3 filters out as `is_system`, so
-  this cannot mis-file a user-chosen counterparty — but it is a real, declared limitation.
+- A contract deployed **at genesis** has no creation record and reads as `eoa`. Measured
+  exhaustively against the chain's full contract population (314 addresses via
+  `listcontracts`): 294 found, **20 missed, every one inside the reserved range** — so recall
+  is 291/291 on non-system contracts and 0/20 on genesis. Correct examples of the miss are
+  `0x0`, `0x…8006`, `0x…800a`, `0x…800b`, `0x…8014`, `0x…10000`; `0x…10003`/`0x…10004`
+  (deployed in block 136) are found. An earlier version of this note cited `0x…8007`,
+  `0x…10002` and `0x…10005` — wrong, those are not contracts on zkcandy at all, so they
+  return nothing simply because they are codeless. Every genesis contract on a ZK-stack chain
+  lives in the reserved range METHOD §3 filters out as `is_system`, so this cannot mis-file a
+  user-chosen counterparty — but it IS why address `0x0` lands in the `eoa` bucket here while
+  it is `contract` on the four RPC chains.
 
 Two API traps this script defends against
 -----------------------------------------
-1. **Silent truncation.** `contractaddresses` accepts at most 10 addresses; pass 11 and the
-   API returns `status:1 "OK"` with results for *none* of them. A caller that chunked at 60
-   would read a whole chain of confident "no creation record" = "EOA" verdicts. The chunk is
+1. **Silent truncation.** `contractaddresses` accepts at most 10 addresses; pass more and the
+   API answers `status:1 "OK"` having silently **truncated to the first 10**. A caller that
+   chunked at 60 would get no record for addresses 11..60 and, under the "no record means no
+   code" rule, would mint confident false `eoa` verdicts for 83% of every chunk. The chunk is
    hard-capped at 10 and every reply is checked to contain only addresses that were asked
    for. Anything else aborts.
+   (An earlier version of this comment said the API returns results for *none* of them above
+   the cap. That was a misdiagnosis from a confounded probe — 10 EOAs followed by 1 contract
+   in position 11, so the only address that could have produced a row was the truncated one.
+   Re-measured: 11/12/15 known contracts each return exactly the first 10.)
 2. **Failure is not a verdict** (METHOD §2). Only `status == "1"` (OK) or the literal
    `status == "0" / "No data found"` count as answers; every other status, an HTTP failure or
    an unparseable body leaves the address UNRESOLVED, never `eoa`.
@@ -60,7 +76,8 @@ from resolve_l2_code import (beneficiary_of, check_classes, collect_targets,   #
 
 API = "https://explorer.zkcandy.io/api"
 CHAIN = "zkcandy"
-MAX_ADDRS = 10          # hard API cap; 11+ silently returns nothing (see module docstring)
+MAX_ADDRS = 10          # hard API cap; above it the API SILENTLY TRUNCATES to the first 10
+                        # and still answers status:1 OK (see module docstring)
 METHOD_TAG = "explorer-getcontractcreation"
 
 
@@ -100,8 +117,9 @@ def creation_records(addrs):
     """
     if len(addrs) > MAX_ADDRS:
         sys.exit(f"FATAL: {len(addrs)} addresses in one getcontractcreation call; the API caps "
-                 f"at {MAX_ADDRS} and answers 'OK' with zero results above it. That would read "
-                 f"as a chunk of confident EOA verdicts. Refusing.")
+                 f"at {MAX_ADDRS} and silently TRUNCATES to the first {MAX_ADDRS} while still "
+                 f"answering 'OK'. Everything past the cap would read as a confident EOA "
+                 f"verdict. Refusing.")
     d, err = get({"module": "contract", "action": "getcontractcreation",
                   "contractaddresses": ",".join(addrs)})
     if err is not None:

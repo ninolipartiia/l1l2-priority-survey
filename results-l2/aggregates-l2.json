@@ -4,7 +4,7 @@
    "from": "2025-08-26",
    "to": "2026-08-26"
   },
-  "generated": "2026-08-26",
+  "generated": "2026-08-27",
   "chains": [
    "era",
    "abstract",
@@ -77,6 +77,18 @@
   },
   "eoa_control": {
    "sampled": 1298,
+   "sampled_that_are_candidate_recipients": 1011,
+   "candidate_eoa_recipients": 21211,
+   "per_chain_candidate_recipients_covered": {
+    "era": 398,
+    "abstract": 353,
+    "zkcandy": 0,
+    "zero": 256,
+    "lens": 2,
+    "cronos": 2,
+    "sophon": 0,
+    "openzk": 0
+   },
    "codeless_at_tx_time": 1298,
    "had_code_at_tx_time": 0,
    "chains": [
@@ -553,6 +565,9 @@
     "unavailable": 0
    },
    "address_lookups": 18482,
+   "endpoint": "https://mainnet.era.zksync.io",
+   "chain_id_verified": 324,
+   "archive_getcode": true,
    "unresolved": {
     "recipients": 0,
     "txs": 0,
@@ -1152,6 +1167,9 @@
     "unavailable": 0
    },
    "address_lookups": 1917,
+   "endpoint": "https://api.mainnet.abs.xyz",
+   "chain_id_verified": 2741,
+   "archive_getcode": true,
    "unresolved": {
     "recipients": 0,
     "txs": 0,
@@ -1420,6 +1438,9 @@
     "unavailable": 0
    },
    "address_lookups": 1256,
+   "endpoint": "https://explorer.zkcandy.io/api",
+   "chain_id_verified": null,
+   "archive_getcode": false,
    "unresolved": {
     "recipients": 0,
     "txs": 0,
@@ -1688,6 +1709,9 @@
     "unavailable": 0
    },
    "address_lookups": 270,
+   "endpoint": "https://rpc.zerion.io/v1/zero",
+   "chain_id_verified": 543210,
+   "archive_getcode": true,
    "unresolved": {
     "recipients": 0,
     "txs": 0,
@@ -1784,6 +1808,9 @@
     "unavailable": 0
    },
    "address_lookups": 4,
+   "endpoint": "https://rpc.lens.xyz",
+   "chain_id_verified": 232,
+   "archive_getcode": true,
    "unresolved": {
     "recipients": 0,
     "txs": 0,
@@ -1880,6 +1907,9 @@
     "unavailable": 0
    },
    "address_lookups": 32,
+   "endpoint": "https://mainnet.zkevm.cronos.org",
+   "chain_id_verified": 388,
+   "archive_getcode": true,
    "unresolved": {
     "recipients": 0,
     "txs": 0,
@@ -1977,6 +2007,9 @@
     "unavailable": 0
    },
    "address_lookups": 195,
+   "endpoint": "https://rpc.sophon.xyz",
+   "chain_id_verified": 50104,
+   "archive_getcode": true,
    "unresolved": {
     "recipients": 0,
     "txs": 0,
@@ -2074,6 +2107,9 @@
     "unavailable": 0
    },
    "address_lookups": 6,
+   "endpoint": "https://rpc.openzk.net",
+   "chain_id_verified": 1345,
+   "archive_getcode": true,
    "unresolved": {
     "recipients": 0,
     "txs": 0,
@@ -2638,7 +2674,9 @@
     "no ERC1967 impl/beacon/admin slot set; name() and symbol() eth_calls return no data",
     "selector 0x64e7f93b is unknown to openchain.xyz and 4byte.directory (0 results in both)",
     "created by 0x94a8ce783060c8e519ca85fe2de8068bf3917d22, which is also the ONLY address that has ever called it (3 calls, all 0x64e7f93b) and the only L1 initiator that paid it \u2014 a single-user private contract, not a shared protocol",
-    "UNATTRIBUTABLE: verified source, proxy implementation, bytecode equality, seed registries, selector DBs and targeted search were all tried"
+    "its FUNCTION is identifiable even though its owner is not: the 0x64e7f93b calldata carries pool addresses, and 0x157beaa1c7dcc2aad79846ec693c558609ebc0ea answers factory() = 0xa1160e73b63f322ae88cc2d8e700833e71d0b2a1, whose verified name on abstract is 'contracts/UniswapV3Factory.sol:UniswapV3Factory', with token0() = 0x3439153eb7af838ad19d56e1571fbd09333c2809 (verified WETH9). Further words in the same calldata are tick bounds. So this is an automated Uniswap-V3 concentrated-liquidity position manager operated by one user.",
+    "NO PROJECT ATTRIBUTION: verified source, proxy implementation, bytecode equality, seed registries, selector DBs and targeted search were all tried and none names an owner or project. actor_type stays `unknown-contract` because Axis B asks whose contract it is, and that remains unknown \u2014 but 'what it does' is answered above, so this is not an opaque blob.",
+    "the single tx that paid it REVERTED on chain (status 0x0), so the 0.0163 ETH was never delivered"
    ],
    "members": [
     "0xed68e19181108758d17c2b1992a5e6b46a60f7d5"
@@ -2687,6 +2725,7 @@
    "confidence": "high",
    "evidence": [
     "verified source 'contracts/staking/RewardsManager.sol:RewardsManager' with header '@author Domani Protocol' and 'Copyright 2023 Memento Blockchain Pte. Ltd.'",
+    "'Domani Protocol' is the name in the deployed source; the project has since rebranded to Memento (the copyright line names Memento Blockchain Pte. Ltd.). Both names refer to the same team.",
     "reached as a canonical-deposit beneficiary only: 3 deposits from 3 distinct L1 initiators",
     "NOT attributed by the parent census \u2014 visible only from the recipient side"
    ],
@@ -2768,13 +2807,207 @@
     "source not verified, but the creation bytecode returned by explorer.openzk.net getcontractcreation contains the revert strings 'OzkVault: tx already sent' and 'OzkVault: insufficient token amount'",
     "ABI surface from the same bytecode: owner()/transferOwnership()/withdraw(address,address,uint256)/approve \u2014 an owned vault, not a user wallet",
     "created by 0x0c78af0fb1f4e09df9421ba9abd75c4dc018db05 (also its factory), block 5981",
-    "medium: the 'Ozk' prefix ties it to OpenZK by name only; no verified source or official registry entry was found"
+    "live eth_call owner() returns 0xee65cca8fe8f2f657c05755779fcad29348c76e2 \u2014 an address the PARENT census independently attributed (results/scripts/labels.json) as 'OpenZK BridgeMiddleware main L2 recipient / L1 deposit initiator'. That is the project link, and it comes from a separate investigation on the sender side rather than from the name.",
+    "MEDIUM per METHOD \u00a77 ('verified name on one side, project inferred'): the contract's own identity is solid (owned vault, replay-protected withdrawals, name from its revert strings) and the OpenZK link is corroborated by the owner, but the source is NOT verified on OpenZK's explorer and no official registry entry or public disclosure of OzkVault was found. Two reviewers split on low-vs-medium; the owner() corroboration is what settles it at medium."
    ],
    "members": [
     "0x7cafe5e0218454abc86c78ba23b311e9a2412e49"
    ]
   }
  ],
+ "report_figures": {
+  "_about": "figures REPORT-L2.md cites that are derived from recipients/*.jsonl, recipients-deposits/*.jsonl or the source census rather than from the buckets above. Collected here so every number in the report is derivable from this file (OUTPUT_SPEC \u00a77).",
+  "contract_recipient_value_total_by_chain_base_token": {
+   "era": "8166986178258713881",
+   "abstract": "36480888151492241452"
+  },
+  "value_note": "each entry is that chain's BASE TOKEN in wei \u2014 era and abstract are ETH; never sum across chains (METHOD \u00a76.6)",
+  "veno_value_total_wei": "7167089440802586186",
+  "unattributable_contract": {
+   "chain": "abstract",
+   "address": "0xed68e19181108758d17c2b1992a5e6b46a60f7d5",
+   "code_len": 51936,
+   "txs": 1,
+   "value_total": "16294524482039651"
+  },
+  "self_funding": {
+   "recipients": 4354,
+   "txs": 6239,
+   "share_of_candidate_txs": 0.2592,
+   "eoa_recipients": 4354,
+   "contract_recipients": 0
+  },
+  "recurrence_contract_recipients": {
+   "ge10": 6,
+   "2-4": 82,
+   "1": 198,
+   "5-9": 18
+  },
+  "agw_family": {
+   "candidate_members": 294,
+   "txs": 864,
+   "recurrence": {
+    "ge10": 5,
+    "5-9": 18,
+    "2-4": 81,
+    "1": 190
+   },
+   "members_own_l1_initiator": 0,
+   "distinct_l1_initiators": 305
+  },
+  "deposits": {
+   "canonical_deposit_records": 3064,
+   "covered_by_decoded_beneficiaries": 2924,
+   "txs_by_beneficiary_actor_type": {
+    "plain-address": 2629,
+    "protocol-contract": 154,
+    "smart-wallet": 141
+   },
+   "beneficiaries_by_actor_type": {
+    "plain-address": 713,
+    "protocol-contract": 3,
+    "smart-wallet": 71
+   }
+  },
+  "contract_addresses": {
+   "chain_address_pairs": 371,
+   "distinct_addresses": 368,
+   "control_set_pairs": 16,
+   "note": "chain_address_pairs is the families.json member total; it is NOT an address count (0x0 is a member on 4 chains) \u2014 METHOD \u00a76.10"
+  },
+  "source_census_records_total": 45711,
+  "source_census_by_class": {
+   "protocol-message": 18580,
+   "direct-transfer": 24052,
+   "canonical-deposit": 3064,
+   "other": 15
+  },
+  "era_beneficiaries_if_v26_were_decoded_upper_bound": 341,
+  "archive_probe": {
+   "system_contract_probed": "0x0000000000000000000000000000000000010003",
+   "code_len_at_tip": 42528,
+   "code_len_at_tip_minus_1M_cronos_zero": 39392,
+   "openzk_chain_height_at_run": 9136,
+   "note": "a DIFFERENT size at depth proves genuine historical state rather than a silent latest-block fallback"
+  },
+  "other_class_calldata_tx_ids": {
+   "era": [
+    3301321,
+    3301322,
+    3301323
+   ],
+   "abstract": [
+    26927
+   ],
+   "note": "the 4 of 15 `other`-class records that actually carry calldata"
+  },
+  "zkcandy": {
+   "addresses_resolved": 1256,
+   "contract_recipients_outside_reserved_range": 0,
+   "plain_addresses": 1255,
+   "is_system_contract_recipients": 1,
+   "chain_contract_population": 314,
+   "intersection_with_census_addresses": 1,
+   "method_recall_non_system_contracts": "291/291",
+   "method_recall_genesis_contracts": "0/20",
+   "independent_is_contract_sample": 184,
+   "independent_is_contract_answered": 174,
+   "independent_is_contract_disagreements": 0,
+   "recipients_with_eip7702_delegation_on_ethereum_l1": 96,
+   "note": "address 0x0 has code on zkcandy and IS one of the 1,251 recipients; it is is_system and sits in the `eoa` bucket per the genesis limitation"
+  },
+  "candidate_initiators_with_l1_code": 1189,
+  "code_time_probes_dated_from_a_non_candidate_record": 8,
+  "control_set_eoa_recipient_records": {
+   "total": 298,
+   "to_equals_l1_from": 293,
+   "to_differs_from_l1_from": 5,
+   "third_party_credited": [
+    {
+     "chain": "zero",
+     "tx_id": 4907
+    },
+    {
+     "chain": "cronos",
+     "tx_id": 4774
+    },
+    {
+     "chain": "sophon",
+     "tx_id": 9467
+    },
+    {
+     "chain": "sophon",
+     "tx_id": 9999
+    },
+    {
+     "chain": "sophon",
+     "tx_id": 10181
+    }
+   ]
+  },
+  "contract_recipient_tx_execution": {
+   "checked": 893,
+   "succeeded": 891,
+   "reverted": 2,
+   "reverted_txs": [
+    {
+     "chain": "era",
+     "tx_id": 3294649,
+     "to": "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
+     "value_wei": "1000000000000000",
+     "status": "0x0"
+    },
+    {
+     "chain": "abstract",
+     "tx_id": 26927,
+     "to": "0xed68e19181108758d17c2b1992a5e6b46a60f7d5",
+     "value_wei": "16294524482039651",
+     "status": "0x0"
+    }
+   ],
+   "era_contract_value_delivered_wei": "7165986178258713881",
+   "abstract_contract_value_delivered_wei": "36464593627010201801",
+   "note": "value_total in recipients/*.jsonl is REQUESTED value; subtract the reverted txs for delivered value. The 19 Veno txs and the 3 era approve calls all succeeded; only these 2 failed."
+  },
+  "control_set_axes": {
+   "txs_to_contract_recipients_era_plus_lens": 18175,
+   "txs_era_plus_lens": 18220,
+   "txs_to_contract_recipients": 18282,
+   "txs": 18580,
+   "contract_recipients": 16,
+   "distinct_recipients": 172,
+   "note": "the package's expectation HOLDS tx-weighted and FAILS recipient-weighted; state both axes"
+  },
+  "parent_census_correction": {
+   "parent_plain_user_activity_records": 27116,
+   "parent_share_of_all_records": 0.5932,
+   "candidate_txs_to_non_user_contracts_by_class": {
+    "direct-transfer": 20,
+    "other": 4
+   },
+   "canonical_deposits_to_protocol_contracts": 154,
+   "records_reclassified_out_of_plain_user_activity": 174,
+   "share_of_all_records": 0.0038,
+   "share_of_the_plain_user_activity_bucket": 0.0064,
+   "note": "only direct-transfer and canonical-deposit records were ever inside the parent's bucket; the `other`-class txs to contracts never were"
+  },
+  "zkcandy_substitute_validation": {
+   "era_cross_validation_agree": 208,
+   "era_cross_validation_disagree": 0,
+   "era_contracts_sampled": 8,
+   "era_eoas_sampled": 200,
+   "zkcandy_positive_control_contracts_found": 8,
+   "source": "seed/zkcandy-method-validation.json"
+  },
+  "labels_registry": {
+   "parent_entries": 57,
+   "new_from_l2_side": 368,
+   "confirmed_from_l2_side": 14,
+   "total": 425,
+   "note": "total = parent_entries + new_from_l2_side; the confirmed are a SUBSET of the parent entries, not a third addend",
+   "source": "labels-l2.json"
+  }
+ },
  "cross_chain": {
   "recipients_multi_chain": [
    {
