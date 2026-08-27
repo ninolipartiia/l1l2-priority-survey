@@ -119,13 +119,13 @@
   "results-l2/scripts/reproduce_ground_truth.py": "9cd061e603e5b10bf51d571cd42e374ac2b08c9abf066389fde719c30d457320",
   "results-l2/scripts/resolve_zkcandy_explorer.py": "89c201538979f42336c36c3a1a6b7ffd42a0e2ddc0dd548cc5b2eb398156cc59",
   "results-l2/scripts/fetch_contract_names.py": "9d0898681ed58cc5abb6184261c1c9a2e23cecbb11e8cad843ffe2289a81b421",
-  "results-l2/scripts/build_outputs.py": "efbd9e8daaa840029ac2f5fea2eb9924459acd3eedbcc101cbb44b013b29dd56",
-  "results-l2/scripts/write_manifest.py": "c760afc8c0c92e7d20365925094edd3a75164bdeea9076819808716c4c695393",
+  "results-l2/scripts/build_outputs.py": "27a9fb862c8d198017a12449084a079f674a60eb5aa3d0a6d9e562761580ea79",
+  "results-l2/scripts/write_manifest.py": "3e6858dfba976639f8021a6af073ac66974f8ec54922ad5144836b490b546998",
   "results-l2/scripts/write_labels.py": "ce1a2722caa02824b4f78d6df1d63f86b7406fdaba7f7602c90f41fb298224de",
-  "results-l2/scripts/check_acceptance.py": "251be23871ecd3ea549b8e4748c4dfdca02432892994f8b18758c2c53cfcb385",
+  "results-l2/scripts/check_acceptance.py": "911fec50ea875c198428d9fab4e6d5bdb71c6339f46932432edbc0586274e08b",
   "results-l2/scripts/attribution.json": "3594ec72651f10d9a3e600dd5924a1e760f5a641723c50d4924e87646348cecf"
  },
- "acceptance": "results-l2/scripts/check_acceptance.py re-checks every TASK.md acceptance criterion mechanically; 21/21 pass as of this run. Strengthened after an independent audit found several checks circular or vacuous: the bucket reconciliation and the lookup-coverage check now re-derive from results/enriched/ and compare KEY SETS rather than counts; the contract-later, is_system and labels checks now test the named property rather than a proxy for it; and a new check enforces OUTPUT_SPEC \u00a77's rule that every number in REPORT-L2.md is derivable from aggregates-l2.json \u2014 the one criterion the earlier checker did not test, and the one that failed.",
+ "acceptance": "results-l2/scripts/check_acceptance.py re-checks every TASK.md acceptance criterion mechanically; 22/22 pass as of this run. Strengthened after an independent audit found several checks circular or vacuous: the bucket reconciliation and the lookup-coverage check now re-derive from results/enriched/ and compare KEY SETS rather than counts; the contract-later, is_system and labels checks now test the named property rather than a proxy for it; and a new check enforces OUTPUT_SPEC \u00a77's rule that every number in REPORT-L2.md is derivable from aggregates-l2.json \u2014 the one criterion the earlier checker did not test, and the one that failed. A 22nd check was added later: the pipeline order is build_outputs.py -> write_labels.py -> write_manifest.py, and re-running build_outputs.py alone leaves report_figures.labels_registry nulled; the guard asserts that block is present and agrees with labels-l2.json so a partial rebuild fails loudly.",
  "independent_audit": {
   "when": "2026-08-27",
   "what": "four independent agents re-derived the numbers from results/enriched/ without using this phase's scripts, re-verified verdicts against the live L2 RPCs and explorers, attacked the zkcandy substitute, and audited the report against the spec.",

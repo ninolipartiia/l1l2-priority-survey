@@ -249,6 +249,23 @@ check("labels-l2.json extends rather than overwrites the parent registry",
       f"all {len(parent)} parent addresses present in the merged registry of "
       f"{len(lab.get('labels', {}))}")
 
+# 10b — the pipeline is build_outputs.py -> write_labels.py -> write_manifest.py, and only the
+# second writes report_figures.labels_registry. Re-running build_outputs.py ALONE silently drops
+# that block, degrading aggregates-l2.json with nothing to catch it: criterion 11 below is loose
+# enough (it accepts any pairwise ratio) that the registry numbers still "derive". So assert the
+# block is present AND agrees with labels-l2.json, which makes a partial rebuild fail loudly.
+reg = agg.get("report_figures", {}).get("labels_registry") or {}
+reg_ok = (reg.get("total") == lab.get("total")
+          and reg.get("parent_entries") == lab.get("parent_entries")
+          and reg.get("new_from_l2_side") == lab.get("new_from_l2_side")
+          and reg.get("confirmed_from_l2_side") == lab.get("confirmed_from_l2_side"))
+check("aggregates carries labels_registry, in sync with labels-l2.json (partial-rebuild guard)",
+      bool(reg) and reg_ok,
+      f"labels_registry present, total {reg.get('total')} == labels-l2.json total "
+      f"{lab.get('total')}" if reg_ok else
+      ("report_figures.labels_registry is MISSING — re-run write_labels.py after build_outputs.py"
+       if not reg else f"labels_registry {reg} disagrees with labels-l2.json"))
+
 # 11 — OUTPUT_SPEC §7 closing rule: every number in the report is derivable from the
 #      aggregates. Flatten every numeric value in aggregates-l2.json, add the percentages and
 #      ratios formable from any two of them, and require every data number in the report to

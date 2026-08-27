@@ -16,6 +16,10 @@ Reads
 Writes ../recipients/, ../recipients-deposits/, ../txs/, ../families.json,
 ../aggregates-l2.json.
 
+RUN ORDER MATTERS: build_outputs.py -> write_labels.py -> write_manifest.py. This script leaves
+report_figures.labels_registry as a null placeholder for write_labels.py to fill, so running it
+alone degrades aggregates-l2.json. check_acceptance.py guards that (criterion 10b).
+
 Invariants asserted here rather than assumed (TASK acceptance criteria):
   * the six `to_kind` values are disjoint and exhaustive, and the tx counts behind them
     sum to the chain's candidate_txs (and 24,067 overall);
@@ -589,6 +593,21 @@ def main():
         if rs:
             value_by_chain[c] = str(sum(int(r["value_total"]) for r in rs))
 
+    # The 2 candidate txs to a contract recipient that reverted on L2 (status 0x0), found by
+    # fetching receipts for all 893 during review. Delivered value is derived from these.
+    REVERTED = [
+        {"chain": "era", "tx_id": 3294649,
+         "to": "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
+         "value_wei": "1000000000000000", "status": "0x0"},
+        {"chain": "abstract", "tx_id": 26927,
+         "to": "0xed68e19181108758d17c2b1992a5e6b46a60f7d5",
+         "value_wei": "16294524482039651", "status": "0x0"},
+    ]
+
+    def _delivered(chain):
+        return str(int(value_by_chain[chain])
+                   - sum(int(r["value_wei"]) for r in REVERTED if r["chain"] == chain))
+
     nonuser_by_class = collections.Counter()
     nonuser_addrs = {(r["chain"], r["address"]) for r in con_rows
                      if r["actor_type"] != "smart-wallet"}
@@ -654,6 +673,11 @@ def main():
                 "note": "these ARE empty pings; kept separate from the 5 above so the two "
                         "are not conflated (REPORT-L2 §7)"},
         },
+        # The `eoa` bucket is not the same as "paid a codeless address": zkcandy's one tx to 0x0
+        # sits in it because the explorer substitute cannot see genesis code (§2.3), yet that
+        # address demonstrably HAS code (Blockscout is_contract:true). §1 needs the distinction.
+        "eoa_bucket_txs_excluding_system": sum(
+            r["txs"] for r in all_rows if r["to_kind"] == "eoa" and not r["is_system"]),
         "self_funding": {
             "recipients": sum(1 for r in all_rows if r["is_own_l1_initiator"]),
             "txs": sum(r["txs"] for r in all_rows if r["is_own_l1_initiator"]),
@@ -733,16 +757,13 @@ def main():
         "contract_recipient_tx_execution": {
             "checked": 893,
             "succeeded": 891,
-            "reverted": 2,
-            "reverted_txs": [
-                {"chain": "era", "tx_id": 3294649,
-                 "to": "0x5a7d6b2f92c77fad6ccabd7ee0624e64907eaf3e",
-                 "value_wei": "1000000000000000", "status": "0x0"},
-                {"chain": "abstract", "tx_id": 26927,
-                 "to": "0xed68e19181108758d17c2b1992a5e6b46a60f7d5",
-                 "value_wei": "16294524482039651", "status": "0x0"}],
-            "era_contract_value_delivered_wei": "7165986178258713881",
-            "abstract_contract_value_delivered_wei": "36464593627010201801",
+            "reverted": len(REVERTED),
+            "reverted_txs": REVERTED,
+            # Derived from value_by_chain, never typed by hand: an earlier revision carried a
+            # hand-written era figure that was 1.0 ETH low (a bare 7 for an 8), which no
+            # acceptance check could catch because it only tests that a number appears here.
+            "era_contract_value_delivered_wei": _delivered("era"),
+            "abstract_contract_value_delivered_wei": _delivered("abstract"),
             "note": "value_total in recipients/*.jsonl is REQUESTED value; subtract the "
                     "reverted txs for delivered value. The 19 Veno txs and the 3 era approve "
                     "calls all succeeded; only these 2 failed.",

@@ -19,8 +19,9 @@ wallet** — 864 to Abstract Global Wallet accounts on abstract, 1 to a Safe on 
 **Veno Finance**'s `BridgeReceiver` on era (7.167 ETH of liquid-staking flow), 4 to token
 contracts (USDC.e, ZK, WETH on era), and 1 to a single unverified private contract on abstract.
 A further **4 txs** were bytecode publications addressed to the reserved address `0x0`
-(`is_system`, excluded from the 889; see §3.1). The remaining **23,174 txs (96.3%) paid a plain codeless address**. 23,174 + 889 + 4 =
-24,067.
+(`is_system`, excluded from the 889; see §3.1). The remaining **23,174 txs (96.3%) sit in the
+`eoa` bucket** — 23,173 of them plain codeless addresses, plus zkcandy's single tx to `0x0`, which
+does have code that the explorer substitute cannot see (§2.3). 23,174 + 889 + 4 = 24,067.
 
 **Two of those 889 txs reverted on L2.** Receipts were fetched for all 893 contract-recipient
 candidate txs during review: 891 succeeded, and 2 failed with `status 0x0` — era tx 3294649
@@ -427,7 +428,7 @@ and zero. AGW is abstract-only; ZKsync SSO is sophon-only in this dataset.
 ### 5.1 ZKsync Era — 19,044 candidate txs, 18,325 recipients
 
 Almost perfectly one-shot: 18,057 recipients received exactly one tx. Only **5** recipients have
-code, carrying 24 txs and **8.167 ETH requested / 7.166 ETH delivered** — era tx 3294649
+code, carrying 24 txs and **8.167 ETH requested / 8.166 ETH delivered** — era tx 3294649
 (0.001 ETH to the ZK token) reverted.
 
 | address | txs | actor_type | identity |
@@ -687,8 +688,11 @@ outright on 4 of 8 chains (§3.5).
   entries are entirely deposit beneficiaries. zkcandy is not covered by this control. A recipient
   that had code when paid and self-destructed since would be silently filed as `eoa`; nothing in
   the sample behaved that way.
-- **zkcandy's verdicts come from a different instrument.** See §2.3 for the validation (208/208
-  on era) and the three declared limitations: no bytecode/families, no EIP-7702 detection, and
+- **zkcandy's verdicts come from a different instrument.** See §2.3 for the validation — which
+  rests on the zkcandy-side evidence (complete 314-contract enumeration, exhaustive recall, and an
+  independent `is_contract` sweep of all 1,256 addresses), **not** on the era cross-validation,
+  whose premise turned out to be false — and for the seven declared limitations, of which three
+  bear on the verdicts: no bytecode/families from the endpoint used, no EIP-7702 detection, and
   genesis contracts reading as codeless. Two schema consequences: `code/zkcandy.json` carries the
   sentinel `"block": "latest-via-explorer"` where OUTPUT_SPEC §1 requires a concrete block number
   (there is none — the explorer answers about creation records, not about a block), and

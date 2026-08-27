@@ -2883,6 +2883,7 @@
     "note": "these ARE empty pings; kept separate from the 5 above so the two are not conflated (REPORT-L2 \u00a77)"
    }
   },
+  "eoa_bucket_txs_excluding_system": 23173,
   "self_funding": {
    "recipients": 4354,
    "txs": 6239,
@@ -3018,7 +3019,7 @@
      "status": "0x0"
     }
    ],
-   "era_contract_value_delivered_wei": "7165986178258713881",
+   "era_contract_value_delivered_wei": "8165986178258713881",
    "abstract_contract_value_delivered_wei": "36464593627010201801",
    "note": "value_total in recipients/*.jsonl is REQUESTED value; subtract the reverted txs for delivered value. The 19 Veno txs and the 3 era approve calls all succeeded; only these 2 failed."
   },

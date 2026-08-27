@@ -277,14 +277,18 @@ manifest = {
     )},
 
     "acceptance": "results-l2/scripts/check_acceptance.py re-checks every TASK.md acceptance "
-                  "criterion mechanically; 21/21 pass as of this run. Strengthened after an "
+                  "criterion mechanically; 22/22 pass as of this run. Strengthened after an "
                   "independent audit found several checks circular or vacuous: the bucket "
                   "reconciliation and the lookup-coverage check now re-derive from "
                   "results/enriched/ and compare KEY SETS rather than counts; the "
                   "contract-later, is_system and labels checks now test the named property "
                   "rather than a proxy for it; and a new check enforces OUTPUT_SPEC §7's rule "
                   "that every number in REPORT-L2.md is derivable from aggregates-l2.json — "
-                  "the one criterion the earlier checker did not test, and the one that failed.",
+                  "the one criterion the earlier checker did not test, and the one that failed. "
+                  "A 22nd check was added later: the pipeline order is build_outputs.py -> "
+                  "write_labels.py -> write_manifest.py, and re-running build_outputs.py alone "
+                  "leaves report_figures.labels_registry nulled; the guard asserts that block is "
+                  "present and agrees with labels-l2.json so a partial rebuild fails loudly.",
     "independent_audit": {
         "when": "2026-08-27",
         "what": "four independent agents re-derived the numbers from results/enriched/ without "
